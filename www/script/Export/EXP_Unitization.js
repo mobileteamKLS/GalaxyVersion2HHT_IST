@@ -1128,7 +1128,7 @@ function UnitizationPendingAWBDetails() {
                     });
                     $('#dvRemarkShow').empty();
                     var Remark = '';
-                    $(xmlDoc).find('Table4').each(function (index) {
+                    $(xmlDoc).find('Table2').each(function (index) {
 
                         Remark = $(this).find('Remark').text();
                         // Date = $(this).find('Date').text();
