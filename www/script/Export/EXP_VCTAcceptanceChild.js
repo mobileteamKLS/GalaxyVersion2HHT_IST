@@ -1139,17 +1139,15 @@ function setHAWBNo(i) {
 
     var Remark = '';
     $(_xmlDocTable).find('Table3').each(function (index) {
-
-        Remark = $(this).find('Remark').text();
-        if (Remark != '') {
-            // RemarkDate = $(this).find('RemarkDate').text();
-            remarkPriority = $(this).find('remarkPriority').text();
-            $('#dvRemarkShow').append(Remark);
-            $('#remarkPriorityShow').modal('show');
+        if ($("#ddlMAWBNo").find(":selected").text() == $(this).find('DocumentNo').text()){
+            Remark = $(this).find('Remark').text();
+            if (Remark != '') {
+                // RemarkDate = $(this).find('RemarkDate').text();
+                remarkPriority = $(this).find('remarkPriority').text();
+                $('#dvRemarkShow').append(Remark);
+                $('#remarkPriorityShow').modal('show');
+            }
         }
-
-
-
     });
 }
 

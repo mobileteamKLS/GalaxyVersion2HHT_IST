@@ -1128,7 +1128,7 @@ function UnitizationPendingAWBDetails() {
                     });
                     $('#dvRemarkShow').empty();
                     var Remark = '';
-                    $(xmlDoc).find('Table4').each(function (index) {
+                    $(xmlDoc).find('Table2').each(function (index) {
 
                         Remark = $(this).find('Remark').text();
                         // Date = $(this).find('Date').text();
@@ -1549,6 +1549,10 @@ function GetExportULDData(Input){
 
 function GetExportFlightDetails(shouldClearRecord) {
 
+    // $('#trolleyLists').empty();
+    // var newOption = $('<option></option>');
+    // newOption.val(0).text('Select');
+    // newOption.appendTo('#trolleyLists');
 
     if ($("#txtFlightNo").val() == "") {
         $.alert("Please Enter Flight No.");
@@ -1632,7 +1636,11 @@ function GetExportFlightDetails(shouldClearRecord) {
                 $(xmlDoc).find('Table5').each(function (index) {
                     var newOption2 = $('<option></option>');
                     newOption2.val($(this).find('TrolleySeqNo').text()).text($(this).find('TrolleyNo').text());
-                    newOption2.appendTo('#trolleyLists');
+                    if ($('#trolleyLists option[value="' + $(this).find('TrolleySeqNo').text() + '"]').length === 0)
+                    {
+                        newOption2.appendTo('#trolleyLists');
+                    }
+                 
                     // $("#trolleyLists").val($(this).find('TrolleySeqNo').text());
                 });
                 //if (Offpoint != "" && !offPointLoaded) {
@@ -3762,7 +3770,10 @@ function cleatInvalidSHCCode() {
 }
 
 function GetULDs(valFromddloffpoint) {
-
+    // $('#trolleyLists').empty();
+    // var newOption = $('<option></option>');
+    // newOption.val(0).text('Select');
+    // newOption.appendTo('#trolleyLists');
 
     if ($("#txtFlightNo").val() == "") {
         $.alert("Please Enter Flight No.");
@@ -3840,7 +3851,10 @@ function GetULDs(valFromddloffpoint) {
                 $(xmlDoc).find('Table5').each(function (index) {
                     var newOption2 = $('<option></option>');
                     newOption2.val($(this).find('TrolleySeqNo').text()).text($(this).find('TrolleyNo').text());
-                    newOption2.appendTo('#trolleyLists');
+                    if ($('#trolleyLists option[value="' + $(this).find('TrolleySeqNo').text() + '"]').length === 0)
+                    {
+                        newOption2.appendTo('#trolleyLists');
+                    }
                     // $("#trolleyLists").val($(this).find('TrolleySeqNo').text());
                 });
                 //if (Offpoint != "" && !offPointLoaded) {

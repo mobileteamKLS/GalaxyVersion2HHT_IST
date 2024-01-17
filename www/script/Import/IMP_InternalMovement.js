@@ -477,15 +477,19 @@ getHWABNoList = function (InputXML) {
                     //  $("#ddlHAWBList").trigger('change');
                     $("#txtLocation").focus();
                 });
-                $('#dvRemarkShow').empty();
+                
                 var Remark = '';
                 $(xmlDoc).find('Table1').each(function (index) {
 
                     Remark = $(this).find('Remark').text();
-                    // Date = $(this).find('Date').text();
+                    if(Remark!=''){
+                    $('#dvRemarkShow').empty();
                     IsHighPriority = $(this).find('IsHighPriority').text();
                     $('#dvRemarkShow').append(Remark);
                     $('#remarkPriorityShow').modal('show');
+                    }
+                    // Date = $(this).find('Date').text();
+                    
                 });
                 
                 if(HAWBNo=" "){
@@ -556,14 +560,18 @@ getIGMNoList = function (InputXML) {
 
                 });
 
-                $('#dvRemarkShow').empty();
+               
                 var Remark = '';
                 $(xmlDoc).find('Table1').each(function (index) {
-
+                   
                     Remark = $(this).find('Remark').text();
-                    // Date = $(this).find('Date').text();
-                    IsHighPriority = $(this).find('IsHighPriority').text();
+                    if(Remark!=''){
+                        $('#dvRemarkShow').empty();
+                        IsHighPriority = $(this).find('IsHighPriority').text();
                     $('#dvRemarkShow').append(Remark);
+                    }
+                    // Date = $(this).find('Date').text();
+                    
 
 
                 });
