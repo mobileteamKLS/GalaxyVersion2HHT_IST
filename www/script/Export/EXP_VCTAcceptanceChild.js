@@ -1501,9 +1501,9 @@ GetVCTUnScannedAWBDetails = function (InputXMLAWB) {
 
                     //$("#ddlMAWBNo option:contains(" + MawbNo + ")").attr('selected', 'selected');                    
                     $('#ddlMAWBNo').val(MawbNo);
-                    // var newOption = $('<option></option>');
-                    // newOption.val(HawbNo).text(HawbNo);
-                    // newOption.appendTo('#ddlHAWBNo');
+                    var newOption = $('<option></option>');
+                    newOption.val(HawbNo).text(HawbNo);
+                    newOption.appendTo('#ddlHAWBNo');
                     setHAWBNo();
                     RemainingPkg = $(this).find('RemainingPkg').text();
                     RemainingWt = $(this).find('RemainingWt').text();
