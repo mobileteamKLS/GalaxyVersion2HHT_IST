@@ -1,4 +1,7 @@
 ﻿
+
+var Column1ForBeakdown = window.localStorage.getItem("Column1ForBeakdown");
+
 (function () {
     document.addEventListener('backbutton', onBackKeyDown, false);
     //document.addEventListener('deviceready', DropDown, false);
@@ -26,6 +29,12 @@ $(function () {
         case "Turkish":
             setTurkish();
             break;
+    }
+
+    if (Column1ForBeakdown == 'Y') {
+        $("#divBreakdown").show();
+    } else {
+        $("#divBreakdown").hide();
     }
 
 });
@@ -114,5 +123,9 @@ function DisplayScreen(Mode) {
     else if (Mode == "AWBRemarks") {
         localStorage.setItem('Is_I_E', 'I');
         window.location.href = "IMP_AWBRemarks.html";
+    }
+    else if (Mode == "Breakdown") {
+        localStorage.setItem('IMP_Breakdown_Parant', 'IMP_Breakdown_Parant');
+        window.location.href = "IMP_Breakdown_Parant.html";
     }
 }
