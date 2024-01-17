@@ -1289,17 +1289,17 @@ function saveCargoAcceptance() {
             $input.css('background-color', $input.val() ? 'white' : '#FFCCCB');
             formElements.push($input.val());
         });
-        if ($input.val() == '') {
-            $input.css('background-color', $input.val() ? 'white' : '#FFCCCB');
-            $(".ibiSuccessMsg1").text('Please enter dimensions.').css({ 'color': 'red' });
-            $("#Length1").focus();
-        } else {
+        // if ($input.val() == '') {
+        //     $input.css('background-color', $input.val() ? 'white' : '#FFCCCB');
+        //     $(".ibiSuccessMsg1").text('Please enter dimensions.').css({ 'color': 'red' });
+        //     $("#Length1").focus();
+        // } else {
             $(".ibiSuccessMsg1").text('');
             getAllValues();
             inputxml = "<Root><VCTNo>" + txtVCTNo + "</VCTNo><VCTID>" + VCTId + "</VCTID><ISULD>False</ISULD><ConsignmentRowID>" + ConsignmentRowID + "</ConsignmentRowID><HouseRowId>" + ConsignmentRowID + "</HouseRowId><AWBULDNo>" + $("#ddlMAWBNo").val() + "</AWBULDNo><HAWB>" + $("#ddlHAWBNo option:selected").text() + "</HAWB><Package>" + $("#txPieces").val() + "</Package><GrossWt>" + $("#txtScaleWt").val() + "</GrossWt><WtUOM>KG</WtUOM><TrolleyCode>" + IDENTIFIER + "</TrolleyCode><TrolleyWt>" + REFERENCE + "</TrolleyWt><IsSecured>" + IsSecuredTF + "</IsSecured><GroupId>" + $("#txtGroupId").val() + "</GroupId><DimUOM>" + $("#ddlUnit").val() + "</DimUOM><DimDetails>" + inputRows + "</DimDetails><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><UserId>" + Userid + "</UserId><NOG>" + $("#txtNOG").val() + "</NOG><CommSrNo>" + $("#ddlComCode").val() + "</CommSrNo>" + allSHCCodeSave + "</Root>"
             console.log(inputxml);
             SaveVCTCargoDetails(inputxml);
-        }
+        //}
         // }
 
     }
