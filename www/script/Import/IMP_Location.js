@@ -33,7 +33,13 @@ $(function () {
 
     $("#ddlHAWBList").change(function () {
         _vlaueofHawb = $('option:selected', this).val();
+        if($('option:selected', this).text()=="Select" || $('option:selected', this).text()==null){
+            _textofHawb="";
+        }
+        else{
         _textofHawb = $('option:selected', this).text();
+       }
+        
         $("#txtLocation").val('');
         $("#txtBinnPkgs").val('');
         $("#txtWght").val('');
@@ -245,6 +251,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
+                    ExpectedZone=$(this).find("EXPECTED_ZONE").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
                     //$("#txtBinnPkgs").val(PendingPieces);
@@ -252,7 +259,8 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
-                    $("#spnTxtWeight").text(LocWeight + " / " + ShipmentWeight);
+                    $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
+                    $("spnExpectedZone").text(ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -393,6 +401,7 @@ function Imp_GetHAWBIGMNumbersForMAWBNumber() {
 getHWABNoList = function (InputXML) {
 
     $("#ddlHAWBList").text('');
+
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetHAWBIGMNumbersForMAWBNumber",
@@ -442,7 +451,7 @@ getHWABNoList = function (InputXML) {
                     var newOption = $('<option></option>');
                     newOption.val(PendingPieces).text(HAWBNo);
                     newOption.appendTo('#ddlHAWBList');
-                    // $("#ddlHAWBList").trigger('change');
+                   $("#ddlHAWBList").trigger('change');
                     $("#txtLocation").focus();
                 });
                 // $('#dvRemarkShow').empty();
@@ -488,6 +497,7 @@ function dialogAlert(Remark) {
 }
 getIGMNoList = function (InputXML) {
     $("#ddlFlightNoandDate").text('');
+
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetHAWBIGMNumbersForMAWBNumber",
@@ -544,6 +554,7 @@ getIGMNoList = function (InputXML) {
                 if (Remark != '') {
                     $('#remarkPriorityShow').modal('show');
                 }
+               
                 _InputXML = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
                 _GetBinningLocPkgDetails(_InputXML);
 
@@ -607,6 +618,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
+                    ExpectedZone=$(this).find("EXPECTED_ZONE").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
 
@@ -615,7 +627,8 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
-                    $("#spnTxtWeight").text(LocWeight + " / " + ShipmentWeight);
+                    $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
+                    $("spnExpectedZone").text(ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
