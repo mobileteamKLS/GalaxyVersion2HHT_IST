@@ -1815,10 +1815,10 @@ function UnitizationSaveTrolleyDetails() {
                     Status = $(this).find('Column1').text();
                     StrMessage = $(this).find('Column2').text();
                     if (Status == 'E') {
-                        $(".uldMessage").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        $(".trollyMessage").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
                     } else if (Status == 'S') {
-                        $(".uldMessage").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                        $(".trollyMessage").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                         GetULDs($("#offPointLists").val());
                         //GetExportFlightDetails(true);
                     }
