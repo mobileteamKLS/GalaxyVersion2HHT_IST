@@ -2407,7 +2407,7 @@ GetULDMaterial = function (InputXML) {
 
                 $(xmlDoc).find('Table2').each(function (index) {
 
-                    createDynamicEquipmentTable($(this).find('Keyvalue').text(), $(this).find('Type').text(), $(this).find('Value').text());
+                    createDynamicEquipmentTable($(this).find('Keyvalue').text(), $(this).find('Type').text(), $(this).find('Value').text(),$(this).find('weight').text());
 
 
                     $('#tableEuipRecords').append(html);
@@ -2430,7 +2430,7 @@ GetULDMaterial = function (InputXML) {
     });
 }
 
-function createDynamicEquipmentTable(key, Type, Value) {
+function createDynamicEquipmentTable(key, Type, Value,Weight) {
 
     html = '';
     html += "<tr>";
@@ -2445,7 +2445,7 @@ function createDynamicEquipmentTable(key, Type, Value) {
     html += "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='number' id='txtQuantity1' value='" + Value + "' onkeyup='NumberOnly(event);  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    html += "<input type='number' id='txtQuantity1' value='" + Weight + "' onkeyup='NumberOnly(event);  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
     html += "</td>";
     html += "</tr>";
 
@@ -2463,16 +2463,16 @@ function calLocationRows(idCounter) {
         TableData[row] = {
             ItemNum: $(tr).find("td:eq(0) input").val(),
             Itemname: $(tr).find("td:eq(1) input").val(),
-            Itemname: $(tr).find("td:eq(1) input").val(),
+            Itemname: $(tr).find("td:eq(2) input").val(),
 
         };
         if (
             $(tr).find("td:eq(0) input").val() != "" ||
             $(tr).find("td:eq(1) input").val() != "" ||
-            $(tr).find("td:eq(1) input").val() != ""
+            $(tr).find("td:eq(2) input").val() != ""
         ) {
             inputRowsforLocation +=
-                '<UldEquip><Keyvalue>' + $(tr).find("td:eq(0) input").val() + '</Keyvalue><Quantity>' + $(tr).find("td:eq(1) input").val() + '</Quantity><Weight>' + $(tr).find("td:eq(1) input").val() + '</Weight></UldEquip>';
+                '<UldEquip><Keyvalue>' + $(tr).find("td:eq(0) input").val() + '</Keyvalue><Quantity>' + $(tr).find("td:eq(1) input").val() + '</Quantity><Weight>' + $(tr).find("td:eq(2) input").val() + '</Weight></UldEquip>';
         }
     });
     idCounter++;

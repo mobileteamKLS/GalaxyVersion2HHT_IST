@@ -260,7 +260,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("spnExpectedZone").text(ExpectedZone);
+                    $("#spnExpectedZone").text(ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -628,7 +628,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("spnExpectedZone").text(ExpectedZone);
+                    $("#spnExpectedZone").text(ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
