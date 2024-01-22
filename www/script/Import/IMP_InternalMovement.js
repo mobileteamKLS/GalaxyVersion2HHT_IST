@@ -32,7 +32,12 @@ $(function () {
 
     $("#ddlHAWBList").change(function () {
         _vlaueofHawb = $('option:selected', this).val();
-        _textofHawb = $('option:selected', this).text();
+        if($('option:selected', this).text()=="Select" || $('option:selected', this).text()==null){
+            _textofHawb="";
+        }
+        else{
+            _textofHawb = $('option:selected', this).text();
+        }
         $("#txtMovePkgs").val('');
         $("#textMoveWght").val('');
         $("#txtLocation").val('');
@@ -474,7 +479,7 @@ getHWABNoList = function (InputXML) {
                     var newOption = $('<option></option>');
                     newOption.val(PendingPieces).text(HAWBNo);
                     newOption.appendTo('#ddlHAWBList');
-                    //  $("#ddlHAWBList").trigger('change');
+                     $("#ddlHAWBList").trigger('change');
                     $("#txtLocation").focus();
                 });
                 
@@ -492,18 +497,9 @@ getHWABNoList = function (InputXML) {
                     
                 });
                 
-                if(HAWBNo=" "){
-                    _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
-                    getIGMNoList(_InputXML);
-                  
-                }
-                else{
                     _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + _textofHawb + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
                     getIGMNoList(_InputXML);
                   
-                }
-               
-
             } else {
                 $("body").mLoading('hide');
                 //errmsg = "WDO No. not found</br>";

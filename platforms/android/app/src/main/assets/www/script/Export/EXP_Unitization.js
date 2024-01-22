@@ -77,6 +77,7 @@ $(function () {
         if(selectedULDNo!="Select"){
             $("#txtBulkManpower").prop('disabled', true);
             $("#txtBlkRemark").prop('disabled', true);
+            $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
             var InputXML = {
                 "ULDSequenceNo": selectedULDSeqNo,
                 "AirportCity": SHED_AIRPORT_CITY,
@@ -92,6 +93,7 @@ $(function () {
         else{
             $("#txtBulkManpower").prop('disabled', false);
             $("#txtBlkRemark").prop('disabled', false);
+            $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
             var InputXML = {
                 "ULDSequenceNo": "0",
                 "AirportCity": SHED_AIRPORT_CITY,
@@ -307,11 +309,11 @@ $(function () {
         $("#lblUldNumber").text($("#uldLists option:selected").text());
 
         if ($("#bulkCheckBox").prop("checked")) {
-            type = "T";
-            if ($("#trolleyLists").val() == "0" || $("#trolleyLists").val() == "") {
-                $.alert("Please Select Trolley.");
-                return;
-            }
+            type = "B";
+            // if ($("#trolleyLists").val() == "0" || $("#trolleyLists").val() == "") {
+            //     $.alert("Please Select Trolley.");
+            //     return;
+            // }
             ULDSeqNo = $("#trolleyLists").val();
             selectedULD = $("#trolleyLists :selected").text()
         } else if ($("#ULDCheckbox").prop("checked")) {
@@ -1624,8 +1626,14 @@ function GetExportFlightDetails(shouldClearRecord) {
                     newOption2.val($(this).find('ULD_SEQUENCE_NUMBER').text()).text($(this).find('ULDBULKNO').text());
                     newOption2.appendTo('#uldLists');
                     // $("#uldLists").val($(this).find('ULD_SEQUENCE_NUMBER').text());
-                    $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
+                    
                 });
+                if ($("#uldLists").val() == "0" || $("#uldLists").val() == ""|| $("#uldLists").val() == null) {
+                    $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
+                }
+                else {
+                    $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
+                }
 
                 $(xmlDoc).find('Table4').each(function (index) {
                     var newOption1 = $('<option></option>');
@@ -1831,9 +1839,24 @@ function commonFunc() {
     if ($("#bulkCheckBox").prop("checked")) {
         $("#ULD").hide();
         $("#BULK").show();
+        if ($("#trolleyLists").val() == "0" || $("#trolleyLists").val() == ""){
+            $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
+        }
+        else{
+            $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
+        }
     } else if ($("#ULDCheckbox").prop("checked")) {
         $("#ULD").show();
         $("#BULK").hide();
+        console.log($("#uldLists").val());
+        if ($("#uldLists").val() == "0" || $("#uldLists").val() == null) {
+            $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
+            console.log("ULD");
+        }
+        else {
+            $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
+            console.log("ULD1");
+        }
     } else {
 
     }
