@@ -30,6 +30,7 @@ var OldLocCode = "", oldLocatedPieces = "", OldLocId = "",
 var _XmlForSHCCode;
 var allSHCCodeSave = '';
 var joinAllValuesWithComma = '';
+var shoulSave
 $(function () {
     $("#uldLists").change(function () {
         selectedULDNo = $(this).find("option:selected").text();
@@ -73,7 +74,8 @@ $(function () {
         selectedULDSeqNo = $(this).val();
         $("#bulkScaleWt").val('');
         $("#txtBlkRemark").val('');
-        $("#txtBulkManpower").val('');      
+        $("#txtBulkManpower").val('');   
+        $(".trollyMessage").text('');    
         if(selectedULDNo!="Select"){
             $("#txtBulkManpower").prop('disabled', true);
             $("#txtBlkRemark").prop('disabled', true);
@@ -306,9 +308,11 @@ $(function () {
     $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
 
     $("#btnAddEquipment").click(function () {
-        $("#lblUldNumber").text($("#uldLists option:selected").text());
+        $(".trollyMessage").text('');
+        
 
         if ($("#bulkCheckBox").prop("checked")) {
+            $("#lblUldNumber").text('');
             type = "B";
             // if ($("#trolleyLists").val() == "0" || $("#trolleyLists").val() == "") {
             //     $.alert("Please Select Trolley.");
@@ -317,6 +321,7 @@ $(function () {
             ULDSeqNo = $("#trolleyLists").val();
             selectedULD = $("#trolleyLists :selected").text()
         } else if ($("#ULDCheckbox").prop("checked")) {
+            $("#lblUldNumber").text($("#uldLists option:selected").text());
             type = "U";
             if ($("#uldLists").val() == "") {
                 $.alert("Please Select ULD's.");
@@ -1589,6 +1594,7 @@ function GetExportFlightDetails(shouldClearRecord) {
                     fnClearfornoMsgClear();
                     $(".uldMessageULDClose").text('');
                     $(".uldMessage").text('');
+                    $(".trollyMessage").text('');
                 }
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
@@ -1815,9 +1821,13 @@ function UnitizationSaveTrolleyDetails() {
                     Status = $(this).find('Column1').text();
                     StrMessage = $(this).find('Column2').text();
                     if (Status == 'E') {
+                        $("#bulkType").val('');
+                        $("#bulkNo").val('');
                         $(".trollyMessage").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
                     } else if (Status == 'S') {
+                        $("#bulkType").val('');
+                        $("#bulkNo").val('');
                         $(".trollyMessage").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                         GetULDs($("#offPointLists").val());
                         //GetExportFlightDetails(true);
@@ -1837,8 +1847,10 @@ function UnitizationSaveTrolleyDetails() {
 
 function commonFunc() {
     if ($("#bulkCheckBox").prop("checked")) {
+        $(".trollyMessage").text('')
         $("#ULD").hide();
         $("#BULK").show();
+        $('#lblUldNum').text('Bulk');
         if ($("#trolleyLists").val() == "0" || $("#trolleyLists").val() == ""){
             $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
         }
@@ -1848,6 +1860,7 @@ function commonFunc() {
     } else if ($("#ULDCheckbox").prop("checked")) {
         $("#ULD").show();
         $("#BULK").hide();
+        $('#lblUldNum').text('ULD Number');
         console.log($("#uldLists").val());
         if ($("#uldLists").val() == "0" || $("#uldLists").val() == null) {
             $("#btnAddEquipment").prop("disabled", true).css('background-color', '#a7a7a7');
@@ -2437,35 +2450,73 @@ function createDynamicEquipmentTable(key, Type, Value,Weight) {
     // html += "<td class='col-8' value='" + key + "' style=' font-size: 1rem; font-weight: 400;'> " + Type +  "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='text' value='" + key + "' style=' font-size: 1rem; font-weight: 400;display: none; text-align:left!important' disabled>" + Type + "";
+    html += "<input type='text' value='" + key + "' style=' font-size: 1rem; font-weight: 400;display: none; text-align:left!important' disabled>" ;
+    html += "<span class='type-value'>" + Type + "</span>";
     html += "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='number' id='txtQuantity1' value='" + Value + "' onkeyup='NumberOnly(event);  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    html += "<input type='number' id='txtQuantity' value='" + Value + "' oninput='truncateToThreeDigits(this);' onkeyup='NumberOnly(event);' maxlength='4' style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
     html += "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='number' id='txtQuantity1' value='" + Weight + "' onkeyup='NumberOnly(event);  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    html += "<input type='number' pattern='\d*' id='txtWeight' value='" + Weight + "' oninput='truncateToSixDigits(this);' onkeyup='NumberOnly(event);' maxlength='4'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
     html += "</td>";
     html += "</tr>";
 
 
 
 }
-
+function truncateToThreeDigits(input) {
+    if (input.value.length > 3) {
+        input.value = input.value.slice(0, 3);
+    }
+}
+function truncateToSixDigits(input) {
+    if (input.value.length > 6) {
+        input.value = input.value.slice(0, 6);
+    }
+}
 
 function calLocationRows(idCounter) {
 
     var TableData = new Array();
     inputRowsforLocation = "";
+    var errorFlag = false;
+    shoulSave = true;
 
     $("#tableEuipRecords tr").each(function (row, tr) {
+        colWght=$(tr).find("td:eq(2) input").val();
+        colQnt=$(tr).find("td:eq(1) input").val();
+        colKey=$(tr).find('td:eq(0) .type-value').text();
+       
+        // if((colWght==='' || colWght==='0.00') &&  colQnt !== "")
+        if(((colQnt==""?0:colQnt)!=0)&&((colWght==""?0:colWght)==0))
+        {
+            
+            $("#ibiSuccessMsg").text(colKey+" weight should not be blank").css({ "color": "Red", "font-weight": "bold" });
+            // $.alert(colKey+" weight should not be blank");
+            errorFlag = true;
+            shoulSave=false;
+            return false;
+        }
+        // if((colQnt==='' || colQnt==='0') &&  colWght !== "")
+        if(((colQnt==""?0:colQnt)==0)&&((colWght==""?0:colWght)!=0))
+        {
+            console.log(colKey+" quantity should not be blank");
+            $("#ibiSuccessMsg").text(colKey+" quantity should not be blank").css({ "color": "Red", "font-weight": "bold" });
+            //$.alert();
+            errorFlag = true;
+            shoulSave=false;
+            return false;
+        }
+
         TableData[row] = {
             ItemNum: $(tr).find("td:eq(0) input").val(),
             Itemname: $(tr).find("td:eq(1) input").val(),
             Itemname: $(tr).find("td:eq(2) input").val(),
 
         };
+        
         if (
             $(tr).find("td:eq(0) input").val() != "" ||
             $(tr).find("td:eq(1) input").val() != "" ||
@@ -2475,7 +2526,10 @@ function calLocationRows(idCounter) {
                 '<UldEquip><Keyvalue>' + $(tr).find("td:eq(0) input").val() + '</Keyvalue><Quantity>' + $(tr).find("td:eq(1) input").val() + '</Quantity><Weight>' + $(tr).find("td:eq(2) input").val() + '</Weight></UldEquip>';
         }
     });
-    idCounter++;
+    if (!errorFlag) {
+        idCounter++;
+    }
+    // idCounter++;
 
 }
 //getAllValues = function () {
@@ -2496,53 +2550,56 @@ function calLocationRows(idCounter) {
 function saveULD() {
     idCounter = 1;
     calLocationRows(idCounter);
-
-    inputxml = "<UldEquips>" + inputRowsforLocation + "</UldEquips>"
-    $('body').mLoading({
-        text: "Please Wait..",
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: ExpURL + "/SaveULDMaterial",
-        data: JSON.stringify({ 'ULDXML': inputxml, 'FlightSeqNo': FltSeqNo, 'ULDSeqNo': ULDSeqNo, 'AirportCity': SHED_AIRPORT_CITY, 'UserID': 1, 'ULDType': type }),
-
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response, xhr, textStatus) {
-            console.log(response.d);
-            HideLoader();
-
-            var str = response.d;
-            if (str != null && str != "" && str != "<NewDataSet />") {
-                $("#btnDiv").show('slow');
-                var xmlDoc = $.parseXML(str);
-
-                $(xmlDoc).find('Table').each(function (index) {
-                    Status = $(this).find('Status').text();
-                    StrMessage = $(this).find('StrMessage').text();
-                    if (Status == 'E') {
-                        $("#ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
-                    } else if (Status == 'S') {
-                        clrCtrl();
-                        $("#ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-                    }
-                });
-
-
-            } else {
+    if(shoulSave){
+        inputxml = "<UldEquips>" + inputRowsforLocation + "</UldEquips>"
+        $('body').mLoading({
+            text: "Please Wait..",
+        });
+    
+        $.ajax({
+            type: 'POST',
+            url: ExpURL + "/SaveULDMaterial",
+            data: JSON.stringify({ 'ULDXML': inputxml, 'FlightSeqNo': FltSeqNo, 'ULDSeqNo': ULDSeqNo, 'AirportCity': SHED_AIRPORT_CITY, 'UserID': 1, 'ULDType': type }),
+    
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response, xhr, textStatus) {
+                console.log(response.d);
+                HideLoader();
+    
+                var str = response.d;
+                if (str != null && str != "" && str != "<NewDataSet />") {
+                    $("#btnDiv").show('slow');
+                    var xmlDoc = $.parseXML(str);
+    
+                    $(xmlDoc).find('Table').each(function (index) {
+                        Status = $(this).find('Status').text();
+                        StrMessage = $(this).find('StrMessage').text();
+                        if (Status == 'E') {
+                            $("#ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+    
+                        } else if (Status == 'S') {
+                            //clrCtrl();
+                            $("#ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                        }
+                    });
+    
+    
+                } else {
+                    $("body").mLoading('hide');
+                    //errmsg = "WDO No. not found</br>";
+                    //$.alert(errmsg);
+                    //return;
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                //errmsg = "WDO No. not found</br>";
-                //$.alert(errmsg);
-                //return;
+                // alert('Server not responding...');
             }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            $("body").mLoading('hide');
-            // alert('Server not responding...');
-        }
-    });
+        });
+    }
+
+   
 }
 
 function exitModal() {

@@ -725,6 +725,7 @@ function clearFunction() {
     $("#spnOriginDist").text('');
     $("#spnCommodity").text('');
     $("#spnBinnTotPkgs").text('');
+    $("#spnTxtWeight").text('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
     //$("#tbTable").empty();
