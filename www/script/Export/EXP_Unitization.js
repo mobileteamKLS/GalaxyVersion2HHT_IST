@@ -30,6 +30,7 @@ var OldLocCode = "", oldLocatedPieces = "", OldLocId = "",
 var _XmlForSHCCode;
 var allSHCCodeSave = '';
 var joinAllValuesWithComma = '';
+let lastValid = "";
 var shoulSave
 $(function () {
     $("#uldLists").change(function () {
@@ -68,6 +69,34 @@ $(function () {
             GetExportULDData(InputXML)
         }
     });
+
+    // $('#txtQuantity').on('input', function() {
+    //     // Get the input value
+    //     let inputValue = $(this).val();
+    
+    //     // Remove any non-numeric characters (except digits and one dot)
+    //     inputValue = inputValue.replace(/[^\d.]/g, '');
+    
+    //     // Allow only 3 digits before the decimal
+    //     let beforeDecimal = inputValue.split('.')[0];
+    //     if (beforeDecimal.length > 3) {
+    //       beforeDecimal = beforeDecimal.substring(0, 3);
+    //     }
+    
+    //     // Allow only 2 digits after the decimal
+    //     let afterDecimal = inputValue.split('.')[1] || '';
+    //     if (afterDecimal.length > 2) {
+    //       afterDecimal = afterDecimal.substring(0, 2);
+    //     }
+    
+    //     // Combine the parts back
+    //     inputValue = beforeDecimal + (afterDecimal ? '.' + afterDecimal : '');
+    
+    //     // Update the input value
+    //     $(this).val(inputValue);
+    //   });
+
+
 
     $("#trolleyLists").change(function () {
         selectedULDNo = $(this).find("option:selected").text();
@@ -2455,27 +2484,31 @@ function createDynamicEquipmentTable(key, Type, Value,Weight) {
     html += "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='number' id='txtQuantity' value='" + Value + "' oninput='truncateToThreeDigits(this);' onkeyup='NumberOnly(event);' maxlength='4' style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    html += "<input type='number' id='txtQuantity' value='" + Value + "' oninput='restrictQuantity(this);'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
     html += "</td>";
 
     html += "<td class='col-3'>";
-    html += "<input type='number' pattern='\d*' id='txtWeight' value='" + Weight + "' oninput='truncateToSixDigits(this);' onkeyup='NumberOnly(event);' maxlength='4'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    html += "<input type='number' id='txtWeight' value='" + Weight + "' oninput='restrictWeight(this);'   style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
     html += "</td>";
     html += "</tr>";
 
+}
 
+function restrictQuantity(input){
+  if (/^\d{0,3}(?:\.\d{0,2})?$/.test(input.value)) {
+    lastValid = input.value;
+  } else {
+    input.value=lastValid;
+  }
+}
 
-}
-function truncateToThreeDigits(input) {
-    if (input.value.length > 3) {
-        input.value = input.value.slice(0, 3);
+function restrictWeight(input){
+    if (/^\d{0,5}(?:\.\d{0,2})?$/.test(input.value)) {
+      lastValid = input.value;
+    } else {
+      input.value=lastValid;
     }
-}
-function truncateToSixDigits(input) {
-    if (input.value.length > 6) {
-        input.value = input.value.slice(0, 6);
-    }
-}
+  }
 
 function calLocationRows(idCounter) {
 

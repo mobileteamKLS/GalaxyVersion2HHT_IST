@@ -260,7 +260,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("#spnExpectedZone").text(ExpectedZone);
+                    $("#lblexploc").text("Expected Location Zone"+ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -628,7 +628,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("#spnExpectedZone").text(ExpectedZone);
+                    $("#lblexploc").text("Expected Location Zone: "+ExpectedZone);
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -726,6 +726,7 @@ function clearFunction() {
     $("#spnCommodity").text('');
     $("#spnBinnTotPkgs").text('');
     $("#spnTxtWeight").text('');
+    $("#lblexploc").text('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
     //$("#tbTable").empty();

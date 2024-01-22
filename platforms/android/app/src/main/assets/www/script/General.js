@@ -201,7 +201,7 @@ function LoadNavBar() {
     }
 }
 function NumberOnly(e) {
-    e.target.value = e.target.value.replace(/[^0-9\.]/g, '');
+    e.target.value = e.target.value.replace(/[^0-9.]+/g, '');
     return false;
 }
 function ChkMaxLength(txt, len) {
