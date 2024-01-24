@@ -145,7 +145,7 @@ function calculateWeight() {
     }
     locNOP = $("#txtMovePkgs").val()
     locWeight = (parseFloat(locNOP) * parseFloat(ShipmentWeight)) / parseFloat(NPR);
-    $("#textMoveWght").val(locWeight.toFixed(3))
+    $("#textMoveWght").val(locWeight.toFixed(2))
 }
 
 function SaveBinning() {
