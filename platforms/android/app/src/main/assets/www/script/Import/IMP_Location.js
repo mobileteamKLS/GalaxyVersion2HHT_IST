@@ -30,7 +30,7 @@ var isDataAvail = false;
 $(function () {
 
     // $("#ddlHAWBList").trigger('change'); _textofHawb
-
+    $("#lblexplochead").hide();
     $("#ddlHAWBList").change(function () {
         _vlaueofHawb = $('option:selected', this).val();
         if($('option:selected', this).text()=="Select" || $('option:selected', this).text()==null){
@@ -260,7 +260,10 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("#lblexploc").text("Expected Location Zone"+ExpectedZone);
+                   if(ExpectedZone!=""){
+                    $("#lblexplochead").show();
+                    $("#lblexploc").text(" "+ExpectedZone);                    
+                   }
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -628,7 +631,10 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    $("#lblexploc").text("Expected Location Zone: "+ExpectedZone);
+                    if(ExpectedZone!=""){
+                        $("#lblexplochead").show();
+                        $("#lblexploc").text(" "+ExpectedZone);
+                       }
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -727,6 +733,7 @@ function clearFunction() {
     $("#spnBinnTotPkgs").text('');
     $("#spnTxtWeight").text('');
     $("#lblexploc").text('');
+    $("#lblexplochead").hide();
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
     //$("#tbTable").empty();

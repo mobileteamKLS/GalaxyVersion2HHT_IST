@@ -145,7 +145,7 @@ function calculateWeight() {
     }
     locNOP = $("#txtMovePkgs").val()
     locWeight = (parseFloat(locNOP) * parseFloat(ShipmentWeight)) / parseFloat(NPR);
-    $("#textMoveWght").val(locWeight.toFixed(3))
+    $("#textMoveWght").val(locWeight.toFixed(2))
 }
 
 function SaveBinning() {
@@ -177,13 +177,13 @@ function SaveBinning() {
         return;
     } else {
         if ($("#ddlHAWBList").val() == '0') {
-            if (HAWBNo != " ") {
+            if (HAWBNo != "") {
                 HideLoader();
                 errmsg = "Please select HAWB No.</br>";
                 $.alert(errmsg);
                 return;
             } else {
-                if (HAWBNo == ' ') {
+                if (HAWBNo == '') {
                     if ($("#locationShow").html() == '') {
                         HideLoader();
                         errmsg = "From location and pckgs not selected</br>";

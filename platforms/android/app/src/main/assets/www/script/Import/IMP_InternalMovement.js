@@ -177,13 +177,13 @@ function SaveBinning() {
         return;
     } else {
         if ($("#ddlHAWBList").val() == '0') {
-            if (HAWBNo != " ") {
+            if (HAWBNo != "") {
                 HideLoader();
                 errmsg = "Please select HAWB No.</br>";
                 $.alert(errmsg);
                 return;
             } else {
-                if (HAWBNo == ' ') {
+                if (HAWBNo == '') {
                     if ($("#locationShow").html() == '') {
                         HideLoader();
                         errmsg = "From location and pckgs not selected</br>";

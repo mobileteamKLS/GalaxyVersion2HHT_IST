@@ -1159,9 +1159,7 @@ SaveImportMaifestDetailsV2 = function (InputXML) {
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
                         $(".ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
                     } else if (Status == 'S') {
-
                         $("#txtGroupCode").val('');
                         $("#txArrivedPakg").val('');
                         $(".ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
@@ -1191,6 +1189,7 @@ function fnClearHAWBAddDetail() {
     // $('#modalHAWBNo').modal('hide');
     $('#valHawb').html('');
     $(".ibiSuccessMsg").text('');
+    $(".ibiHawbSuccessMsg").text('');
 }
 
 function fnPopupClose() {
@@ -1200,11 +1199,12 @@ function fnPopupClose() {
     $("#txtPopHwabWeight").val('');
     $('#modalHAWBNo').modal('hide');
     $('#valHawb').html('');
+    $(".ibiHawbSuccessMsg").text('');
 
 }
 
 function saveHAWBAddDetail() {
-
+    $(".ibiHawbSuccessMsg").text('');
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1286,16 +1286,16 @@ ImportCreateNewHouse = function (InputXML) {
 
                 });
 
-                $(xmlDoc).find('Table1').each(function (index) {
+                $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
-                        $(".ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        $(".ibiHawbSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
                     } else if (Status == 'S') {
                         openScanner();
                         $('#modalHAWBNo').modal('hide');
-                        $(".ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                        $(".ibiHawbSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                     }
                 });
 
@@ -1745,6 +1745,7 @@ function clearFunction() {
     $("#txtNOG").val('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg").text('');
+    $("#valHawb").html('');
 
 }
 
