@@ -251,7 +251,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
-                    ExpectedZone=$(this).find("EXPECTED_ZONE").text();
+                    ExpectedZone=$(this).find("ExpectedZone").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
                     //$("#txtBinnPkgs").val(PendingPieces);
@@ -621,7 +621,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
-                    ExpectedZone=$(this).find("EXPECTED_ZONE").text();
+                    ExpectedZone=$(this).find("ExpectedZone").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
 
