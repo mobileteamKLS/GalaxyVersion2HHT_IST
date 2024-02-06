@@ -182,22 +182,22 @@ function SaveBinning() {
                 return;
             } else {
                 if (HAWBNo == '') {
-                    inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+                    inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val().toUpperCase() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
                     _SaveBinning(inputxml);
                     console.log(inputxml);
                 } else {
-                    inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+                    inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val().toUpperCase() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
                     _SaveBinning(inputxml);
                     console.log(inputxml);
                 }
             }
         } else {
             if (HAWBNo == '') {
-                inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+                inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val().toUpperCase() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
                 _SaveBinning(inputxml);
                 console.log(inputxml);
             } else {
-                inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+                inputxml = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><LocCode>" + $("#txtLocation").val().toUpperCase() + "</LocCode><LocId>-1</LocId><NOP>" + $("#txtBinnPkgs").val() + "</NOP><Weight>" + $('#txtWght').val() + "</Weight><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
                 _SaveBinning(inputxml);
                 console.log(inputxml);
             }
@@ -210,7 +210,8 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
     inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + IGMVal + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
     $("#tblLocation").empty();
-
+    $("#lblexploc").text('');
+    $("#lblexplochead").hide();
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetBinningLocPkgDetails",
@@ -580,7 +581,8 @@ getIGMNoList = function (InputXML) {
 _GetBinningLocPkgDetails = function (InputXML) {
     // console.log(InputXML)
     $("#tblLocation").empty();
-
+    $("#lblexploc").text('');
+    $("#lblexplochead").hide();
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetBinningLocPkgDetails",
@@ -669,6 +671,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
 
 _SaveBinning = function (InputXML) {
     console.log(InputXML);
+    console.log($("#txtLocation").val().toUpperCase());
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/SaveBinning",
@@ -733,6 +736,7 @@ function clearFunction() {
     $("#spnBinnTotPkgs").text('');
     $("#spnTxtWeight").text('');
     $("#lblexploc").text('');
+    
     $("#lblexplochead").hide();
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
