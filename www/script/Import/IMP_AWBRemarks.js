@@ -393,7 +393,7 @@ AWBRemarkGet = function (InputXML) {
 function RemarkListDetails(RowId, ActivityType, Remark, FontColor, HighPriority) {
 
     html += '<tr id="row1 ' + RowId + '">';
-    html += '<td id="ActivityType' + RowId + '">' + ActivityType + '</td>';
+    html += '<td id="ActivityType' + RowId + '" style="color: ' + FontColor + ';">' + ActivityType + '</td>';
     html += '<td id="Remark' + RowId + '" style="color: ' + FontColor + ';">' + Remark + '</td>';
     html += '<td id="fnPencil' + RowId + '" onclick="edit_row(\'' + RowId + '\',\'' + ActivityType + '\',\'' + Remark + '\',\'' + HighPriority + '\');" style="padding: 2px;" align="center" id="pencil"><button type="button"  id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-edit"></i></button></td>';
     html += '<td onclick="AWBRemarkDelete(\'' + RowId + '\')" style="padding: 2px;" align="center"><button type="button" onclick="removeRow();" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete"><i class="zmdi zmdi-delete"></i></button></td>';

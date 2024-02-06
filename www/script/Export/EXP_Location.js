@@ -344,6 +344,19 @@ GetBinningAWBDetails = function (HAWBROWID) {
                         isDataAvail=true;
                     });
 
+                    $('#dvRemarkShow').empty();
+                    var Remark = '';
+                    $(xmlDoc).find('Table2').each(function (index) {
+
+                        Remark = $(this).find('Remark').text();
+                        // Date = $(this).find('Date').text();
+                        IsHighPriority = $(this).find('IsHighPriority').text();
+                        $('#dvRemarkShow').append(Remark);
+                        $('#remarkPriorityShow').modal('show');
+
+
+                    });
+
 
             } else {
                 $("body").mLoading('hide');
