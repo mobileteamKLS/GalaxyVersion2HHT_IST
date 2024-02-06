@@ -428,6 +428,7 @@ function GetULDDetails() {
 function GetAWBDetailsForULD(ULDid) {
 
     $("#hawbLists").val('');
+   
     if (chkShowAll.checked || selectedRowULDNo != '')
         showAll = 'Y';
     else
@@ -974,41 +975,44 @@ function SaveImportMaifestDetailsV3() {
     }
     else {
 
-         if ($('#ddlAWBNo').val() == '0') {
-            errmsg = "Please scan/select MAWB No.";
-            $.alert(errmsg);
+        //if ($('#ddlAWBNo').val() == '0') {
+        //   errmsg = "Please scan/select MAWB No.";
+        //   $.alert(errmsg);
+        //   return;
+        //}
+
+        if ($('#ddlAWBNo').val() == "0") {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            $('#successMsg').text('Please scan/select MAWB No.').css('color', 'red');
+            $('#txtScanAWBNo').focus();
             return;
-         }
+        } else {
+            $('#successMsg').text('');
+        }
 
-         if ($('#ddlAWBNo').val() == "0") {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please scan/select MAWB No.').css('color', 'red');
-             $('#txtScanAWBNo').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        if (document.getElementById("ddlHAWBNo").options.length > 1) {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            if ($('#ddlHAWBNo').val() == "0") {
+                $('#successMsg').text('Please scan/select HAWB No.').css('color', 'red');
+                $('#txtScanAWBNo').focus();
+                return;
+            }
 
-         if ($("#ddlHAWBNo option").length > 1) {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please scan/select HAWB No.').css('color', 'red');
-             $('#txtScanAWBNo').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        } else {
+            $('#successMsg').text('');
+        }
 
-         if ($('#txtArrivedPkgs').val() == "" && $('#txtDamagePkgs').val() == "") {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please enter Arrived NoP.').css('color', 'red');
-             $('#txtArrivedPkgs').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        if ($('#txtArrivedPkgs').val() == "" && $('#txtDamagePkgs').val() == "") {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            $('#successMsg').text('Please enter Arrived NoP.').css('color', 'red');
+            $('#txtArrivedPkgs').focus();
+            return;
+        } else {
+            $('#successMsg').text('');
+        }
     }
 
     if (document.getElementById('chkModify').checked)
@@ -1172,6 +1176,10 @@ function SaveImportMaifestDetailsV3() {
     }
 }
 
+function clearMSGOnChange() {
+    $("#successMsg").text('');
+}
+
 function SelectElement(id, valueToSelect) {
     var element = document.getElementById(id);
     element.value = valueToSelect;
@@ -1223,7 +1231,7 @@ function onFocusArrivedPkgs() {
 function GetHAWBDetails(AWBid) {
 
 
-
+   
 
     if ($("#ddlAWBNo").val() == '0') {
         return;
