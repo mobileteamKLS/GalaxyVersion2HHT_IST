@@ -49,6 +49,12 @@ $(function () {
     //function onImageFail(message) {
     //    // alert('Failed because: ' + message);
     //}
+    $('#txtScanMAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanMAWB').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);

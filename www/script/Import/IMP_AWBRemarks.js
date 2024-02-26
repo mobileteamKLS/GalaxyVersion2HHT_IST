@@ -86,7 +86,12 @@ $(function () {
     //    console.log($item);
     //})
 
-
+    $('#txtScanMAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanMAWB').keypress(function (event) {
         $("#txtHAWBNo").val('');
@@ -121,7 +126,8 @@ $(function () {
             //}
 
             prifix = $("#txtScanMAWB").val().slice(0, 3);
-            AWBNo = $("#txtScanMAWB").val().slice(3, 11);
+            AWBNo = $("#txtScanMAWB").val().slice(3);
+            console.log(AWBNo);
             //InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
 
             if ($('#txtHAWBNo').val() != '') {
@@ -168,7 +174,7 @@ $(function () {
             //}
 
             prifix = $("#txtScanMAWB").val().slice(0, 3);
-            AWBNo = $("#txtScanMAWB").val().slice(3, 11);
+            AWBNo = $("#txtScanMAWB").val().slice(3);
             //InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
 
             if ($('#txtHAWBNo').val() != '') {

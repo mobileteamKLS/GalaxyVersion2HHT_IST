@@ -46,6 +46,7 @@ var isVCTNo = localStorage.getItem('isVCTNo');
 var _XmlForSHCCode;
 var joinAllValuesWithComma = '';
 var allSHCCodeSave = '';
+var values=[];
 $(function () {
 
     if (txtScannedNo != '') {
@@ -58,7 +59,16 @@ $(function () {
         SHCCodePopupField();
 
     });
+    $("#btnGetWeight").click(function () {
+      GetWeightingScaleWt();     
+    });
 
+    $('#txtScanAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanAWB').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -232,13 +242,16 @@ $(function () {
         window.location.href = 'EXP_VCTAcceptance.html';
     });
 
+    $("#ddlWeighingScale").change(function (){
+        $(".ibiSuccessMsg1").text('');
+    });
+
 
     inputxml = "<Root><VCTNo>" + VCTNo + "</VCTNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><UserId>" + Userid + "</UserId></Root>";
     GetVCTUnScannedDetails(inputxml);
     $("#VCTNo").text(VCTNo.toUpperCase()).css('color', 'red');
 
     // inputxml = "<Root><VCTNo>" + VCTNo + "</VCTNo><AWBId>"+AWBId+"</AWBId><AirportCity>" + AirportCity + "</AirportCity><Culture>" + language + "</Culture><UserId>" + UserId + "</UserId></Root>";
-
 
     $("#ddlEquTrolley").change(function () {
         //_vlaueofTrolley = $('option:selected', this).val();
@@ -294,6 +307,7 @@ $(function () {
         $("#TareWt").text('');
         $("#NetWt").text('');
         $("#ddlComCode").val('0');
+        $("#ddlWeighingScale").val('0');
         $("#txtNOG").val('');
         $("#SHCCodeTbl").empty();
         if ($("#ddlMAWBNo").val() == '0') {
@@ -345,6 +359,9 @@ $(function () {
                 SHCSpanHtml(SHCAll);
             }
         });
+        $(_xmlDocTable).find('Table5').each(function (index){
+            $("#ddlWeighingScale").val(values[0]);
+        });
         $("#txtGroupId").focus();
     });
 
@@ -372,6 +389,7 @@ $(function () {
         $("#TareWt").text('');
         $("#NetWt").text('');
         $("#ddlComCode").val('0');
+        $("#ddlWeighingScale").val('0');
         $("#txtNOG").val('');
         $("#SHCCodeTbl").empty();
         if ($("#ddlMAWBNo").val() == '0') {
@@ -987,8 +1005,23 @@ GetVCTUnScannedDetails = function (InputXML) {
                             }
                         });
                     }
+                });
+                
+                $(xmlDoc).find('Table5').each(function (index) {
+                    ScaleID = $(this).find('rowid').text();
+                    MachineName = $(this).find('machinename').text();
+                    values.push(ScaleID);
+                    if (index == 0) {
+                        var newOption = $('<option></option>');
+                        newOption.val(0).text('Select');
+                        newOption.appendTo('#ddlWeighingScale');
+                    }
 
-
+                    var newOption = $('<option></option>');
+                    newOption.val(ScaleID).text(MachineName);
+                    newOption.appendTo('#ddlWeighingScale');
+                    // $("#ddlWeighingScale").val(values[0]);
+                   
                 });
 
                 if ($("#txtScanAWB").val() != '') {
@@ -1149,6 +1182,10 @@ function setHAWBNo(i) {
             }
         }
     });
+
+    $(_xmlDocTable).find('Table5').each(function (index){
+        $("#ddlWeighingScale").val(values[0]);
+    });
 }
 
 // function setHAWBNoHAWBNo(i) {
@@ -1239,12 +1276,13 @@ function saveCargoAcceptance() {
         });
         return;
     }
-    else if ($("#ddlComCode").val() == '0') {
-        $("body").mLoading('hide');
-        errmsg = "Please Select Com. Code</br>";
-        $.alert(errmsg);
-        return;
-    } else if ($("#txtNOG").val() == '') {
+    // else if ($("#ddlComCode").val() == '0') {
+    //     $("body").mLoading('hide');
+    //     errmsg = "Please Select Com. Code</br>";
+    //     $.alert(errmsg);
+    //     return;
+    // } 
+    else if ($("#txtNOG").val() == '') {
         $("body").mLoading('hide');
         errmsg = "Please Enter NOG</br>";
         $.alert(errmsg);
@@ -1302,6 +1340,54 @@ function saveCargoAcceptance() {
 
     }
 }
+
+GetWeightingScaleWt=function(){
+    $(".ibiSuccessMsg1").text('');
+    if($('#ddlWeighingScale').find("option:selected").val()=='0'){
+        $("body").mLoading('hide');
+        errmsg = "Please select Weighing Scale</br>";
+        $.alert(errmsg);
+        return;
+    }
+    MacRowID=$('#ddlWeighingScale').find("option:selected").val();
+    InputXML="<Root><MacRowID>"+MacRowID+"</MacRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>"+Userid+"</UserId></Root>"
+    $('body').mLoading({
+        text: "Please Wait..",
+    }); 
+
+    $.ajax({
+        type: 'POST',
+        url: ExpURL + "/GetWeighingScaleWt",
+        data: JSON.stringify({ 'InputXML': InputXML }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            HideLoader();
+            var str = response.d;
+            console.log(response.d);
+            if (str != null && str != "" && str != "<NewDataSet />") {
+                var xmlDoc = $.parseXML(str);
+                $(xmlDoc).find('Table').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });                       
+                    } else if (Status == 'S') {
+                        $("#txtScaleWt").val(StrMessage);
+                    }});
+
+            } else {
+                $("body").mLoading('hide');
+               
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $("body").mLoading('hide');
+            alert('Server not responding...');
+        }
+    });
+}
+
 
 SaveVCTCargoDetails = function (InputXML) {
     console.log(InputXML);
@@ -1408,6 +1494,7 @@ function clearFunction() {
     //$("#TextBoxesGroup").hide();
 
     $("#ddlComCode").val('0');
+    $("#ddlWeighingScale").val('0');
     $("#txtNOG").val('');
 
     $("#txtScanAWB").focus();

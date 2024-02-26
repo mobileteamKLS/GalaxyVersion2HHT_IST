@@ -294,6 +294,15 @@
                         </select>
                     </div>
                     <div class="col-5" style="text-align:left;">
+                        <label class="lbl" id="lblPcsSclWt">Weighing Scale</label>
+                    </div>
+                    <div class="col-6">
+                        <select class="textfieldClass" id="ddlWeighingScale"></select>
+                    </div>
+                    <div class="col-1">
+                        <img id="btnGetWeight" src="img/weighing_scale.svg" style="height: 22px; padding-right: 2px;" />
+                    </div>
+                    <div class="col-5" style="text-align:left;">
                         <label id="lblSca" class="lbl">Scale Weight</label>
                     </div>
                     <div class="col-7">
@@ -322,6 +331,9 @@
                     </div>
                     <div class="col-7">
                         <textarea class="textfieldClass" id="txtRemark"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="ibiSuccessMsg1"></label>
                     </div>
                 </div>
 
@@ -396,9 +408,9 @@
                     <label id="lblAWB" class="lbl">AWB No.</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-7">
-                    <input type="number" id="_txtAWBNo"
+                    <input type="text" id="_txtAWBNo"
                            onkeyup="ChkMaxLength(this, '30');" class="textfieldClass" placeholder=""
-                           maxlength="11" onblur="UnitizationPendingAWBDetails()">
+                           maxlength="30" onblur="UnitizationPendingAWBDetails()">
                 </div>
 
 

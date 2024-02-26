@@ -203,6 +203,12 @@ $(function () {
     //        event.preventDefault();
     //    }
     //});
+    $('#txtScanMAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanMAWB').keypress(function (event) {
 
@@ -481,12 +487,12 @@ function saveFlightCheckInDetals() {
         return
 
     }
-    else if ($("#ddlComCode").val() == '0' || $("#ddlComCode").val() == null) {
-        $("body").mLoading('hide');
-        errmsg = "Please select Com. Code</br>";
-        $.alert(errmsg);
-        return
-    }
+    // else if ($("#ddlComCode").val() == '0' || $("#ddlComCode").val() == null) {
+    //     $("body").mLoading('hide');
+    //     errmsg = "Please select Com. Code</br>";
+    //     $.alert(errmsg);
+    //     return
+    // }
 
     //else if ($("#txtNOG").val() == '') {
     //    $("body").mLoading('hide');
