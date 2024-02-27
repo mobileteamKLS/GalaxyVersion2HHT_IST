@@ -54,6 +54,7 @@ $(function () {
     //$('#ddlULDNo').select2();
     //$('#ddlAWBNo').select2();
 
+    ImportDeStuffingZoneList();
 
     //$('#txtScanULD').on('blure', function () {
     $("#txtScanULD").blur(function () {
@@ -428,6 +429,7 @@ function GetULDDetails() {
 function GetAWBDetailsForULD(ULDid) {
 
     $("#hawbLists").val('');
+
     if (chkShowAll.checked || selectedRowULDNo != '')
         showAll = 'Y';
     else
@@ -708,6 +710,12 @@ function SaveImportFoundCargoDetailsV3() {
     selectedAWB = $('#ddlAWBNo').find('option:selected').text();
     selectedHAWB = $('#ddlHAWBNo').find('option:selected').text();
 
+    if ($('#ddlLocation').val() == "-1" || $('#ddlLocation').val() == null || $('#ddlLocation').val() == undefined || $('#ddlLocation').val() == "") {
+        errmsg = "Please select zone.";
+        $.alert(errmsg);
+        return;
+    }
+
     if (document.getElementById('chkFoundCgo').checked) {
 
         if ($('#txtFoundMAWB').val() == "" && $('#txtFoundHAWB').val() == "") {
@@ -817,7 +825,7 @@ function SaveImportFoundCargoDetailsV3() {
     }
 
     //inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><UlDSeqNo>' + ULDSeqNo + '</UlDSeqNo><AWBNO>MLM</AWBNO><HAWBNO></HAWBNO><NPR>' + $('#txtFoundPkgs').val() + '</NPR><WtRec>' + $('#txtFoundPkgsWt').val() + '</WtRec><DMGPsc>' + $('#txtDamagePkgs').val() + '</DMGPsc><DMGWt></DMGWt><DMGCode></DMGCode><UserId>' + window.localStorage.getItem("UserID") + '</UserId><AirportCity>' + AirportCity + '</AirportCity></Root>';
-    inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><UlDSeqNo>' + $('#ddlULDNo').val() + '</UlDSeqNo><AWBNO>' + $('#txtFoundMAWB').val() + '</AWBNO><HAWBNO>' + $('#txtFoundHAWB').val() + '</HAWBNO><NPR>' + $('#txtFoundPkgs').val() + '</NPR><WtRec>' + $('#txtFoundPkgsWt').val() + '</WtRec><DMGPsc>' + $('#txtDamagePkgs').val() + '</DMGPsc><DMGWt>' + $('#txtDamageWt').val() + '</DMGWt><DMGCode>' + dmgType + '</DMGCode><UserId>' + Userid + '</UserId><AirportCity>' + AirportCity + '</AirportCity><GroupId>' + $('#txtScanGroupIdFoundCargo').val().toUpperCase() + '</GroupId></Root>';
+    inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><UlDSeqNo>' + $('#ddlULDNo').val() + '</UlDSeqNo><AWBNO>' + $('#txtFoundMAWB').val() + '</AWBNO><HAWBNO>' + $('#txtFoundHAWB').val() + '</HAWBNO><NPR>' + $('#txtFoundPkgs').val() + '</NPR><WtRec>' + $('#txtFoundPkgsWt').val() + '</WtRec><DMGPsc>' + $('#txtDamagePkgs').val() + '</DMGPsc><DMGWt>' + $('#txtDamageWt').val() + '</DMGWt><DMGCode>' + dmgType + '</DMGCode><UserId>' + Userid + '</UserId><AirportCity>' + AirportCity + '</AirportCity><GroupId>' + $('#txtScanGroupIdFoundCargo').val().toUpperCase() + '</GroupId><LocCode>' + $('#ddlLocation').val() + '</LocCode></Root>';
     serviceName = 'SaveImportFoundCargoDetailsV3';
 
     if (errmsg == "" && connectionStatus == "online") {
@@ -934,7 +942,11 @@ function SaveImportMaifestDetailsV3() {
     selectedUld = $('#ddlULDNo').find('option:selected').text();
     selectedAWB = $('#ddlAWBNo').find('option:selected').text();
     selectedHAWB = $('#ddlHAWBNo').find('option:selected').text();
-
+    if ($('#ddlLocation').val() == "-1" || $('#ddlLocation').val() == null || $('#ddlLocation').val() == undefined || $('#ddlLocation').val() == "") {
+        errmsg = "Please select zone.";
+        $.alert(errmsg);
+        return;
+    }
     if (document.getElementById('chkFoundCgo').checked) {
 
         if ($('#txtFoundMAWB').val() == "" && $('#txtFoundHAWB').val() == "") {
@@ -974,41 +986,44 @@ function SaveImportMaifestDetailsV3() {
     }
     else {
 
-         if ($('#ddlAWBNo').val() == '0') {
-            errmsg = "Please scan/select MAWB No.";
-            $.alert(errmsg);
+        //if ($('#ddlAWBNo').val() == '0') {
+        //   errmsg = "Please scan/select MAWB No.";
+        //   $.alert(errmsg);
+        //   return;
+        //}
+
+        if ($('#ddlAWBNo').val() == "0") {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            $('#successMsg').text('Please scan/select MAWB No.').css('color', 'red');
+            $('#txtScanAWBNo').focus();
             return;
-         }
+        } else {
+            $('#successMsg').text('');
+        }
 
-         if ($('#ddlAWBNo').val() == "0") {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please scan/select MAWB No.').css('color', 'red');
-             $('#txtScanAWBNo').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        if (document.getElementById("ddlHAWBNo").options.length > 1) {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            if ($('#ddlHAWBNo').val() == "0") {
+                $('#successMsg').text('Please scan/select HAWB No.').css('color', 'red');
+                $('#txtScanAWBNo').focus();
+                return;
+            }
 
-         if ($("#ddlHAWBNo option").length > 1) {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please scan/select HAWB No.').css('color', 'red');
-             $('#txtScanAWBNo').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        } else {
+            $('#successMsg').text('');
+        }
 
-         if ($('#txtArrivedPkgs').val() == "" && $('#txtDamagePkgs').val() == "") {
-             //errmsg = "Please enter Arrived pkgs";
-             //$.alert(errmsg);
-             $('#successMsg').text('Please enter Arrived NoP.').css('color', 'red');
-             $('#txtArrivedPkgs').focus();
-             return;
-         } else {
-             $('#successMsg').text('');
-         }
+        if ($('#txtArrivedPkgs').val() == "" && $('#txtDamagePkgs').val() == "") {
+            //errmsg = "Please enter Arrived pkgs";
+            //$.alert(errmsg);
+            $('#successMsg').text('Please enter Arrived NoP.').css('color', 'red');
+            $('#txtArrivedPkgs').focus();
+            return;
+        } else {
+            $('#successMsg').text('');
+        }
     }
 
     if (document.getElementById('chkModify').checked)
@@ -1073,7 +1088,7 @@ function SaveImportMaifestDetailsV3() {
         dmgType = $('#ddlDamageType').val();
     }
 
-    inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><UlDSeqNo>' + $('#ddlULDNo').val() + '</UlDSeqNo><AWBId>' + $('#ddlAWBNo').find('option:selected').val() + '</AWBId><HAWBId>' + $('#ddlHAWBNo').find('option:selected').val() + '</HAWBId><NPR>' + $('#txtArrivedPkgs').val() + '</NPR><DMGPsc>' + $('#txtDamagePkgs').val() + '</DMGPsc><DMGWt>' + $('#txtDamageWt').val() + '</DMGWt><DMGCode>' + dmgType + '</DMGCode><UserId>' + Userid + '</UserId><AirportCity>' + AirportCity + '</AirportCity><IsOverride>' + isOverride + '</IsOverride><GroupId>' + GroupId + '</GroupId></Root>';
+    inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><UlDSeqNo>' + $('#ddlULDNo').val() + '</UlDSeqNo><AWBId>' + $('#ddlAWBNo').find('option:selected').val() + '</AWBId><HAWBId>' + $('#ddlHAWBNo').find('option:selected').val() + '</HAWBId><NPR>' + $('#txtArrivedPkgs').val() + '</NPR><DMGPsc>' + $('#txtDamagePkgs').val() + '</DMGPsc><DMGWt>' + $('#txtDamageWt').val() + '</DMGWt><DMGCode>' + dmgType + '</DMGCode><UserId>' + Userid + '</UserId><AirportCity>' + AirportCity + '</AirportCity><IsOverride>' + isOverride + '</IsOverride><GroupId>' + GroupId + '</GroupId><LocCode>' + $('#ddlLocation').val() + '</LocCode></Root>';
     //inputXML = '<Root><FlightSeqNo>' + flightSeqNo + '</FlightSeqNo><ID>' + $('#ddlAWBNo').find('option:selected').val() + '</ID><UserId>' + window.localStorage.getItem("UserID") + '</UserId><AirportCity>' + AirportCity + '</AirportCity></Root>';
     console.log(inputXML)
     serviceName = 'SaveImportMaifestDetailsV3';
@@ -1170,6 +1185,10 @@ function SaveImportMaifestDetailsV3() {
         });
         return false;
     }
+}
+
+function clearMSGOnChange() {
+    $("#successMsg").text('');
 }
 
 function SelectElement(id, valueToSelect) {
@@ -1576,4 +1595,62 @@ function ClearError(ID) {
 }
 function ClearFields() {
     $('.ClearFields input[type=text]').val("");
+}
+
+
+function ImportDeStuffingZoneList() {
+    var connectionStatus = navigator.onLine ? 'online' : 'offline'
+
+    var errmsg = "";
+
+    inputxml = '<Root><ShedCode>' + SHED_CODE + '</ShedCode><AirportCity>' + AirportCity + '</AirportCity><UserId>' + Userid + '</UserId></Root>';
+
+    if (errmsg == "" && connectionStatus == "online") {
+        $.ajax({
+            type: "POST",
+            //url: GHAImportFlightserviceURL + "GetImportHouseDetails",
+            url: ACSServiceURL + "/ImportDeStuffingZoneList",
+            data: JSON.stringify({
+                'InputXML': inputxml,
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (Result) {
+                Result = Result.d;
+                var xmlDoc = $.parseXML(Result);
+
+                $(xmlDoc).find('Table1').each(function () {
+
+                    LOC_CODE = $(this).find('LOC_CODE').text();
+                    LOC_DESC = $(this).find('LOC_DESC').text();
+
+
+                    var newOption = $('<option></option>');
+                    newOption.val(LOC_CODE).text(LOC_DESC);
+                    newOption.appendTo('#ddlLocation');
+
+
+                });
+
+            },
+            error: function (msg) {
+                $("body").mLoading('hide');
+                $.alert('Data could not be loaded');
+            }
+        });
+        return false;
+    }
+    else if (connectionStatus == "offline") {
+        $("body").mLoading('hide');
+        $.alert('No Internet Connection!');
+    }
+    else if (errmsg != "") {
+        $("body").mLoading('hide');
+        $.alert(errmsg);
+    }
+    else {
+        $("body").mLoading('hide');
+    }
+
+
 }
