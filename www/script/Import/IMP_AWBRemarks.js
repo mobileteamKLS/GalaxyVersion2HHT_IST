@@ -54,13 +54,22 @@ $(function () {
             inputField.value = inputValue.replace(/[^a-zA-Z0-9 ]/g, '');
         }
     }
+    function preventSpecialCharactersV2(inputField) {
+        var inputValue = inputField.value;
+        // Define a regular expression to allow only alphanumeric characters and spaces
+        var regex =  /^[a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]*$/;
+        if (!regex.test(inputValue)) {
+            // If the input contains special characters, remove them
+            inputField.value = inputValue.replace(/[^a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]/g, '');
+        }
+    }
     
     $("#txtRemark").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#txtHAWBNo").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#ddlHAWBList").change(function () {
