@@ -54,13 +54,22 @@ $(function () {
             inputField.value = inputValue.replace(/[^a-zA-Z0-9 ]/g, '');
         }
     }
+    function preventSpecialCharactersV2(inputField) {
+        var inputValue = inputField.value;
+        // Define a regular expression to allow only alphanumeric characters and spaces
+        var regex =  /^[a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]*$/;
+        if (!regex.test(inputValue)) {
+            // If the input contains special characters, remove them
+            inputField.value = inputValue.replace(/[^a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]/g, '');
+        }
+    }
     
     $("#txtRemark").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#txtHAWBNo").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#ddlHAWBList").change(function () {
@@ -86,7 +95,12 @@ $(function () {
     //    console.log($item);
     //})
 
-
+    $('#txtScanMAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanMAWB').keypress(function (event) {
         $("#txtHAWBNo").val('');
@@ -121,7 +135,8 @@ $(function () {
             //}
 
             prifix = $("#txtScanMAWB").val().slice(0, 3);
-            AWBNo = $("#txtScanMAWB").val().slice(3, 11);
+            AWBNo = $("#txtScanMAWB").val().slice(3);
+            console.log(AWBNo);
             //InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
 
             if ($('#txtHAWBNo').val() != '') {
@@ -168,7 +183,7 @@ $(function () {
             //}
 
             prifix = $("#txtScanMAWB").val().slice(0, 3);
-            AWBNo = $("#txtScanMAWB").val().slice(3, 11);
+            AWBNo = $("#txtScanMAWB").val().slice(3);
             //InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
 
             if ($('#txtHAWBNo').val() != '') {

@@ -36,6 +36,13 @@ var currentLocId = "";
 var currentLocWght = "";
 $(function () {
 
+    $('#txtMAWBNO').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
+
     $('#txtMAWBNO').keypress(function (event) {
 
         var keycode = (event.keyCode ? event.keyCode : event.which);

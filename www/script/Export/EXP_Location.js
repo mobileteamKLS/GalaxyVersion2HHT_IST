@@ -34,6 +34,13 @@ $(function () {
     //    window.location.href = 'Login.html'
     //}, 1200000);
 
+    $('#txtMAWBNo').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
+
     $('#txtMAWBNo').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {

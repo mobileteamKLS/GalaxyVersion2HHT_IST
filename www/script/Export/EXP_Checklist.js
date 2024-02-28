@@ -31,6 +31,13 @@ $(function () {
         window.location.href = 'IMP_Dashboard.html';
     }
 
+    $('#txtScanAWBNo').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
+
     var formattedDate = new Date();
     var d = formattedDate.getDate();
     if (d.toString().length < Number(2))
@@ -434,14 +441,14 @@ function GetExportCheckListSearch() {
         return;
     }
 
-    if ($("#txtScanAWBNo").val().length != '11') {
-        errmsg = "Please enter valid AWB No.";
-        $.alert(errmsg);
-        $('#txtScanAWBNo').val('');
-        $('#txtScanAWBNo').focus();
-        clearALL();
-        return;
-    }
+    // if ($("#txtScanAWBNo").val().length != '11') {
+    //     errmsg = "Please enter valid AWB No.";
+    //     $.alert(errmsg);
+    //     $('#txtScanAWBNo').val('');
+    //     $('#txtScanAWBNo').focus();
+    //     clearALL();
+    //     return;
+    // }
     var connectionStatus = navigator.onLine ? 'online' : 'offline'
     var errmsg = "";
     // InputXML = '<Root><AWBNo>' + $("#txtAWBNo").val() + '</AWBNo><AirportCity>' + AirportCity + '</AirportCity></Root>';
@@ -677,7 +684,7 @@ function ChkAndValidate() {
 
     var ScanCode = $('#txtAWBNo').val();
     ScanCode = ScanCode.replace(/\s+/g, '');
-    ScanCode = ScanCode.replace("-", "").replace("–", "");
+    ScanCode = ScanCode.replace("-", "").replace("ï¿½", "");
 
     if (ScanCode.length >= 11) {
 

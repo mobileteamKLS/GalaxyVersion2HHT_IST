@@ -32,7 +32,17 @@ var allSHCCodeSave = '';
 var joinAllValuesWithComma = '';
 let lastValid = "";
 var shoulSave
+var values=[];
+var selectedULDSeqNo='';
 $(function () {
+
+    $('#_txtAWBNo').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
+    
     $("#uldLists").change(function () {
         selectedULDNo = $(this).find("option:selected").text();
         selectedULDSeqNo = $(this).val();
@@ -69,7 +79,59 @@ $(function () {
             GetExportULDData(InputXML)
         }
     });
-
+    $("#btnGetWeight").click(function () {
+        GetWeightingScaleWt();     
+      });
+         $("#ddlWeighingScale").change(function (){
+        $(".ibiSuccessMsg1").text('');
+    });
+    
+      GetWeightingScaleWt=function(){
+        $(".ibiSuccessMsg1").text('');
+        if($('#ddlWeighingScale').find("option:selected").val()=='0'){
+            $("body").mLoading('hide');
+            errmsg = "Please select Weighing Scale</br>";
+            $.alert(errmsg);
+            return;
+        }
+        MacRowID=$('#ddlWeighingScale').find("option:selected").val();
+        InputXML="<Root><MacRowID>"+MacRowID+"</MacRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>"+Userid+"</UserId></Root>"
+        $('body').mLoading({
+            text: "Please Wait..",
+        }); 
+    
+        $.ajax({
+            type: 'POST',
+            url: ExpURL + "/GetWeighingScaleWt",
+            data: JSON.stringify({ 'InputXML': InputXML }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response, xhr, textStatus) {
+                HideLoader();
+                var str = response.d;
+                console.log(response.d);
+                if (str != null && str != "" && str != "<NewDataSet />") {
+                    var xmlDoc = $.parseXML(str);
+                    $(xmlDoc).find('Table').each(function (index) {
+                        Status = $(this).find('Status').text();
+                        StrMessage = $(this).find('StrMessage').text();
+                        if (Status == 'E') {
+                            $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });                       
+                        } else if (Status == 'S') {
+                            $("#txtScaleWt").val(StrMessage);
+                        }});
+    
+                } else {
+                    $("body").mLoading('hide');
+                   
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("body").mLoading('hide');
+                alert('Server not responding...');
+            }
+        });
+    }
     // $('#txtQuantity').on('input', function() {
     //     // Get the input value
     //     let inputValue = $(this).val();
@@ -744,6 +806,7 @@ function clearAWB() {
     $("#FlightDate").val('');
     $("#txtFlightAirlineNo").val('');
     $(".uldMessage").text('');
+    $(".ibiSuccessMsg1").text('');
 
 }
 
@@ -772,6 +835,7 @@ function fnClear() {
     $("#txtBlkRemark").prop('disabled', false);
     commonFunc();
     $(".uldMessageSuccess").text('');
+    $(".ibiSuccessMsg1").text('');
     $(".uldMessageULDClose").text('');
     $("#txtULDManpower").val('');
     $("#txtRemark").val('');
@@ -805,6 +869,7 @@ function fnClearfornoMsgClear() {
     $("#txtBlkRemark").prop('disabled', false);
     commonFunc();
     $(".uldMessageSuccess").text('');
+    $(".ibiSuccessMsg1").text('');
     // $(".uldMessageULDClose").text('');
 
 }
@@ -814,6 +879,7 @@ function GetUnitizedShipmentDetails() {
 
 
     $(".uldMessageULDClose").text('');
+    $(".ibiSuccessMsg1").text('');
     $("#txtFlightManpower").val('');
 
     if ($("#txtFlightNo").val() == "") {
@@ -1111,18 +1177,16 @@ function UnitizationPendingAWBDetails() {
     allSHCCodeSave = '';
     joinAllValuesWithComma = '';
     if ($("#_txtAWBNo").val() == '') {
-
         return;
     }
-    if ($("#_txtAWBNo").val().length != 11) {
-        $.alert("Please Enter Valid AWB No.");
-        $(".alert_btn_ok").click(function () {
-            $("#_txtAWBNo").val('');
-            $("#_txtAWBNo").focus();
-        });
-        return;
-    }
-
+    // if ($("#_txtAWBNo").val().length != 11) {
+    //     $.alert("Please Enter Valid AWB No.");
+    //     $(".alert_btn_ok").click(function () {
+    //         $("#_txtAWBNo").val('');
+    //         $("#_txtAWBNo").focus();
+    //     });
+    //     return;
+    // }
     isHAWBNo = '0';
     if ($("#_txtAWBNo").val().length >= 11) {
         var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo></Root>";
@@ -1140,6 +1204,7 @@ function UnitizationPendingAWBDetails() {
                 var str = response.d;
                 $('#ddlHAWBNo').empty();
                 $('.uldMessageSuccess').text('');
+                $(".ibiSuccessMsg1").text('');
 
 
                 if (str != null && str != "" && str != "<NewDataSet />") {
@@ -1376,6 +1441,7 @@ function onBack() {
     clearOptions("_txtRNoLists");
     $("#tableRecords").empty();
     $(".uldMessageSuccess").text('');
+    $(".ibiSuccessMsg1").text('');
     $("#divHAWBNo1").hide();
     $("#divHAWBNo2").hide();
     $("#divHAWBNo3").hide();
@@ -1494,6 +1560,7 @@ function UnitizeAWB() {
                         $("#_txtManWt").val('');
                         $("#dvForEditBtn").hide();
                         joinAllValuesWithComma = '';
+                        $(".ibiSuccessMsg1").text('');
                         GetUnitizedShipmentDetails();
                     }
                 });
@@ -1512,6 +1579,7 @@ function UnitizeAWB() {
 }
 
 function GetExportULDData(Input){
+    $(".ibiSuccessMsg1").text('');
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1553,6 +1621,23 @@ function GetExportULDData(Input){
                             }
                        });
 
+                    });
+                    $('#ddlWeighingScale').empty();
+                    $(xmlDoc).find('Table1').each(function (index) {
+                        ScaleID = $(this).find('rowid').text();
+                        MachineName = $(this).find('machinename').text();
+                        values.push(ScaleID);
+                        if (index == 0) {
+                            var newOption = $('<option></option>');
+                            newOption.val(0).text('Select');
+                            newOption.appendTo('#ddlWeighingScale');
+                        }
+    
+                        var newOption = $('<option></option>');
+                        newOption.val(ScaleID).text(MachineName);
+                        newOption.appendTo('#ddlWeighingScale');
+                        $("#ddlWeighingScale").val(values[0]);
+                       
                     });
                 }
                 if($("#bulkCheckBox").prop("checked")){
@@ -1624,6 +1709,7 @@ function GetExportFlightDetails(shouldClearRecord) {
                     $(".uldMessageULDClose").text('');
                     $(".uldMessage").text('');
                     $(".trollyMessage").text('');
+                    $(".ibiSuccessMsg1").text('');
                 }
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
@@ -1669,6 +1755,7 @@ function GetExportFlightDetails(shouldClearRecord) {
                 else {
                     $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
                 }
+                
 
                 $(xmlDoc).find('Table4').each(function (index) {
                     var newOption1 = $('<option></option>');
@@ -1732,7 +1819,7 @@ function UnitizationSaveULDDetails() {
         return;
     }
 
-
+    $(".ibiSuccessMsg1").text('');
 
     var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#txtULDType").val() + "</ULDType><ULDNo>" + $("#txtULDNo").val() + "</ULDNo><ULDOwner>" + $("#txtULDOwner").val() + "</ULDOwner><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId><ULDSpecification>" + $("#uldTypeULDL").val() + "</ULDSpecification></Root>";
     $('body').mLoading({
@@ -2318,6 +2405,7 @@ function EXPTrolleyClose() {
     //     $.alert("Please Select Trolley.");
     //     return;
     // }
+    $(".ibiSuccessMsg1").text('');
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -2395,6 +2483,7 @@ function clearAWBRecords() {
     $("#tableRecords").empty();
     $("#SHCCodeTbl").empty();
     $(".uldMessageSuccess").text('');
+    $(".ibiSuccessMsg1").text('');
     $("#dvForEditBtn").hide();
 
 
@@ -3903,7 +3992,7 @@ function GetULDs(valFromddloffpoint) {
         $.alert("Please Enter Flight Date.");
         return;
     }
-
+    $(".ibiSuccessMsg1").text('');
     var InputXML = "<Root><FlightAirline>" + $("#txtFlightAirlineNo").val() + "</FlightAirline><FlightNo>" + $("#txtFlightNo").val() + "</FlightNo><FlightDate>" + $("#FlightDate").val() + "</FlightDate><Offpoint>" + valFromddloffpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
     $('body').mLoading({
         text: "Please Wait..",
@@ -3960,6 +4049,17 @@ function GetULDs(valFromddloffpoint) {
                     $("#uldLists").val($(this).find('ULD_SEQUENCE_NUMBER').text());
                     $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
                 });
+                var InputXML = {
+                    "ULDSequenceNo": selectedULDSeqNo,
+                    "AirportCity": SHED_AIRPORT_CITY,
+                    "CompanyCode": CompanyCode,
+                    "Mode": "U",
+                    "FltSeqNo": FltSeqNo,
+                    "RoutePoint": Offpoint,
+                }
+                selectedULDSeqNo = $('#uldLists').val();
+                console.log(InputXML)
+                GetExportULDData(InputXML)
 
                 $(xmlDoc).find('Table4').each(function (index) {
                     var newOption1 = $('<option></option>');

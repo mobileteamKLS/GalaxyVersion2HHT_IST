@@ -60,7 +60,12 @@ $(function () {
     //    console.log($item);
     //})
 
-
+    $('#txtScanMAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
 
     $('#txtScanMAWB').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -424,6 +429,7 @@ function Imp_GetHAWBIGMNumbersForMAWBNumber() {
 getHWABNoList = function (InputXML) {
 
     $("#ddlHAWBList").text('');
+    
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetHAWBIGMNumbersForMAWBNumber",
@@ -525,7 +531,7 @@ function dialogAlert(Remark) {
     }
 }
 getIGMNoList = function (InputXML) {
-    $("#ddlFlightNoandDate").text('');
+    $("#ddlFlightNoandDate").empty();
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetHAWBIGMNumbersForMAWBNumber",
@@ -540,20 +546,15 @@ getIGMNoList = function (InputXML) {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
                 var xmlDoc = $.parseXML(str);
-
+                $("#ddlFlightNoandDate").empty();
                 $(xmlDoc).find('Table').each(function (index) {
                     var Process = $(this).find('Process').text();
                     var IGMNo = $(this).find('IGMNo').text();
                     var FlightDetails = $(this).find('FlightDetails').text();
                     _IGMNo = $(this).find('Process').text();
-
-
                     var newOption = $('<option></option>');
                     newOption.val(_IGMNo).text(FlightDetails);
                     newOption.appendTo('#ddlFlightNoandDate');
-
-
-
                 });
 
                
