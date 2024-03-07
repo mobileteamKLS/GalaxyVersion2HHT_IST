@@ -1132,7 +1132,8 @@ function SaveImportMaifestDetailsV3() {
                         $('#successMsg').text(StrMessage).css('color', 'green');
 
                         GetAWBDetailsForULD($('#ddlULDNo').val())
-
+                        
+                        $('#txtScanAWBNo').val('');
                         $('#txtScanAWBNo').focus();
                         $('#ddlAWBNo').val(0);
                         $('#ddlHAWBNo').val(0);

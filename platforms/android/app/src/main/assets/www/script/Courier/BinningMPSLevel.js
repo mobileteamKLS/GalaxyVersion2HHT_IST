@@ -280,7 +280,7 @@ searchDetails = function (InputXML) {
                     // Date = $(this).find('Date').text();
                     IsHighPriority = $(this).find('IsHighPriority').text();
                     $('#dvRemarkShow').append(Remark);
-                   
+
 
                 });
                 if (Remark != '') {
@@ -461,6 +461,7 @@ function GetImportActiveLocationsV2(INPUTXML) {
         text: "Please Wait..",
     });
     $("#txtOldNewLocation").val('');
+
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetImportActiveLocationsV2",
@@ -486,7 +487,8 @@ function GetImportActiveLocationsV2(INPUTXML) {
                         $("#txtOldHAWBLocation").val("");
                         $("#txtScanShipLabel").val("");
                         $("#txtScanShipLabel").trigger('focus');//.focus();
-
+                        $('#tableRecords').empty();
+                        tblArray = '';
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 

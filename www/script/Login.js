@@ -113,6 +113,20 @@ UserLogin = function (pUserID, pPassword) {
 
                 var xmlDoc = $.parseXML(str);
 
+                $(xmlDoc).find('Table1').each(function (index) {
+                    if (index == 0) {
+                        window.localStorage.setItem("Column1ForBeakdown", $(this).find('PARAMETER_VALUE').text());
+                        window.localStorage.setItem("PARAMETER_NAME", $(this).find('PARAMETER_NAME').text());
+                    }
+
+
+                });
+                $(xmlDoc).find('Table1').each(function (index) {
+
+                    window.localStorage.setItem("PARAMETER_VALUE_for_Groupid", $(this).find('PARAMETER_VALUE').text());
+                    window.localStorage.setItem("PARAMETER_NAME_for_Groupid", $(this).find('PARAMETER_NAME').text());
+                });
+
                 $(xmlDoc).find('Table').each(function (index) {
                     window.localStorage.setItem("Userid", $(this).find('Userid').text());
                     window.localStorage.setItem("User_Name", $(this).find('User_Name').text());
@@ -129,14 +143,10 @@ UserLogin = function (pUserID, pPassword) {
                     window.localStorage.setItem("Language", $('#ddlLanguage').find('option:selected').text());
                     window.location = "Dashboard.html";
                 });
-                localStorage.removeItem('Column1ForBeakdown');
-                localStorage.removeItem('PARAMETER_NAME');
+                //localStorage.removeItem('Column1ForBeakdown');
+                //localStorage.removeItem('PARAMETER_NAME');
 
-                $(xmlDoc).find('Table1').each(function (index) {
-                    window.localStorage.setItem("Column1ForBeakdown", $(this).find('Column1').text());
-                    window.localStorage.setItem("PARAMETER_NAME", $(this).find('PARAMETER_NAME').text());
-                   
-                });
+               
             } else {
 
                 HideLoader();

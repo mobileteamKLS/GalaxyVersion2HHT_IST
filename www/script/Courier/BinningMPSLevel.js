@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+var PARAMETER_NAME_for_Groupid = window.localStorage.getItem("PARAMETER_NAME_for_Groupid");
 var _Status;
 var _StrMessage;
 var _WDOStatus;
@@ -40,10 +42,10 @@ $(function () {
     //    alert('l');
     //}
 
-    window.onload = function () {
-        $("#txtScanGroupID").trigger('focus');
-        // tblArray = [];
-    }
+    //window.onload = function () {
+    //    $("#txtScanGroupID").trigger('focus');
+    //    // tblArray = [];
+    //}
 
 
     $("#btnSearch").click(function () {
@@ -139,6 +141,13 @@ $(function () {
     }
 
     $('#tblCountShow').hide();
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+    } else {
+        $('#txtScanGroupID').focus();
+    }
+
 });
 
 function setHungarian() {
@@ -223,8 +232,8 @@ searchDetails = function (InputXML) {
             HideLoader();
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
-                $("#txtScanShipLabel").removeAttr('disabled');
-                $("#txtScanShipLabel").trigger('focus');//.focus();
+                //$("#txtScanShipLabel").removeAttr('disabled');
+                //$("#txtScanShipLabel").trigger('focus');//.focus();
 
                 //  createTable();
                 $("#btnDiv").show('slow');
@@ -280,15 +289,19 @@ searchDetails = function (InputXML) {
                     // Date = $(this).find('Date').text();
                     IsHighPriority = $(this).find('IsHighPriority').text();
                     $('#dvRemarkShow').append(Remark);
-                   
+
 
                 });
                 if (Remark != '') {
                     $('#remarkPriorityShow').modal('show');
                 }
                 // html += "</tbody></table>";
-
-                CreateBinningListTable();
+                if (PARAMETER_VALUE_for_Groupid == 'N') {
+                    CreateBinningListTable();
+                } else {
+                    CreateBinningListTable();
+                }
+              
                 //generate table here
 
 
@@ -461,6 +474,7 @@ function GetImportActiveLocationsV2(INPUTXML) {
         text: "Please Wait..",
     });
     $("#txtOldNewLocation").val('');
+
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetImportActiveLocationsV2",
@@ -486,7 +500,8 @@ function GetImportActiveLocationsV2(INPUTXML) {
                         $("#txtOldHAWBLocation").val("");
                         $("#txtScanShipLabel").val("");
                         $("#txtScanShipLabel").trigger('focus');//.focus();
-
+                        $('#tableRecords').empty();
+                        tblArray = '';
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 
@@ -542,11 +557,19 @@ function GetImportActiveLocationsV2(INPUTXML) {
 
 function UpdateImportLocationV3(InputXML) {
     console.log("***************** UpdateImportLocationV3 *******************");
-    if (($("#txtScanGroupID").val() == '')) {
-        errmsg = "Please enter/scan Group ID</br>";
-        $.alert(errmsg);
-        return;
+
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+      
+    } else {
+        if (($("#txtScanGroupID").val() == '')) {
+            errmsg = "Please enter/scan Group ID</br>";
+            $.alert(errmsg);
+            return;
+        }
     }
+
+   
 
     // if (($("#txtScanShipLabel").val() == '')) {
     //     errmsg = "Please enter/scan Group ID</br>";
@@ -630,6 +653,12 @@ function clearRecords() {
     $("#tblCountShow").hide();
     $("#txtScanGroupID").trigger('focus');//.focus();
     $(".ibiSuccessMsg1").text('');
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+    } else {
+        $('#txtScanGroupID').focus();
+    }
 }
 
 function clearRecordsBeforeGID() {

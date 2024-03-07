@@ -164,13 +164,13 @@ $(function () {
         _vlaueofHawbText = $('option:selected', this).text();
 
         ASI(_vlaueofHawb);
-        if(_vlaueofHawbText=="Select"){
+        if (_vlaueofHawbText == "Select") {
             $("#txtNOG").val('');
             $("#ddlComCode").val(0);
             $("#txtManifested").val('');
             $("#txtReceived").val('');
             $("#txtRemaining").val('');
-            return; 
+            return;
         }
         //$("#txtManifested").val(Manifested);
         //$("#txtReceived").val(Received);
@@ -203,7 +203,7 @@ $(function () {
     //        event.preventDefault();
     //    }
     //});
-    $('#txtScanMAWB').on('keyup', function() {
+    $('#txtScanMAWB').on('keyup', function () {
         let currentValue = $(this).val();
         let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
         cleanedValue = cleanedValue.replace(/\s+/g, '');
@@ -400,8 +400,8 @@ function ASIforFlight(_vlaueofHawbforflight, _vlaueofHawbforflightText) {
     FltDetails = _vlaueofHawbforflightText;
     var array = _vlaueofHawbforflight.split(",");
 
-    var hawbSelected=$('#ddlHAWBList option:selected');
-    if(hawbSelected.text()!="Select"){
+    var hawbSelected = $('#ddlHAWBList option:selected');
+    if (hawbSelected.text() != "Select") {
         for (i = 0; i < array.length; i++) {
             if (i == 0) {
                 $("#txtManifested").val(array[i]);
@@ -424,7 +424,7 @@ function ASIforFlight(_vlaueofHawbforflight, _vlaueofHawbforflightText) {
         }
     }
     //$("#txArrivedPakg").focus();
-   
+
 }
 
 function ASI(_vlaueofHawb) {
@@ -958,14 +958,17 @@ GetImportCargoCheckInDetails = function (InputXML) {
                     dmgIMPAWBROWID = $(this).find('IMPAWBROWID').text();
                     dmgIMPSHIPROWID = $(this).find('IMPSHIPROWID').text();
                     commsrno = $(this).find('commsrno').text();
+                    nog = $(this).find('nog').text();
                     if (commsrno != '-1' && commsrno != '0' && commsrno != null && commsrno != undefined) {
                         // $("#ddlComCode").val(commsrno);
                     }
-                    if(HouseNo==''){
+                    if (HouseNo == '') {
                         console.log("is empty");
                         $("#ddlComCode").val(commsrno);
                         $("#txtNOG").val($(this).find('nog').text());
                     }
+                    $("#ddlComCode").val(commsrno);
+                    $("#txtNOG").val(nog);
 
                     // $("#txtNOG").val($(this).find('nog').text());
 
@@ -1016,6 +1019,9 @@ GetImportCargoCheckInDetails = function (InputXML) {
                             newOption.val(Manifested + ',' + Received + ',' + Remaining + ',' + HAWBID).text(HouseNo);
                             newOption.appendTo('#ddlHAWBList');
                             a.push(HouseNo.toUpperCase());
+                            if (HouseNo != '') {
+                                $("#ddlHAWBList option:contains(" + HouseNo + ")").attr('selected', 'selected');
+                            }
                         }
 
                         // $("#ddlHAWBList").children("option").each(function (x) {
@@ -1292,7 +1298,7 @@ ImportCreateNewHouse = function (InputXML) {
 
                 });
 
-                $(xmlDoc).find('Table').each(function (index) {
+                $(xmlDoc).find('Table2').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
@@ -1300,8 +1306,9 @@ ImportCreateNewHouse = function (InputXML) {
 
                     } else if (Status == 'S') {
                         openScanner();
-                        $('#modalHAWBNo').modal('hide');
+                        // $('#modalHAWBNo').modal('hide');
                         $(".ibiHawbSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                        $("#txtPopHwabHAWB").focus();
                     }
                 });
 

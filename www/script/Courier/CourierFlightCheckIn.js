@@ -15,6 +15,9 @@ var txtScanMAWB = window.localStorage.getItem("txtScanMAWB");
 var flightNo = window.localStorage.getItem("flightNo");
 var flightDate = window.localStorage.getItem("flightDate");
 var groupId = window.localStorage.getItem("groupId");
+var fsqno = localStorage.getItem('fsqno');
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+var PARAMETER_NAME_for_Groupid = window.localStorage.getItem("PARAMETER_NAME_for_Groupid");
 var _Status;
 var _StrMessage;
 var _WDOStatus;
@@ -163,6 +166,16 @@ $(function () {
             break;
     }
 
+    if (fsqno == '1') {
+        openScanner();
+    }
+
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+    } else {
+        $('#txtScanGroupID').focus();
+    }
 
 });
 
@@ -277,6 +290,7 @@ function openScanner() {
 
 function fnExit() {
     window.location.href = 'Courier.html';
+    localStorage.removeItem('fsqno');
 }
 function fnClear() {
     $("#txtScanMAWB").val('');
@@ -292,7 +306,7 @@ function fnClear() {
     $("#Weight").val('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
-
+    localStorage.removeItem('fsqno');
 }
 
 GetImportFlightCourierDetailsV2 = function (InputXML) {
@@ -323,10 +337,16 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
                     } else {
                         $(".ibiSuccessMsg1").text('');
                     }
+                    $("#txtScan").focus();
                 });
+                if (PARAMETER_VALUE_for_Groupid == 'N') {
+                    $('#txtScan').focus();
+                } else {
+                    $('#groupId').focus();
+                }
 
                 $(xmlDoc).find('Table1').each(function (index) {
-                    $("#groupId").focus();
+                  /*  $("#groupId").focus();*/
                     $("#flightNo").val($(this).find('FlightAirline').text() + $(this).find('FlightNo').text());
                     flightSeqNo = $(this).find('FlightSeqNo').text()
                     if ($(this).find('FlightDate').text() != "") {
@@ -491,6 +511,7 @@ searchRecord = function () {
 
 
 GetImportGetCourierAcceptedDetailsV2 = function () {
+    localStorage.setItem('fsqno', '1');
     if ($("#txtScanMAWB").val() == "") {
 
     } else {
