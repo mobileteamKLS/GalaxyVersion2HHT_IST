@@ -54,13 +54,22 @@ $(function () {
             inputField.value = inputValue.replace(/[^a-zA-Z0-9 ]/g, '');
         }
     }
+    function preventSpecialCharactersV2(inputField) {
+        var inputValue = inputField.value;
+        // Define a regular expression to allow only alphanumeric characters and spaces
+        var regex =  /^[a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]*$/;
+        if (!regex.test(inputValue)) {
+            // If the input contains special characters, remove them
+            inputField.value = inputValue.replace(/[^a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]/g, '');
+        }
+    }
     
     $("#txtRemark").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#txtHAWBNo").on('input', function () {
-        preventSpecialCharacters(this);
+        preventSpecialCharactersV2(this);
     });
 
     $("#ddlHAWBList").change(function () {
@@ -399,7 +408,7 @@ AWBRemarkGet = function (InputXML) {
 function RemarkListDetails(RowId, ActivityType, Remark, FontColor, HighPriority) {
 
     html += '<tr id="row1 ' + RowId + '">';
-    html += '<td id="ActivityType' + RowId + '">' + ActivityType + '</td>';
+    html += '<td id="ActivityType' + RowId + '" style="color: ' + FontColor + ';">' + ActivityType + '</td>';
     html += '<td id="Remark' + RowId + '" style="color: ' + FontColor + ';">' + Remark + '</td>';
     html += '<td id="fnPencil' + RowId + '" onclick="edit_row(\'' + RowId + '\',\'' + ActivityType + '\',\'' + Remark + '\',\'' + HighPriority + '\');" style="padding: 2px;" align="center" id="pencil"><button type="button"  id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-edit"></i></button></td>';
     html += '<td onclick="AWBRemarkDelete(\'' + RowId + '\')" style="padding: 2px;" align="center"><button type="button" onclick="removeRow();" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete"><i class="zmdi zmdi-delete"></i></button></td>';

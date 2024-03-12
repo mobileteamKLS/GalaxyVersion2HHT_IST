@@ -52,6 +52,7 @@ $(function () {
             $("#ULDScaleWt").val('');
             $("#txtRemark").val('');
             $("#txtULDManpower").val('');
+            $("#txtPriority").val('');          
             return;
         }
         if (selectedULDNo == "BULK") {
@@ -838,6 +839,8 @@ function fnClear() {
     $(".ibiSuccessMsg1").text('');
     $(".uldMessageULDClose").text('');
     $("#txtULDManpower").val('');
+    $("#txtPriority").val(''); 
+    $("#txtUldPriority").val(''); 
     $("#txtRemark").val('');
     $("#uldTypeULDL").val('0');
     $("#txtFlightManpower").val('');
@@ -855,6 +858,8 @@ function fnClearfornoMsgClear() {
     $("#txtBlkRemark").val('');
     $("#ULDScaleWt").val('');
     $("#txtULDManpower").val('');
+    $("#txtPriority").val(''); 
+    $("#txtUldPriority").val(''); 
     $("#txtRemark").val('');
     $("#offPointLists").empty();
     $("#uldLists").empty();
@@ -1609,6 +1614,7 @@ function GetExportULDData(Input){
                         $("#ULDScaleWt").val(uldScaleWeight);
                         $("#txtRemark").val(uldRemark);
                         $("#txtULDManpower").val(uldManpower);
+                        $("#txtPriority").val('00'); 
                         selectedvalue=uldCONTOUR;
                         if(uldCONTOUR=="" || uldCONTOUR==" "){
                             selectedvalue="0"
@@ -1743,6 +1749,13 @@ function GetExportFlightDetails(shouldClearRecord) {
                 });
 
                 $(xmlDoc).find('Table3').each(function (index) {
+
+                    if (index == 0) {
+                        var newOption = $('<option></option>');
+                        newOption.val(0).text('Select');
+                        newOption.appendTo('#uldLists');
+                    }
+
                     var newOption2 = $('<option></option>');
                     newOption2.val($(this).find('ULD_SEQUENCE_NUMBER').text()).text($(this).find('ULDBULKNO').text());
                     newOption2.appendTo('#uldLists');
@@ -1821,7 +1834,7 @@ function UnitizationSaveULDDetails() {
 
     $(".ibiSuccessMsg1").text('');
 
-    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#txtULDType").val() + "</ULDType><ULDNo>" + $("#txtULDNo").val() + "</ULDNo><ULDOwner>" + $("#txtULDOwner").val() + "</ULDOwner><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId><ULDSpecification>" + $("#uldTypeULDL").val() + "</ULDSpecification></Root>";
+    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#txtULDType").val() + "</ULDType><ULDNo>" + $("#txtULDNo").val() + "</ULDNo><ULDOwner>" + $("#txtULDOwner").val() + "</ULDOwner><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId><ULDSpecification>" + $("#uldTypeULDL").val() + "</ULDSpecification><ULDPriority>"+$("#txtUldPriority").val()+"</ULDPriority></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1870,6 +1883,7 @@ function UnitizationSaveULDDetails() {
                     $('#txtULDType').val('');
                     $('#txtULDNo').val('');
                     $('#txtULDOwner').val('');
+                    $("#txtUldPriority").val('')
                     $("#uldTypeULDL").val('0');
                 });
 
@@ -2382,6 +2396,7 @@ function EXPULDClose() {
                     //GetExportFlightDetails(true);
                     $("#txtRemark").val('');
                     $("#txtULDManpower").val('');
+                    $("#txtPriority").val(''); 
 
                 });
 
@@ -4049,6 +4064,7 @@ function GetULDs(valFromddloffpoint) {
                     $("#uldLists").val($(this).find('ULD_SEQUENCE_NUMBER').text());
                     $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
                 });
+                selectedULDSeqNo = $('#uldLists').val();
                 var InputXML = {
                     "ULDSequenceNo": selectedULDSeqNo,
                     "AirportCity": SHED_AIRPORT_CITY,
@@ -4057,7 +4073,7 @@ function GetULDs(valFromddloffpoint) {
                     "FltSeqNo": FltSeqNo,
                     "RoutePoint": Offpoint,
                 }
-                selectedULDSeqNo = $('#uldLists').val();
+                
                 console.log(InputXML)
                 GetExportULDData(InputXML)
 

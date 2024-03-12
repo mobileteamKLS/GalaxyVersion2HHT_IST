@@ -52,6 +52,7 @@ $(function () {
             $("#ULDScaleWt").val('');
             $("#txtRemark").val('');
             $("#txtULDManpower").val('');
+            $("#txtPriority").val('');          
             return;
         }
         if (selectedULDNo == "BULK") {
@@ -838,6 +839,7 @@ function fnClear() {
     $(".ibiSuccessMsg1").text('');
     $(".uldMessageULDClose").text('');
     $("#txtULDManpower").val('');
+    $("#txtPriority").val(''); 
     $("#txtRemark").val('');
     $("#uldTypeULDL").val('0');
     $("#txtFlightManpower").val('');
@@ -855,6 +857,7 @@ function fnClearfornoMsgClear() {
     $("#txtBlkRemark").val('');
     $("#ULDScaleWt").val('');
     $("#txtULDManpower").val('');
+    $("#txtPriority").val(''); 
     $("#txtRemark").val('');
     $("#offPointLists").empty();
     $("#uldLists").empty();
@@ -1609,6 +1612,7 @@ function GetExportULDData(Input){
                         $("#ULDScaleWt").val(uldScaleWeight);
                         $("#txtRemark").val(uldRemark);
                         $("#txtULDManpower").val(uldManpower);
+                        $("#txtPriority").val('00'); 
                         selectedvalue=uldCONTOUR;
                         if(uldCONTOUR=="" || uldCONTOUR==" "){
                             selectedvalue="0"
@@ -2382,6 +2386,7 @@ function EXPULDClose() {
                     //GetExportFlightDetails(true);
                     $("#txtRemark").val('');
                     $("#txtULDManpower").val('');
+                    $("#txtPriority").val(''); 
 
                 });
 
