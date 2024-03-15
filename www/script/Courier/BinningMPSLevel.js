@@ -144,11 +144,33 @@ $(function () {
 
     if (PARAMETER_VALUE_for_Groupid == 'N') {
         $('#txtScanShipLabel').focus();
+        $('#txtScanGroupID').attr("disabled", 'disabled');
     } else {
         $('#txtScanGroupID').focus();
+        $('#txtScanGroupID').removeAttr('disabled');
     }
 
 });
+
+//function MPSNumberScan() {
+//    if ($('#txtScanShipLabel').val().length == 34) {
+//        if ($("#txtScanShipLabel").val() != '') {
+//            INPUTXML = "<Root><GroupID>" + $("#txtScanGroupID").val() + "</GroupID><MPSNo>" + $("#txtScanShipLabel").val() + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+//            GetImportActiveLocationsV2(INPUTXML);
+//        }
+//    }
+//}
+
+function MPSNumberScan() {
+    var mpsln = $('#txtScanShipLabel').val().length;
+
+    if (parseInt(mpsln) === 34) {
+        // if ($("#txtScan").val() != '') {
+        INPUTXML = "<Root><GroupID>" + $("#txtScanGroupID").val() + "</GroupID><MPSNo>" + $("#txtScanShipLabel").val() + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+        GetImportActiveLocationsV2(INPUTXML);
+        // }
+    }
+}
 
 function setHungarian() {
 
@@ -301,7 +323,7 @@ searchDetails = function (InputXML) {
                 } else {
                     CreateBinningListTable();
                 }
-              
+
                 //generate table here
 
 
@@ -505,8 +527,8 @@ function GetImportActiveLocationsV2(INPUTXML) {
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 
-                        $("#txtScanShipLabel").val("");
-                        $("#txtScanShipLabel").trigger('focus');//.focus();
+                        // $("#txtScanShipLabel").val("");
+                        //  $("#txtScanShipLabel").trigger('focus');//.focus();
                     }
                 });
 
@@ -560,7 +582,7 @@ function UpdateImportLocationV3(InputXML) {
 
 
     if (PARAMETER_VALUE_for_Groupid == 'N') {
-      
+
     } else {
         if (($("#txtScanGroupID").val() == '')) {
             errmsg = "Please enter/scan Group ID</br>";
@@ -569,7 +591,7 @@ function UpdateImportLocationV3(InputXML) {
         }
     }
 
-   
+
 
     // if (($("#txtScanShipLabel").val() == '')) {
     //     errmsg = "Please enter/scan Group ID</br>";

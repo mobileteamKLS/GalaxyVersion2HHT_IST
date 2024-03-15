@@ -1,7 +1,7 @@
 ﻿
 
 var Column1ForBeakdown = window.localStorage.getItem("Column1ForBeakdown");
-
+var PARAMETER_VALUE_for_WDOScanOnAWBHHT = window.localStorage.getItem("PARAMETER_VALUE_for_WDOScanOnAWBHHT");
 (function () {
     document.addEventListener('backbutton', onBackKeyDown, false);
     //document.addEventListener('deviceready', DropDown, false);
@@ -37,6 +37,12 @@ $(function () {
         $("#divBreakdown").hide();
     }
 
+    if (PARAMETER_VALUE_for_WDOScanOnAWBHHT == 'Y') {
+        $("#divWDORelease").show();
+    } else {
+        $("#divWDORelease").hide();
+    }
+
 });
 
 
@@ -56,7 +62,7 @@ function setHungarian() {
     $('#lblIntMov').text("Átlokálás");
     $('#lblWDO').text("Árukiadás");
 
-    
+
 
 }
 
@@ -127,5 +133,10 @@ function DisplayScreen(Mode) {
     else if (Mode == "Breakdown") {
         localStorage.setItem('IMP_Breakdown_Parant', 'IMP_Breakdown_Parant');
         window.location.href = "IMP_Breakdown_Parant.html";
+    }
+
+    else if (Mode == "IMP_WDORelease") {
+        localStorage.setItem('IMP_WDORelease', 'IMP_WDORelease');
+        window.location.href = "IMP_WDORelease.html";
     }
 }

@@ -40,7 +40,7 @@ $(function () {
     //    window.location.href = 'Login.html'
     //}, 1200000);
 
-   
+
 
     $("#btnComplete").click(function () {
         $("#groupId").val('');
@@ -173,8 +173,10 @@ $(function () {
 
     if (PARAMETER_VALUE_for_Groupid == 'N') {
         $('#txtScanShipLabel').focus();
+        $('#groupId').attr("disabled", 'disabled');
     } else {
         $('#txtScanGroupID').focus();
+        $('#groupId').removeAttr('disabled');
     }
 
 });
@@ -192,7 +194,7 @@ function setHungarian() {
     $('#lblScanFlight').text("Járat szkennelés");
     $('#lblFltDateNo').text("Járatszám");
     $('#lblAccept').text("Átvétel");
-   // $('#lblFlCheckIn').text("Auto");
+    // $('#lblFlCheckIn').text("Auto");
     $('#lblScan').text("Szkennelés");
     $('#lblMAWBNo').text("Főfuvarlevél szám");
     $('#lblHAWBNo').text("Házi Fuvarlevél szám");
@@ -204,6 +206,16 @@ function setHungarian() {
     $('#btnClear').text("Törlés");
     $('#btnSbmit').text("Jóváhagyás");
 
+}
+
+function MPSNumberScan() {
+    var mpsln = $('#txtScan').val().length;
+
+    if (parseInt(mpsln) === 34) {
+        // if ($("#txtScan").val() != '') {
+        searchRecord();
+        // }
+    }
 }
 //function scanBarCode() {
 //    cordova.plugins.barcodeScanner.scan(
@@ -346,7 +358,7 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
                 }
 
                 $(xmlDoc).find('Table1').each(function (index) {
-                  /*  $("#groupId").focus();*/
+                    /*  $("#groupId").focus();*/
                     $("#flightNo").val($(this).find('FlightAirline').text() + $(this).find('FlightNo').text());
                     flightSeqNo = $(this).find('FlightSeqNo').text()
                     if ($(this).find('FlightDate').text() != "") {
@@ -432,7 +444,7 @@ GetImportSaveCourierDetailsV2 = function () {
 
 searchRecord = function () {
     if ($("#txtScanMAWB").val() == "") {
-       // $.alert("Please Enter Scan Flight No.");
+        // $.alert("Please Enter Scan Flight No.");
         return;
     }
 
@@ -456,10 +468,20 @@ searchRecord = function () {
                         StrMessage = $(this).find('StrMessage').text();
                         if (Status == 'E') {
                             $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
+                            $('#MAWB').val('');
+                            $('#HAWB').val('');
+                            $('#MPS').val('');
+                            $('#Pieces').val('');
+                            $('#Weight').val('');
+                            $('#txtScan').val('');
+                            $('#txtScan').focus();
                         } else if (Status == 'S') {
                             $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-
+                            if ($('#autoCheckBox').is(":checked")) {
+                                //setTimeout(function () {
+                                GetImportSaveCourierDetailsV2();
+                                //}, 1000);
+                            }
                         } else {
                             $(".ibiSuccessMsg1").text('');
                         }
@@ -486,11 +508,7 @@ searchRecord = function () {
                         $("#Weight").val($(this).find('WeightExp').text());
                         ISCROWID = $(this).find('ISCROWID').text()
                     });
-                    if ($('#autoCheckBox').is(":checked")) {
-                        setTimeout(function () {
-                            GetImportSaveCourierDetailsV2();
-                        }, 1000);
-                    }
+
 
                 } else {
                     $("body").mLoading('hide');
@@ -505,7 +523,7 @@ searchRecord = function () {
             }
         });
     } else {
-       // $.alert("Please Enter MPS No.");
+        // $.alert("Please Enter MPS No.");
     }
 }
 

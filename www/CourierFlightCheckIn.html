@@ -44,8 +44,8 @@
             <div class="navigation-trigger hidden-xl-up">
                 <div class="navigation-trigger__inner">
                     <!--<i class="navigation-trigger__line"></i>
-                <i class="navigation-trigger__line"></i>
-                <i class="navigation-trigger__line"></i>-->
+                    <i class="navigation-trigger__line"></i>
+                    <i class="navigation-trigger__line"></i>-->
                     <!--<a class="btnHome" style="color:#fff;"><i class="zmdi zmdi-home"></i></a>-->
                     <a href="Courier.html" class="btnHome" style="font-size:2rem !important;color:#fff !important;">
                         <i style="" class="zmdi zmdi-chevron-left"></i>
@@ -94,15 +94,15 @@
                     </div>
                 </div>
                 <!--<div class="col-3">
-                <button type="button" id="btnSearch"
-                        class="btn btn--icon login__block__btn login__block__btn_margin">
-                    <i class="zmdi zmdi-search"></i>
-                </button>
-                <button onclick="openScanner();"
-                        class="btn btn--icon login__block__btn login__block__btn_margin scannerBG">
-                    <i class="zmdi zmdi-scanner"></i>
-                </button>
-            </div>-->
+                    <button type="button" id="btnSearch"
+                            class="btn btn--icon login__block__btn login__block__btn_margin">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                    <button onclick="openScanner();"
+                            class="btn btn--icon login__block__btn login__block__btn_margin scannerBG">
+                        <i class="zmdi zmdi-scanner"></i>
+                    </button>
+                </div>-->
 
                 <div class="col-4" style="text-align:left;">
                     <label class="lbl" id="lblFltDateNo">Flight No. / Dt</label>
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="col-6">
-                    <input type="text"  id="groupId" onblur="onFocus();" onkeypress="    return blockSpecialChar(event)" class="textfieldClass"
+                    <input type="text" id="groupId" onblur="onFocus();" onkeypress="    return blockSpecialChar(event)" class="textfieldClass"
                            placeholder="" style="width:100% !important;text-align:right;">
 
 
@@ -152,13 +152,13 @@
             </div>
             <div class="contacts row contacts__itemfortext">
                 <!-- <div class="col-4" style="text-align:left;">
-                <label class="lbl">Scan</label>
-            </div>
-            <div class="col-8">
-                <input type="text" id="Scan" maxlength="15" style="height: 30px;text-transform:uppercase;"
-                    class="textfieldClass" placeholder="">
-                <i class="form-group__bar"></i>
-            </div> -->
+                    <label class="lbl">Scan</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="Scan" maxlength="15" style="height: 30px;text-transform:uppercase;"
+                        class="textfieldClass" placeholder="">
+                    <i class="form-group__bar"></i>
+                </div> -->
 
                 <div class="col-4" style="text-align:left;">
                     <label class="lbl" id="lblScan">Scan</label>&nbsp;&nbsp;
@@ -169,21 +169,21 @@
 
                 <div class="col-8">
                     <div class="form-group">
-                        <input type="text" id="txtScan" onblur="searchRecord();" onkeypress="    return blockSpecialChar(event)"
-                               style="height: 30px;color:#2196F3;font-weight:bold;text-align:right;" class="textfieldClass" placeholder="">
+                        <input type="text" id="txtScan" onkeyup="MPSNumberScan();" onblur="searchRecord();" onkeypress="return blockSpecialChar(event)"
+                               style="height: 30px;color:#2196F3;font-weight:bold;text-align:right;" class="textfieldClass"  placeholder="">
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
                 <!--<div class="col-3">
-                <button type="button" id="btnSearchRecord" onclick="searchRecord()"
-                        class="btn btn--icon login__block__btn login__block__btn_margin">
-                    <i class="zmdi zmdi-search"></i>
-                </button>
-                <button onclick="scanBarCode();"
-                        class="btn btn--icon login__block__btn login__block__btn_margin scannerBG">
-                    <i class="zmdi zmdi-scanner"></i>
-                </button>
-            </div>-->
+                    <button type="button" id="btnSearchRecord" onclick="searchRecord()"
+                            class="btn btn--icon login__block__btn login__block__btn_margin">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                    <button onclick="scanBarCode();"
+                            class="btn btn--icon login__block__btn login__block__btn_margin scannerBG">
+                        <i class="zmdi zmdi-scanner"></i>
+                    </button>
+                </div>-->
                 <div class="col-4" style="text-align:left;">
                     <label class="lbl" id="lblMAWBNo">MAWB No.</label>
                 </div>
@@ -250,8 +250,8 @@
                 </div>
             </div>
             <!--<div class="col-2" style="float:right;">
-            <button href="index-2.html"  class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-format-clear-all"></i></button>
-        </div>-->
+                <button href="index-2.html"  class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-format-clear-all"></i></button>
+            </div>-->
             <!--<footer>FOOTER</footer>-->
 
         </section>
@@ -276,12 +276,12 @@
         </div>
 
         <!--<div>
-        <footer class="footer">
-            <div class="container">
-                <center><p class="text-muted" id="RightsReserved"> © Kale Logistics Solutions Private Limited. 2019</p></center>
-            </div>
-        </footer>
-    </div>-->
+            <footer class="footer">
+                <div class="container">
+                    <center><p class="text-muted" id="RightsReserved"> © Kale Logistics Solutions Private Limited. 2019</p></center>
+                </div>
+            </footer>
+        </div>-->
     </main>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

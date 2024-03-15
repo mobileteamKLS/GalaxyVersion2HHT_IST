@@ -41,6 +41,8 @@ $(function () {
         $("#txtMovePkgs").val('');
         $("#textMoveWght").val('');
         $("#txtLocation").val('');
+        $("#spnOriginDist").text('');
+        
         // ASI(_vlaueofHawb);
         $("#txtBinnPkgs").val(_vlaueofHawb);
         //$("#txtReceived").val(Received);
@@ -68,6 +70,7 @@ $(function () {
     });
 
     $('#txtScanMAWB').keypress(function (event) {
+        $('#ddlHAWBList').empty();
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('body').mLoading({
@@ -105,6 +108,27 @@ $(function () {
 
 });
 
+
+function AWBNumberScan() {
+    $('#ddlHAWBList').empty();
+
+    if ($('#txtScanMAWB').val().length == 16) {
+       
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+    if ($('#txtScanMAWB').val().length == 11) {
+       
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+}
 
 function setTurkish() {
     $('#lblIntlMove').text("İç hareket");
@@ -444,7 +468,7 @@ getHWABNoList = function (InputXML) {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
                 var xmlDoc = $.parseXML(str);
-
+                $('#ddlHAWBList').empty();
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
@@ -476,19 +500,39 @@ getHWABNoList = function (InputXML) {
                     //newOption.val(MAWBId).text(HAWBNo);
                     //newOption.appendTo('#ddlHAWBList');
 
-                    if (index == 0) {
-                        var newOption = $('<option></option>');
-                        newOption.val(0).text('Select');
-                        newOption.appendTo('#ddlHAWBList');
-                    }
+                    //if (index == 0) {
+                    //    var newOption = $('<option></option>');
+                    //    newOption.val(0).text('Select');
+                    //    newOption.appendTo('#ddlHAWBList');
+                    //}
 
-                    var newOption = $('<option></option>');
-                    newOption.val(PendingPieces).text(HAWBNo);
-                    newOption.appendTo('#ddlHAWBList');
-                    $("#ddlHAWBList").trigger('change');
-                    $("#txtLocation").focus();
-                    if (HAWBNo != '') {
-                        $("#ddlHAWBList option:contains(" + HAWBNo + ")").attr('selected', 'selected');
+                    //var newOption = $('<option></option>');
+                    //newOption.val(MAWBId).text(HAWBNo);
+                    //newOption.appendTo('#ddlHAWBList');
+                    //$("#ddlHAWBList").trigger('change');
+                    //$("#txtLocation").focus();
+                    //if (HAWBNo != '') {
+                    //    $("#ddlHAWBList option:contains(" + HAWBNo + ")").attr('selected', 'selected');
+                    //}
+
+                    if ($(xmlDoc).find('Table').length > 1) {
+                        if (index == 0) {
+                            var newOption = $('<option></option>');
+                            newOption.val(0).text('Select');
+                            newOption.appendTo('#ddlHAWBList');
+                        }
+                        var newOption = $('<option></option>');
+                        newOption.val(MAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                    } else {
+                        var newOption = $('<option></option>');
+                        newOption.val(MAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                        $("#ddlWDONoList").trigger('change');
+                        // GetWDODetailsBLAWB($("#ddlHAWBList :selected").text())
+                        _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + $("#ddlHAWBList :selected").text() + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
+                        getIGMNoList(_InputXML);
+                        $("#txtLocation").focus();
                     }
                 });
 
@@ -506,8 +550,7 @@ getHWABNoList = function (InputXML) {
 
                 });
 
-                _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + _textofHawb + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
-                getIGMNoList(_InputXML);
+
 
             } else {
                 $("body").mLoading('hide');
@@ -656,7 +699,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     if (LocCode != '') {
                         $("#LocationDiv").show();
 
-                        $('<tr class="valp"></tr>').html('<td class="text-left .tdVal"  >' + LocCode + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="display:none;">' + LocId + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
+                        $('<tr class="valp"></tr>').html('<td class="text-left .tdVal"  >' + LocCode.toUpperCase() + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="display:none;">' + LocId + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
                         //$('<tr></tr>').html('<td class="text-left tdVal">' + LocCode + '</td><td>' + LocPieces + '</td>').appendTo('#tblLocation');
 
                         //$("#spnlocationName").text(LocCode);
@@ -815,4 +858,7 @@ function clearFunction() {
 //        $("#tblLocation").html(row);
 //    }
 //}
+
+
+
 
