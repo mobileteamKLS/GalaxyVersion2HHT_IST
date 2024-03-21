@@ -110,12 +110,13 @@ $(function () {
 
             dd.selectedIndex = index; // set selected option
 
-            //if (dd.selectedIndex == 0) {
-            //    // errmsg = "Please scan/enter valid AWB No.";
-            //    // $.alert(errmsg);
-            //    $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
-            //    return;
-            //}
+            if (dd.selectedIndex == 0) {
+                // errmsg = "Please scan/enter valid AWB No.";
+                // $.alert(errmsg);
+                $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
+                $("#txtScanAWBNo").val('');
+                return;
+            }
             console.log(dd.selectedIndex);
             $('#successMsg').text('');
 
@@ -152,6 +153,7 @@ $(function () {
                 // errmsg = "Please scan/enter valid HAWB No.";
                 // $.alert(errmsg);
                 $('#successMsg').text('Please scan/enter valid HAWB No.').css('color', 'red');
+                $("#hawbLists").val('');
                 return;
             }
             console.log(dd.selectedIndex);
@@ -195,6 +197,7 @@ function HAWBNoScan() {
             // errmsg = "Please scan/enter valid HAWB No.";
             // $.alert(errmsg);
             $('#successMsg').text('Please scan/enter valid HAWB No.').css('color', 'red');
+            //$("#hawbLists").val('');
             return;
         }
         console.log(dd.selectedIndex);
@@ -208,7 +211,41 @@ function HAWBNoScan() {
 }
 
 function AWBNumberScan() {
-    if ($('#txtScanAWBNo').val().length == 16 || $('#txtScanAWBNo').val().length == 11) {
+    if ($('#txtScanAWBNo').val().length == 11) {
+        if ($("#txtScanAWBNo").val() != '') {
+            var value = $("#txtScanAWBNo").val();// this.value;// parseInt(this.value, 10),
+
+            var res = value.replace(/(\d{3})/, "$1-")
+            let result = res.slice(0, 12);
+            dd = document.getElementById('ddlAWBNo'),
+                index = 0;
+
+            $.each(dd.options, function (i) {
+                console.log(this.text);
+                if (this.text == result) {
+                    index = i;
+                }
+            });
+
+            dd.selectedIndex = index; // set selected option
+
+            //if (dd.selectedIndex == 0) {
+            //    // errmsg = "Please scan/enter valid AWB No.";
+            //    // $.alert(errmsg);
+            //    $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
+            //    return;
+            //}
+            console.log(dd.selectedIndex);
+            $('#successMsg').text('');
+
+            $('#ddlAWBNo').trigger('change');
+            //  $('#hawbLists').focus();
+
+            // GetAWBDetailsForULD($('#ddlULDNo').val())
+        }
+    }
+
+    if ($('#txtScanAWBNo').val().length == 16) {
         if ($("#txtScanAWBNo").val() != '') {
             var value = $("#txtScanAWBNo").val();// this.value;// parseInt(this.value, 10),
 
@@ -1320,7 +1357,7 @@ function onFocusArrivedPkgs() {
 function GetHAWBDetails(AWBid) {
 
 
-
+    $("#successMsg").text('');
 
     if ($("#ddlAWBNo").val() == '0') {
         clearPiecesInfo();
@@ -1379,7 +1416,7 @@ function GetHAWBDetails(AWBid) {
                 var xmlDoc = $.parseXML(Result);
 
                 $('#ddlHAWBNo').empty();
-               
+
 
                 var houseCount = 0;
 
@@ -1393,7 +1430,7 @@ function GetHAWBDetails(AWBid) {
                     newOption.appendTo('#ddlHAWBNo');
                 }
 
-               
+
                 $(xmlDoc).find('Table3').each(function (index) {
 
                     var HAWBId;
@@ -1510,7 +1547,7 @@ function GetHAWBDetails(AWBid) {
 }
 
 function GetHAWBLevelPiecesDetails(HAWBid) {
-
+    $("#successMsg").text('');
     if (chkShowAll.checked)
         showAll = 'Y';
     else

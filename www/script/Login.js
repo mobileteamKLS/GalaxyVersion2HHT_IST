@@ -117,19 +117,20 @@ UserLogin = function (pUserID, pPassword) {
 
                 localStorage.removeItem('PARAMETER_VALUE_for_WDOScanOnAWBHHT');
                 localStorage.removeItem('PARAMETER_NAME_for_WDOScanOnAWBHHT');
-
+                localStorage.removeItem('pageXMLArray');
+                
                 var xmlDoc = $.parseXML(str);
 
                 $(xmlDoc).find('Table1').each(function (index) {
-                   
+
                     if (index == 0) {
-                       
+
                         window.localStorage.setItem("Column1ForBeakdown", $(this).find('PARAMETER_VALUE').text());
                         window.localStorage.setItem("PARAMETER_NAME", $(this).find('PARAMETER_NAME').text());
                     }
 
                     if (index == 1) {
-                        
+
                         window.localStorage.setItem("PARAMETER_VALUE_for_WDOScanOnAWBHHT", $(this).find('PARAMETER_VALUE').text());
                         window.localStorage.setItem("PARAMETER_NAME_for_WDOScanOnAWBHHT", $(this).find('PARAMETER_NAME').text());
                     }
@@ -164,6 +165,12 @@ UserLogin = function (pUserID, pPassword) {
                     window.localStorage.setItem("Language", $('#ddlLanguage').find('option:selected').text());
                     window.location = "Dashboard.html";
                 });
+
+                localStorage.setItem('pageXMLArray', response.d);
+
+                //$(xmlDoc).find('Table2').each(function (index) {
+                    
+                //});
                 //localStorage.removeItem('Column1ForBeakdown');
                 //localStorage.removeItem('PARAMETER_NAME');
 

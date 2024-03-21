@@ -1,4 +1,5 @@
 ﻿var OrgName = localStorage.getItem('OrgName');
+var pageXMLArray = window.localStorage.getItem("pageXMLArray");
 (function () {
 
     setTimeout(function () {
@@ -23,6 +24,8 @@ $(function () {
             setHungarian();
             break;
     }
+
+    onPageShowHideCourier();
 
 });
 
@@ -110,4 +113,61 @@ function DisplayScreen(Mode) {
         localStorage.setItem('Is_I_E', 'C');
         window.location.href = "IMP_AWBRemarks.html";
     }
+}
+
+
+function onPageShowHideCourier() {
+
+    var pageXmlDoc = $.parseXML(pageXMLArray);
+    $(pageXmlDoc).find('Table4').each(function (index) {
+
+        PageName = $(this).find('PageName').text();
+        IsActive = $(this).find('IsActive').text();
+        Module = $(this).find('Module').text();
+
+        if (index == 0) {
+            if (Module == 'Courier' && PageName == 'BinningMPSLevel.html' && IsActive == '1') {
+                $("#BinningMPSLevel").show();
+            } else {
+                $("#BinningMPSLevel").hide();
+
+            }
+        }
+
+        if (index == 1) {
+            if (Module == 'Courier' && PageName == 'CourierBinning.html' && IsActive == '1') {
+                $("#Binning").show();
+            } else {
+                $("#Binning").hide();
+            }
+        }
+
+        if (index == 2) {
+            if (Module == 'Courier' && PageName == 'CourierFlightCheckIn.html' && IsActive == '1') {
+                $("#CourierFlightCheckIn").show();
+            } else {
+                $("#CourierFlightCheckIn").hide();
+            }
+        }
+
+        if (index == 3) {
+            if (Module == 'Courier' && PageName == 'CourierFlightCheckInMPSLevel.html' && IsActive == '1') {
+                $("#CourierFlightCheckInMPSLevel").show();
+            } else {
+                $("#CourierFlightCheckInMPSLevel").hide();
+
+            }
+        }
+
+        if (index == 4) {
+            if (Module == 'Courier' && PageName == 'IMP_AWBRemarks.html' && IsActive == '1') {
+                $("#AWBRemarks").show();
+            } else {
+                $("#AWBRemarks").hide();
+            }
+        }
+
+
+    });
+
 }

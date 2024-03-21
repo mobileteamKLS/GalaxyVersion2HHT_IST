@@ -174,7 +174,7 @@ function saveWDO() {
         inputxml = "<Root><WDONo>" + $("#ddlWDONoList :selected").text() + "</WDONo><WDODT>" + _WDODT + "</WDODT><ImpShipRowId>" + _ImpShipRowId + "</ImpShipRowId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><MPSNo>" + _MPSNo + "</MPSNo><LocDetails>" + arrayOfRows + "</LocDetails></Root>";
         console.log(inputxml);
         SaveWDODetailsBLAWB(inputxml);
-     
+
         //  var all_checkboxes = $('#tbTable input[type="checkbox"]');
 
         //if (all_checkboxes.length === all_checkboxes.filter(":checked").length) {
@@ -483,8 +483,8 @@ GetWDODetailsBLWDOList = function (InputXML) {
 
 GetWDODetailsBLAWB = function (_IdValue) {
     const myArray = _IdValue.split("~");
-    _WDODT = myArray[0]
-    _ImpShipRowId = myArray[1]
+    _WDODT = myArray[0];
+    _ImpShipRowId = myArray[1];
     $('.ibiSuccessMsg1').text('');
 
     //  InputXML = "<Root><WDONo>" + $("#ddlWDONoList :selected").text() + "</WDONo><ImpShipRowId>" + ImpShipRowId + "</ImpShipRowId><MPSNo>" + _MPSNo + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
@@ -499,7 +499,7 @@ GetWDODetailsBLAWB = function (_IdValue) {
         success: function (response, xhr, textStatus) {
             HideLoader();
             var str = response.d;
-            // console.log(response.d);
+            console.log(response.d);
             if (str != null && str != "" && str != "<NewDataSet />") {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
@@ -514,6 +514,7 @@ GetWDODetailsBLAWB = function (_IdValue) {
                         $("#lblPkgsWgt").html('');
                         $("#lblMawbNo").html('');
                         $("#lblHawbNo").html('');
+                        $("#lblMPSNo").html('');
                         $("#lblStatus").html('');
                         $("#spnSelect").text('');
                         $("#spnLocationCode").text('');
@@ -627,15 +628,15 @@ bindAllCheckBoxes = function () {
         $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"  checked="checked" class="xmlCheck" /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
     }
 
-    LocXML = '<Rows><StockId>' + _STOCKID + '</StockId><IsSelect>' + checkBoxCheckStatus + '</IsSelect><LocCode>' + _LOCCODE + '</LocCode><Pieces>' + _NOP + '</Pieces><ActualPieces>' + _NOP + '</ActualPieces><IsSeized>' + _IsSeized + '</IsSeized></Rows>';
+    //LocXML = '<Rows><StockId>' + _STOCKID + '</StockId><IsSelect>' + checkBoxCheckStatus + '</IsSelect><LocCode>' + _LOCCODE + '</LocCode><Pieces>' + _NOP + '</Pieces><ActualPieces>' + _NOP + '</ActualPieces><IsSeized>' + _IsSeized + '</IsSeized></Rows>';
 
-    // console.log(LocXML)
+    //// console.log(LocXML)
 
-    rowCollection.push(LocXML);
+    //rowCollection.push(LocXML);
 
-    arrayOfRows = rowCollection.join('');
+    //arrayOfRows = rowCollection.join('');
 
-    var numberOfChecked = $('input:checkbox:checked').length;
+    //var numberOfChecked = $('input:checkbox:checked').length;
 }
 var getAllrowsVal = [];
 function getRowData() {
@@ -677,24 +678,24 @@ SaveWDODetailsBLAWB = function (InputXML) {
                 var Status0;
                 var Status1;
                 var Status2;
+                var Status3;
+                var Status4;
                 var Status;
                 var StrMessage;
                 $(xmlDoc).find('Table').each(function (index) {
-
                     Status0 = $(this).find('Status').text();
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     //if (Status == 'E') {
-                    //    $('#tbTable').empty();
-                    //    getAllrowsVal = [];
-                    //    LocXML = ' ';
-                    //    inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
-                    //    GetWDODetails(inputxml);
                     //    $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
                     //} else if (Status == 'S') {
                     //    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-
+                    //    $('#tbTable').empty();
+                    //    getAllrowsVal = [];
+                    //    LocXML = '';
+                    //    inputxml = "<Root><ScanNo>" + $("#txtMAWBHAWB").val() + "</ScanNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
+                    //    GetWDODetailsBLWDOList(inputxml);
                     //}
                 });
 
@@ -703,56 +704,46 @@ SaveWDODetailsBLAWB = function (InputXML) {
 
                     Status1 = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
-                    //if (Status == 'E') {
-                    //    $('#tbTable').empty();
-                    //    getAllrowsVal = [];
-                    //    LocXML = ' ';
-                    //    inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
-                    //    GetWDODetails(inputxml);
-                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
-                    //} else if (Status == 'S') {
-                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-
-                    //}
                 });
 
                 $(xmlDoc).find('Table2').each(function (index) {
 
                     Status2 = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
-                    //if (Status == 'E') {
-                    //    $('#tbTable').empty();
-                    //    getAllrowsVal = [];
-                    //    LocXML = ' ';
-                    //    inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
-                    //    GetWDODetails(inputxml);
-                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
-                    //} else if (Status == 'S') {
-                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-
-                    //}
                 });
 
+                $(xmlDoc).find('Table3').each(function (index) {
 
+                    Status3 = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
 
+                });
 
+                $(xmlDoc).find('Table4').each(function (index) {
 
-                if (Status0 == 'S' || Status1 == 'S' || Status2 == 'S') {
-                    // if (StrMessage == 'Location updated successfully.') {
-                    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-                    // }
+                    Status4 = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+
+                });
+
+                if (Status0 == 'S' || Status1 == 'S' || Status2 == 'S' || Status3 == 'S' || Status4 == 'S') {
                     fnClear();
-
-                } else if (Status == 'E') {
+                    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                     $('#tbTable').empty();
                     getAllrowsVal = [];
                     LocXML = '';
-                    inputxml = "<Root><WDONo>" + $("#ddlWDONoList :selected").text() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
-                    // GetWDODetails(inputxml);
+                    //inputxml = "<Root><ScanNo>" + $("#txtMAWBHAWB").val() + "</ScanNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
+                    //GetWDODetailsBLWDOList(inputxml);
+                   
+
+                } else if (Status == 'E') {
+                    // $('#tbTable').empty();
+                    getAllrowsVal = [];
+                    LocXML = '';
                     $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-                    fnClear();
+                    // fnClear();
                 }
 
             } else {

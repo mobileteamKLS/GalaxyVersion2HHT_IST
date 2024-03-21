@@ -33,13 +33,13 @@ $(function () {
     $("#lblexplochead").hide();
     $("#ddlHAWBList").change(function () {
         _vlaueofHawb = $('option:selected', this).val();
-        if($('option:selected', this).text()=="Select" || $('option:selected', this).text()==null){
-            _textofHawb="";
+        if ($('option:selected', this).text() == "Select" || $('option:selected', this).text() == null) {
+            _textofHawb = "";
         }
-        else{
-        _textofHawb = $('option:selected', this).text();
-       }
-        
+        else {
+            _textofHawb = $('option:selected', this).text();
+        }
+
         $("#txtLocation").val('');
         $("#txtBinnPkgs").val('');
         $("#txtWght").val('');
@@ -57,7 +57,7 @@ $(function () {
         $(".ibiSuccessMsg1").text('');
     });
 
-    $('#txtScanMAWB').on('keyup', function() {
+    $('#txtScanMAWB').on('keyup', function () {
         let currentValue = $(this).val();
         let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
         cleanedValue = cleanedValue.replace(/\s+/g, '');
@@ -137,16 +137,59 @@ function setTurkish() {
     $('#lblPageName').text("Lokasyon");
 }
 
+
+function AWBNumberScan() {
+    $('#ddlHAWBList').empty();
+
+
+    if ($('#txtScanMAWB').val().length == 11) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 12) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 16) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 28) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+}
+
 function calculateWeight() {
     if (!isDataAvail) {
         return;
     }
     if ($("#txtBinnPkgs").val() == '') {
-        $("#txtWght").val(" ")
+        $("#txtWght").val("")
         return;
     }
     locNOP = $("#txtBinnPkgs").val()
     locWeight = (parseFloat(locNOP) * parseFloat(ShipmentWeight)) / parseFloat(NPR);
+
     $("#txtWght").val(locWeight.toFixed(2))
 }
 
@@ -258,7 +301,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
-                    ExpectedZone=$(this).find("ExpectedZone").text();
+                    ExpectedZone = $(this).find("ExpectedZone").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
                     //$("#txtBinnPkgs").val(PendingPieces);
@@ -266,11 +309,12 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
-                    $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                   if(ExpectedZone!=""){
-                    $("#lblexplochead").show();
-                    $("#lblexploc").text(" "+ExpectedZone);                    
-                   }
+                    //$("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
+
+                    if (ExpectedZone != "") {
+                        $("#lblexplochead").show();
+                        $("#lblexploc").text(" " + ExpectedZone);
+                    }
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -411,6 +455,9 @@ function Imp_GetHAWBIGMNumbersForMAWBNumber() {
 getHWABNoList = function (InputXML) {
 
     $("#ddlHAWBList").text('');
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
 
     $.ajax({
         type: 'POST',
@@ -425,14 +472,31 @@ getHWABNoList = function (InputXML) {
             if (str != null && str != "" && str != "<NewDataSet />") {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
+                $('#ddlHAWBList').empty();
                 var xmlDoc = $.parseXML(str);
 
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
+                        $("#tbTable").hide();
+                        $("#tblLocation").hide();
+                        // $("#txtScanMAWB").val('');
+                        $("#ddlHAWBList").text('');
+                        $("#ddlFlightNoandDate").val('');
+                        $("#txtLocation").val('');
+                        $("#txtBinnPkgs").val('');
+                        $("#txtWght").val('');
+                        $("#spnOriginDist").text('');
+                        $("#spnCommodity").text('');
+                        $("#spnBinnTotPkgs").text('');
+                        $("#spnTxtWeight").text('');
+                        $("#lblexploc").text('');
+
+                        $("#lblexplochead").hide();
+                        // $("#txtScanMAWB").focus();
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-                        return;
+
 
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
@@ -452,17 +516,39 @@ getHWABNoList = function (InputXML) {
                     //newOption.val(MAWBId).text(HAWBNo);
                     //newOption.appendTo('#ddlHAWBList');
 
-                    if (index == 0) {
-                       var newOption = $('<option></option>');
-                       newOption.val(0).text('Select');
-                       newOption.appendTo('#ddlHAWBList');
-                    }
+                    // if (index == 0) {
+                    //    var newOption = $('<option></option>');
+                    //    newOption.val(0).text('Select');
+                    //    newOption.appendTo('#ddlHAWBList');
+                    // }
 
-                    var newOption = $('<option></option>');
-                    newOption.val(PendingPieces).text(HAWBNo);
-                    newOption.appendTo('#ddlHAWBList');
-                   $("#ddlHAWBList").trigger('change');
-                    $("#txtLocation").focus();
+                    // var newOption = $('<option></option>');
+                    // newOption.val(PendingPieces).text(HAWBNo);
+                    // newOption.appendTo('#ddlHAWBList');
+                    //$("#ddlHAWBList").trigger('change');
+                    // $("#txtLocation").focus();
+
+                    if ($(xmlDoc).find('Table').length > 1) {
+                        if (index == 0) {
+                            var newOption = $('<option></option>');
+                            newOption.val(0).text('Select');
+                            newOption.appendTo('#ddlHAWBList');
+                        }
+                        var newOption = $('<option></option>');
+                        newOption.val(MAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                    } else {
+                        var newOption = $('<option></option>');
+                        newOption.val(HAWBNo).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                        $("#ddlWDONoList").trigger('change');
+
+                        // GetWDODetailsBLAWB($("#ddlHAWBList :selected").text())
+                        _textofHawb = $('#ddlHAWBList').val();
+                        _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + $("#ddlHAWBList :selected").text() + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
+                        getIGMNoList(_InputXML);
+                        $("#txtLocation").focus();
+                    }
                 });
                 // $('#dvRemarkShow').empty();
                 $(xmlDoc).find('Table1').each(function (index) {
@@ -478,8 +564,8 @@ getHWABNoList = function (InputXML) {
 
                 });
 
-                _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + _textofHawb + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
-                getIGMNoList(_InputXML);
+                //_InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + _textofHawb + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
+                //getIGMNoList(_InputXML);
 
             } else {
                 $("body").mLoading('hide');
@@ -507,6 +593,9 @@ function dialogAlert(Remark) {
 }
 getIGMNoList = function (InputXML) {
     $("#ddlFlightNoandDate").text('');
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
 
     $.ajax({
         type: 'POST',
@@ -522,7 +611,7 @@ getIGMNoList = function (InputXML) {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
                 var xmlDoc = $.parseXML(str);
-
+                $("body").mLoading('hide');
                 $(xmlDoc).find('Table').each(function (index) {
                     var Process = $(this).find('Process').text();
                     var IGMNo = $(this).find('IGMNo').text();
@@ -547,7 +636,7 @@ getIGMNoList = function (InputXML) {
 
                 });
                 // $('#dvRemarkShow').empty();
-                 var Remark = '';
+                var Remark = '';
                 $(xmlDoc).find('Table1').each(function (index) {
 
                     Remark = $(this).find('Remark').text();
@@ -564,7 +653,7 @@ getIGMNoList = function (InputXML) {
                 if (Remark != '') {
                     $('#remarkPriorityShow').modal('show');
                 }
-               
+
                 _InputXML = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
                 _GetBinningLocPkgDetails(_InputXML);
 
@@ -603,6 +692,14 @@ _GetBinningLocPkgDetails = function (InputXML) {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
                 $("#tblLocation").show('slow');
+                $("#spnOriginDist").text('');
+                $("#spnCommodity").text('');
+                $("#spnBinnTotPkgs").text('');
+                $("#spnTxtWeight").text('');
+
+                $("#txtBinnPkgs").val('');
+                $("#txtWght").val('');
+
                 var xmlDoc = $.parseXML(str);
 
                 $(xmlDoc).find('Table').each(function (index) {
@@ -618,6 +715,17 @@ _GetBinningLocPkgDetails = function (InputXML) {
                 });
                 $("#tblLocation").empty();
                 $(xmlDoc).find('Table1').each(function (index) {
+
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        return;
+                    } else if (Status == 'S') {
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+
+                    }
+
                     Origin = $(this).find('Origin').text();
                     Destination = $(this).find('Destination').text();
                     Commodity = $(this).find('Commodity').text();
@@ -629,20 +737,27 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     TotalPieces = $(this).find('TotalPieces').text();
                     LocWeight = $(this).find('LocWeight').text();
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
-                    ExpectedZone=$(this).find("ExpectedZone").text();
+                    ExpectedZone = $(this).find("ExpectedZone").text();
+                    shipmentWeightExp = $(this).find("shipmentWeightExp").text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
-
+                    showWt = shipmentWeightExp - LocWeight;
                     //$("#txtBinnPkgs").val(PendingPieces);
                     //$("#txtLocation").text(LocPieces);
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
-                    if(ExpectedZone!=""){
+
+                    $("#txtBinnPkgs").val(PendingPieces);
+                    //  $("#txtWght").val(showWt);
+
+                    calculateWeight();
+
+                    if (ExpectedZone != "") {
                         $("#lblexplochead").show();
-                        $("#lblexploc").text(" "+ExpectedZone);
-                       }
+                        $("#lblexploc").text(" " + ExpectedZone);
+                    }
 
                     if (LocCode != '') {
                         $("#LocationDiv").show();
@@ -742,7 +857,7 @@ function clearFunction() {
     $("#spnBinnTotPkgs").text('');
     $("#spnTxtWeight").text('');
     $("#lblexploc").text('');
-    
+
     $("#lblexplochead").hide();
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');

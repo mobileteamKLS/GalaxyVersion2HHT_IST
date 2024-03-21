@@ -42,7 +42,7 @@ $(function () {
         $("#textMoveWght").val('');
         $("#txtLocation").val('');
         $("#spnOriginDist").text('');
-        
+
         // ASI(_vlaueofHawb);
         $("#txtBinnPkgs").val(_vlaueofHawb);
         //$("#txtReceived").val(Received);
@@ -112,16 +112,35 @@ $(function () {
 function AWBNumberScan() {
     $('#ddlHAWBList').empty();
 
-    if ($('#txtScanMAWB').val().length == 16) {
-       
+    if ($('#txtScanMAWB').val().length == 11) {
+
         if ($("#txtScanMAWB").val() != '') {
             var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
             InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
             getHWABNoList(InputXML);
         }
     }
-    if ($('#txtScanMAWB').val().length == 11) {
-       
+
+    if ($('#txtScanMAWB').val().length == 12) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 16) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 28) {
+
         if ($("#txtScanMAWB").val() != '') {
             var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
             InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
@@ -476,6 +495,22 @@ getHWABNoList = function (InputXML) {
 
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                         $("#btnSubmit").attr('disabled', 'disabled').css('background-color', '#a7a7a7');
+                        //  $("#txtScanMAWB").val('');
+                        $("#ddlHAWBList").text('');
+                        $("#ddlFlightNoandDate").val('');
+                        $("#txtLocation").val('');
+                        $("#txtMovePkgs").val('');
+                        $("#textMoveWght").val('');
+                        $("#spnOriginDist").text('');
+                        $("#spnCommodity").text('');
+                        $("#spnBinnTotPkgs").text('');
+                        // $("#txtScanMAWB").focus();
+
+                        $("#locationShow").text('');
+                        $("#LocationDiv").hide();
+                        $("#tblLocation").empty();
+                        _textofHawb = "";
+
                     } else if (Status == 'S') {
                         //   $("#btnSubmit").removeAttr('disabled');
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
@@ -526,10 +561,11 @@ getHWABNoList = function (InputXML) {
                         newOption.appendTo('#ddlHAWBList');
                     } else {
                         var newOption = $('<option></option>');
-                        newOption.val(MAWBId).text(HAWBNo);
+                        newOption.val(HAWBNo).text(HAWBNo);
                         newOption.appendTo('#ddlHAWBList');
                         $("#ddlWDONoList").trigger('change');
                         // GetWDODetailsBLAWB($("#ddlHAWBList :selected").text())
+                        _textofHawb = $('#ddlHAWBList').val();
                         _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + $("#ddlHAWBList :selected").text() + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
                         getIGMNoList(_InputXML);
                         $("#txtLocation").focus();
@@ -837,8 +873,9 @@ function clearFunction() {
     $("#locationShow").text('');
     $("#LocationDiv").hide();
     $("#tblLocation").empty();
-    $(".ibiSuccessMsg1").text('');
     _textofHawb = "";
+    $(".ibiSuccessMsg1").text('');
+
 }
 
 

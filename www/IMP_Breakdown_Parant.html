@@ -71,6 +71,7 @@
         .btn-primary.disabled, .btn-primary:disabled {
             background-color: #ccc;
         }
+
     </style>
 </head>
 
@@ -134,7 +135,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="number" disabled id="txtIGMNo" onkeyup="ChkMaxLength(this, '7'); NumberOnly(event);" class="textfieldClass"  style="text-align:right;">
+                        <input type="number" disabled id="txtIGMNo" onkeyup="ChkMaxLength(this, '7'); NumberOnly(event);" class="textfieldClass" style="text-align:right;">
                     </div>
                 </div>
                 <div class="col-4">
@@ -197,7 +198,7 @@
 
             </div>
 
-            <div class="contacts row contacts__itemfortext" id="">
+            <div class="contacts row contacts__itemfortext" id="divMainDetails">
 
                 <div class="col-5" style="text-align:left;">
                     <label class="lbl" id="lblNLoc">Tot. Shipments</label>
@@ -279,9 +280,8 @@
                 <div class="col-12">
                     <label class="ibiSuccessMsg1"></label>
                 </div>
-            </div>
 
-            <div class="contacts row contacts__itemfortext" id="btndiv">
+
                 <div class="col-6">
                     <div class="form-group">
                         <button type="button" id="btnExcLanded" onclick="window.location.href = 'ImportOperations.html'" class="btnClass btn-primary">EXIT</button>
@@ -296,6 +296,12 @@
                 </div>
             </div>
 
+            <!--<div class="contacts row contacts__itemfortext" id="btndiv">
+                
+            </div>-->
+            <div class="contacts row contacts__itemfortext" id="divFlightInfo" style="overflow: scroll">
+
+            </div>
             <!--<footer>FOOTER</footer>-->
         </section>
 
