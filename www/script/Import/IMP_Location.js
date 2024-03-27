@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+
 var _IGMNo;
 var Origin;
 var Destination;
@@ -65,6 +67,7 @@ $(function () {
     });
 
     $('#txtScanMAWB').keypress(function (event) {
+
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('body').mLoading({
@@ -99,6 +102,14 @@ $(function () {
             setTurkish();
             break;
     }
+
+
+    $("#txtScanMAWB").bind("input", function (e) {
+
+        if (PARAMETER_VALUE_for_Groupid == 'N') {
+            AWBNumberScan();
+        }
+    });
 
 });
 
@@ -139,6 +150,8 @@ function setTurkish() {
 
 
 function AWBNumberScan() {
+
+    
     $('#ddlHAWBList').empty();
 
 
@@ -170,6 +183,15 @@ function AWBNumberScan() {
     }
 
     if ($('#txtScanMAWB').val().length == 28) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 34) {
 
         if ($("#txtScanMAWB").val() != '') {
             var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
@@ -814,9 +836,30 @@ _SaveBinning = function (InputXML) {
                         $("#txtLocation").focus();
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-                        $("#txtBinnPkgs").val('');
-                        $("#txtWght").val('');
-                        $("#txtLocation").val('');
+
+                        if (PARAMETER_VALUE_for_Groupid != 'N') {
+                            $("#txtBinnPkgs").val('');
+                            $("#txtWght").val('');
+                            $("#txtLocation").val('');
+                        } else {
+                            $("#tbTable").hide();
+                            $("#tblLocation").hide();
+                            $("#txtScanMAWB").val('');
+                            $("#ddlHAWBList").text('');
+                            $("#ddlFlightNoandDate").val('');
+                            $("#txtLocation").val('');
+                            $("#txtBinnPkgs").val('');
+                            $("#txtWght").val('');
+                            $("#spnOriginDist").text('');
+                            $("#spnCommodity").text('');
+                            $("#spnBinnTotPkgs").text('');
+                            $("#spnTxtWeight").text('');
+                            $("#lblexploc").text('');
+
+                            $("#lblexplochead").hide();
+                            $("#txtScanMAWB").focus();
+                        }
+
                         //$("#btnSearch").trigger("click");
                         //if (true) {
 
@@ -825,8 +868,12 @@ _SaveBinning = function (InputXML) {
                     }
                 });
 
-                _InputXML = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
-                _GetBinningLocPkgDetails(_InputXML);
+                if (PARAMETER_VALUE_for_Groupid != 'N') {
+                    _InputXML = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + $('#ddlFlightNoandDate').val() + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+                    _GetBinningLocPkgDetails(_InputXML);
+                }
+
+
             } else {
                 $("body").mLoading('hide');
                 $(".ibiSuccessMsg1").text('Please enter valid location pieces').css({ "color": "Red", "font-weight": "bold" });
