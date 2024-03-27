@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\www",
-    "\\www\\js",
-    "\\www\\script"
+    "\\www\\script",
+    "\\www\\script\\Import"
   ],
+  "SelectedNode": "\\www\\script\\Import\\IMP_Location.js",
   "PreviewInSolutionExplorer": false
 }

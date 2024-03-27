@@ -15,6 +15,9 @@ var txtScanMAWB = window.localStorage.getItem("txtScanMAWB");
 var flightNo = window.localStorage.getItem("flightNo");
 var flightDate = window.localStorage.getItem("flightDate");
 var groupId = window.localStorage.getItem("groupId");
+var fsqno = localStorage.getItem('fsqno');
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+var PARAMETER_NAME_for_Groupid = window.localStorage.getItem("PARAMETER_NAME_for_Groupid");
 var _Status;
 var _StrMessage;
 var _WDOStatus;
@@ -31,13 +34,14 @@ var _AirportCity
 var _Culture
 var flightSeqNo;
 var ISCROWID = "";
+
 $(function () {
 
     //setTimeout(function () {
     //    window.location.href = 'Login.html'
     //}, 1200000);
 
-   
+
 
     $("#btnComplete").click(function () {
         $("#groupId").val('');
@@ -163,6 +167,18 @@ $(function () {
             break;
     }
 
+    if (fsqno == '1') {
+        openScanner();
+    }
+
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+        $('#groupId').attr("disabled", 'disabled');
+    } else {
+        $('#txtScanGroupID').focus();
+        $('#groupId').removeAttr('disabled');
+    }
 
 });
 
@@ -179,7 +195,7 @@ function setHungarian() {
     $('#lblScanFlight').text("Járat szkennelés");
     $('#lblFltDateNo').text("Járatszám");
     $('#lblAccept').text("Átvétel");
-   // $('#lblFlCheckIn').text("Auto");
+    // $('#lblFlCheckIn').text("Auto");
     $('#lblScan').text("Szkennelés");
     $('#lblMAWBNo').text("Főfuvarlevél szám");
     $('#lblHAWBNo').text("Házi Fuvarlevél szám");
@@ -191,6 +207,17 @@ function setHungarian() {
     $('#btnClear').text("Törlés");
     $('#btnSbmit').text("Jóváhagyás");
 
+}
+
+function MPSNumberScan() {
+    var mpsln = $('#txtScan').val().length;
+    
+    if (parseInt(mpsln) === 34) {
+       
+        // if ($("#txtScan").val() != '') {
+        searchRecordon34digit();
+        // }
+    }
 }
 //function scanBarCode() {
 //    cordova.plugins.barcodeScanner.scan(
@@ -277,6 +304,7 @@ function openScanner() {
 
 function fnExit() {
     window.location.href = 'Courier.html';
+    localStorage.removeItem('fsqno');
 }
 function fnClear() {
     $("#txtScanMAWB").val('');
@@ -292,7 +320,7 @@ function fnClear() {
     $("#Weight").val('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
-
+    localStorage.removeItem('fsqno');
 }
 
 GetImportFlightCourierDetailsV2 = function (InputXML) {
@@ -323,10 +351,16 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
                     } else {
                         $(".ibiSuccessMsg1").text('');
                     }
+                    $("#txtScan").focus();
                 });
+                if (PARAMETER_VALUE_for_Groupid == 'N') {
+                    $('#txtScan').focus();
+                } else {
+                    $('#groupId').focus();
+                }
 
                 $(xmlDoc).find('Table1').each(function (index) {
-                    $("#groupId").focus();
+                    /*  $("#groupId").focus();*/
                     $("#flightNo").val($(this).find('FlightAirline').text() + $(this).find('FlightNo').text());
                     flightSeqNo = $(this).find('FlightSeqNo').text()
                     if ($(this).find('FlightDate').text() != "") {
@@ -396,7 +430,7 @@ GetImportSaveCourierDetailsV2 = function () {
                         }
                     });
 
-
+                    
                 } else {
                     $("body").mLoading('hide');
                     return;
@@ -412,7 +446,7 @@ GetImportSaveCourierDetailsV2 = function () {
 
 searchRecord = function () {
     if ($("#txtScanMAWB").val() == "") {
-       // $.alert("Please Enter Scan Flight No.");
+        // $.alert("Please Enter Scan Flight No.");
         return;
     }
 
@@ -431,19 +465,7 @@ searchRecord = function () {
                 var str = response.d;
                 if (str != null && str != "" && str != "<NewDataSet />") {
                     var xmlDoc = $.parseXML(str);
-                    $(xmlDoc).find('Table').each(function (index) {
-                        Status = $(this).find('Status').text();
-                        StrMessage = $(this).find('StrMessage').text();
-                        if (Status == 'E') {
-                            $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
-                        } else if (Status == 'S') {
-                            $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
-
-                        } else {
-                            $(".ibiSuccessMsg1").text('');
-                        }
-                    });
                     $('#dvRemarkShow').empty();
                     var Remark = '';
                     $(xmlDoc).find('Table2').each(function (index) {
@@ -466,11 +488,31 @@ searchRecord = function () {
                         $("#Weight").val($(this).find('WeightExp').text());
                         ISCROWID = $(this).find('ISCROWID').text()
                     });
-                    if ($('#autoCheckBox').is(":checked")) {
-                        setTimeout(function () {
-                            GetImportSaveCourierDetailsV2();
-                        }, 1000);
-                    }
+
+                    $(xmlDoc).find('Table').each(function (index) {
+                        Status = $(this).find('Status').text();
+                        StrMessage = $(this).find('StrMessage').text();
+                        if (Status == 'E') {
+                            $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                            $('#MAWB').val('');
+                            $('#HAWB').val('');
+                            $('#MPS').val('');
+                            $('#Pieces').val('');
+                            $('#Weight').val('');
+                            $('#txtScan').val('');
+                            $('#txtScan').focus();
+                        } else if (Status == 'S') {
+                            $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                            if ($('#autoCheckBox').is(":checked")) {
+                                //setTimeout(function () {
+                                GetImportSaveCourierDetailsV2();
+                                //}, 1000);
+                            }
+                        } else {
+                            $(".ibiSuccessMsg1").text('');
+                        }
+                    });
+
 
                 } else {
                     $("body").mLoading('hide');
@@ -485,12 +527,106 @@ searchRecord = function () {
             }
         });
     } else {
-       // $.alert("Please Enter MPS No.");
+        // $.alert("Please Enter MPS No.");
+    }
+}
+
+
+searchRecordon34digit = function () {
+
+    if ($("#txtScanMAWB").val() == "") {
+        // $.alert("Please Enter Scan Flight No.");
+        return;
+    }
+
+    if ($("#txtScan").val() != "") {
+        var inputSearchxml = "<Root><FltSeqNo>" + flightSeqNo + "</FltSeqNo><MPSNo>" + $("#txtScan").val() + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+        console.log(inputSearchxml)
+        $.ajax({
+            type: 'POST',
+            url: ACSServiceURL + "/GetImportGetCourierDetailsV2",
+            data: JSON.stringify({ 'InputXML': inputSearchxml }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response, xhr, textStatus) {
+                console.log(response.d);
+                HideLoader();
+                var str = response.d;
+                if (str != null && str != "" && str != "<NewDataSet />") {
+                    var xmlDoc = $.parseXML(str);
+
+                    $('#dvRemarkShow').empty();
+                    var Remark = '';
+                    $(xmlDoc).find('Table2').each(function (index) {
+
+                        Remark = $(this).find('Remark').text();
+                        // Date = $(this).find('Date').text();
+                        IsHighPriority = $(this).find('IsHighPriority').text();
+                        $('#dvRemarkShow').append(Remark);
+                        $('#remarkPriorityShow').modal('show');
+
+
+                    });
+
+                    $(xmlDoc).find('Table1').each(function (index) {
+                        $("#txtScan").val('');
+                        $("#MAWB").val($(this).find('AWBNo').text());
+                        $("#HAWB").val($(this).find('HouseNo').text());
+                        $("#MPS").val($(this).find('MPSNo').text());
+                        $("#Pieces").val($(this).find('NPX').text());
+                        $("#Weight").val($(this).find('WeightExp').text());
+                        ISCROWID = $(this).find('ISCROWID').text()
+                    });
+
+                    $(xmlDoc).find('Table').each(function (index) {
+
+                        Status = $(this).find('Status').text();
+                        StrMessage = $(this).find('StrMessage').text();
+                        if (Status == 'E') {
+                            $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                            $('#MAWB').val('');
+                            $('#HAWB').val('');
+                            $('#MPS').val('');
+                            $('#Pieces').val('');
+                            $('#Weight').val('');
+                            $('#txtScan').val('');
+                            $('#txtScan').focus();
+                        } else if (Status == 'S') {
+                            $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                            if ($('#autoCheckBox').is(":checked")) {
+                                //setTimeout(function () {
+                                if (index == 0) {
+                                    GetImportSaveCourierDetailsV2();
+                                }
+
+                                //}, 1000);
+                            }
+                        } else {
+                            $(".ibiSuccessMsg1").text('');
+                        }
+                    });
+
+
+                } else {
+                    $("body").mLoading('hide');
+                    errmsg = "Record not found</br>";
+                    $.alert(errmsg);
+                    return;
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("body").mLoading('hide');
+                // alert('Server not responding...');
+            }
+        });
+    } else {
+        // $.alert("Please Enter MPS No.");
     }
 }
 
 
 GetImportGetCourierAcceptedDetailsV2 = function () {
+    localStorage.setItem('fsqno', '1');
     if ($("#txtScanMAWB").val() == "") {
 
     } else {

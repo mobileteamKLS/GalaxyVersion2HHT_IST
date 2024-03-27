@@ -89,9 +89,11 @@ function DropDownClick() {
 
 }
 function DisplayScreen(Mode) {
+    localStorage.removeItem('fsqno');
     if (Mode == "CourierFlightCheckIn") {
         window.location.href = "CourierFlightCheckIn.html";
         window.localStorage.setItem("c_flag", '0');
+       
         localStorage.setItem('Mode', 'CourierFlightCheckIn');
     } else if (Mode == "Binning") {
         window.location.href = "CourierBinning.html";

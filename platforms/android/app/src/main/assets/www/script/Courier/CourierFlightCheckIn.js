@@ -15,6 +15,7 @@ var txtScanMAWB = window.localStorage.getItem("txtScanMAWB");
 var flightNo = window.localStorage.getItem("flightNo");
 var flightDate = window.localStorage.getItem("flightDate");
 var groupId = window.localStorage.getItem("groupId");
+var fsqno = localStorage.getItem('fsqno');
 var _Status;
 var _StrMessage;
 var _WDOStatus;
@@ -163,7 +164,9 @@ $(function () {
             break;
     }
 
-
+    if (fsqno == '1') {
+        openScanner();
+    }
 });
 
 function onFocus() {
@@ -277,6 +280,7 @@ function openScanner() {
 
 function fnExit() {
     window.location.href = 'Courier.html';
+    localStorage.removeItem('fsqno');
 }
 function fnClear() {
     $("#txtScanMAWB").val('');
@@ -292,7 +296,7 @@ function fnClear() {
     $("#Weight").val('');
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
-
+    localStorage.removeItem('fsqno');
 }
 
 GetImportFlightCourierDetailsV2 = function (InputXML) {
@@ -323,6 +327,7 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
                     } else {
                         $(".ibiSuccessMsg1").text('');
                     }
+                    $("#txtScan").focus();
                 });
 
                 $(xmlDoc).find('Table1').each(function (index) {
@@ -491,6 +496,7 @@ searchRecord = function () {
 
 
 GetImportGetCourierAcceptedDetailsV2 = function () {
+    localStorage.setItem('fsqno', '1');
     if ($("#txtScanMAWB").val() == "") {
 
     } else {

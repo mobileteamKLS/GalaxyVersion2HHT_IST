@@ -211,6 +211,7 @@ GetRNoForAWBForGet = function (InputXML) {
         dataType: "json",
         success: function (response, xhr, textStatus) {
             console.log(response.d)
+           
             HideLoader();
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
@@ -431,6 +432,18 @@ GetBinningAWBDetails = function (HAWBROWID) {
                     $("#tblLocation tr").removeClass("highlight");
                     if (!selected)
                         $(this).addClass("highlight");
+                });
+                $('#dvRemarkShow').empty();
+                var Remark = '';
+                $(xmlDoc).find('Table2').each(function (index) {
+
+                    Remark = $(this).find('Remark').text();
+                    // Date = $(this).find('Date').text();
+                    IsHighPriority = $(this).find('IsHighPriority').text();
+                    $('#dvRemarkShow').append(Remark);
+                    $('#remarkPriorityShow').modal('show');
+
+
                 });
 
 

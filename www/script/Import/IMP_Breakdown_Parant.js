@@ -23,7 +23,7 @@ var _flightPrefix = '';
 var _flightNo = '';
 var _flightDate = '';
 $(function () {
-   
+
     //var formattedDate = new Date();
     //var d = formattedDate.getDate();
     //if (d.toString().length < Number(2))
@@ -136,7 +136,7 @@ function NexttoULDDetails() {
 }
 
 function setDate() {
- 
+
     $("#txtFlightDate").val(moment(new Date()).format("YYYY-MM-DD"))
 }
 
@@ -281,7 +281,7 @@ function GetFlightDetails() {
                             return;
                         }
                         else
-                            $("#btnNext").removeAttr("disabled").css('background-color','#3c7cd3');
+                            $("#btnNext").removeAttr("disabled").css('background-color', '#3c7cd3');
                         $('#lblFlightStatusError').text('');
 
                         $('#txtIGMNo').val($(this).find('CustomRef').text());
@@ -443,11 +443,11 @@ function ViewFlightRelatedDetails() {
         flagRdoAll = 'A';
 
     if (IGMNo != "" && IGMYear != "") {
-        inputxml = '<Root><IGMNO>' + IGMNo + '</IGMNO><IGMYear>' + IGMYear + '</IGMYear><FlightAirline></FlightAirline><FlightNo></FlightNo><FlightDate></FlightDate><FilterClause>' + flagRdoAll + '</FilterClause><AirportCity>' + AirportCity + '</AirportCity></Root>';
+        inputxml = '<Root><IGMNO>' + IGMNo + '</IGMNO><IGMYear>' + IGMYear + '</IGMYear><FlightAirline></FlightAirline><FlightNo></FlightNo><FlightDate></FlightDate><FilterClause>' + flagRdoAll + '</FilterClause><AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity></Root>';
     }
 
     else if (FlightPrefix != "" && FlightNo != "" && $("#txtFlightDate").val() != "") {
-        inputxml = '<Root><IGMNO></IGMNO><IGMYear></IGMYear><FlightAirline>' + FlightPrefix + '</FlightAirline><FlightNo>' + FlightNo + '</FlightNo><FlightDate>' + FlightDate + '</FlightDate><FilterClause>' + flagRdoAll + '</FilterClause><AirportCity>' + AirportCity + '</AirportCity></Root>';
+        inputxml = '<Root><IGMNO></IGMNO><IGMYear></IGMYear><FlightAirline>' + FlightPrefix + '</FlightAirline><FlightNo>' + FlightNo + '</FlightNo><FlightDate>' + FlightDate + '</FlightDate><FilterClause>' + flagRdoAll + '</FilterClause><AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity></Root>';
     }
 
     if (errmsg == "" && connectionStatus == "online") {
@@ -481,15 +481,15 @@ function ViewFlightRelatedDetails() {
                     else
                         html += '<input type="radio" name="radSize" id="rdoAll" value="All" checked="checked" />'
 
-                    html += '<label for="sizeLarge">All</label>'
+                    html += '<label for="sizeLarge" style="margin-left: 10px; ">All</label>'
                     html += '<label for="sizeLarge">  </label>'
 
                     if (flagRdoAll == 'S')
-                        html += '<input type="radio" name="radSize" id="rdoShortUnscanned" value="ShortUnscanned" checked="checked"/>'
+                        html += '<input type="radio" name="radSize" style="margin: 10px;" id="rdoShortUnscanned" value="ShortUnscanned" checked="checked"/>'
                     else
-                        html += '<input type="radio" name="radSize" id="rdoShortUnscanned" value="ShortUnscanned" />'
+                        html += '<input type="radio" name="radSize" style="margin: 10px;" id="rdoShortUnscanned" value="ShortUnscanned" />'
 
-                    html += '<label for="sizeSmall">Short/Unscanned</label>'
+                    html += '<label for="sizeSmall" style="margin-left: 10px; ">Short/Unscanned</label>'
                     html += '</div>'
 
                     // html += "<table id='tblNews' border='1' style='width:200%;table-layout:fixed;word-break:break-word;border-color: white;margin-top: 2%;'>";
@@ -531,7 +531,7 @@ function ViewFlightRelatedDetails() {
                         $('#txtFlightPrefix').val($(this).find('FlightAirline').text());
                         $('#txtFlightNo').val($(this).find('FlightNo').text());
                         FlightDate = $(this).find('STA').text();
-                        // $('#txtFlightDate').val(FlightDate);
+                       // $('#txtFlightDate').val(FlightDate);
 
                         // sta = $(this).find('STA').text();
 
@@ -547,24 +547,24 @@ function ViewFlightRelatedDetails() {
 
                         //$('#txtFlightDate').val(newdate);
 
-                        var date = FlightDate;
-                        var newdate = date.split("-").reverse().join("-");
+                        //var date = FlightDate;
+                        //var newdate = date.split("-").reverse().join("-");
 
-                        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                            "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
-                        ];
+                        //const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        //    "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
+                        //];
 
-                        var d = new Date(newdate);
+                        //var d = new Date(newdate);
 
-                        _Mont = monthNames[d.getMonth()]
+                        //_Mont = monthNames[d.getMonth()]
 
-                        YY = FlightDate.split("-")[2];
-                        MM = FlightDate.split("-")[1];
-                        DD = FlightDate.split("-")[0];
+                        //YY = FlightDate.split("-")[2];
+                        //MM = FlightDate.split("-")[1];
+                        //DD = FlightDate.split("-")[0];
 
 
-                        var ulddate = DD + '-' + _Mont + '-' + YY;
-                        $('#txtFlightDate').val(ulddate);
+                        //var ulddate = DD + '-' + _Mont + '-' + YY;
+                        //$('#txtFlightDate').val(ulddate);
 
                         $('#lblFlightStatus').text('Flight Status:' + ' ' + $(this).find('Status').text());
                     });
@@ -707,12 +707,12 @@ function clearALL() {
     var today = day + '-' + month + '-' + year;
     $('#txtFlightDate').val(today);
 
-    $("#txtFlightDate").datepicker({
-        shortYearCutoff: 1,
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: 'dd-M-yy'
-    });
+    //$("#txtFlightDate").datepicker({
+    //    shortYearCutoff: 1,
+    //    changeMonth: true,
+    //    changeYear: true,
+    //    dateFormat: 'dd-M-yy'
+    //});
 
     $('#txtTotCnts').val('');
     $('#txtManiPieces').val('');
