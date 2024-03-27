@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+
 var _IGMNo;
 var Origin;
 var Destination;
@@ -106,6 +108,13 @@ $(function () {
             break;
     }
 
+    $("#txtScanMAWB").bind("input", function (e) {
+
+        if (PARAMETER_VALUE_for_Groupid == 'N') {
+            AWBNumberScan();
+        }
+    });
+
 });
 
 
@@ -140,6 +149,15 @@ function AWBNumberScan() {
     }
 
     if ($('#txtScanMAWB').val().length == 28) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 34) {
 
         if ($("#txtScanMAWB").val() != '') {
             var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
