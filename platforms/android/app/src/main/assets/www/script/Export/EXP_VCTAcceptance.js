@@ -54,6 +54,13 @@ $(function () {
             }
         }
     }
+
+    $('#txtScannedNo').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
    
    
    

@@ -49,6 +49,13 @@ var allSHCCodeSave = '';
 var values=[];
 $(function () {
 
+    $('#txtScanAWB').on('keyup', function() {
+        let currentValue = $(this).val();
+        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+        cleanedValue = cleanedValue.replace(/\s+/g, '');
+        $(this).val(cleanedValue);
+    });
+
     if (txtScannedNo != '') {
         $("#txtScanAWB").val(txtScannedNo);
 
@@ -1020,7 +1027,7 @@ GetVCTUnScannedDetails = function (InputXML) {
                     var newOption = $('<option></option>');
                     newOption.val(ScaleID).text(MachineName);
                     newOption.appendTo('#ddlWeighingScale');
-                    // $("#ddlWeighingScale").val(values[0]);
+                     $("#ddlWeighingScale").val(values[0]);
                    
                 });
 
