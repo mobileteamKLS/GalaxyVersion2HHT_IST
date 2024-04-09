@@ -118,7 +118,7 @@ UserLogin = function (pUserID, pPassword) {
                 localStorage.removeItem('PARAMETER_VALUE_for_WDOScanOnAWBHHT');
                 localStorage.removeItem('PARAMETER_NAME_for_WDOScanOnAWBHHT');
                 localStorage.removeItem('pageXMLArray');
-                
+
                 var xmlDoc = $.parseXML(str);
 
                 $(xmlDoc).find('Table1').each(function (index) {
@@ -149,7 +149,10 @@ UserLogin = function (pUserID, pPassword) {
                 //    window.localStorage.setItem("PARAMETER_NAME_for_Groupid", $(this).find('PARAMETER_NAME').text());
                 //});
 
+                logincheckflag = '0';
+
                 $(xmlDoc).find('Table').each(function (index) {
+                    logincheckflag = '1';
                     window.localStorage.setItem("Userid", $(this).find('Userid').text());
                     window.localStorage.setItem("User_Name", $(this).find('User_Name').text());
                     window.localStorage.setItem("User_group", $(this).find('User_group').text());
@@ -169,10 +172,16 @@ UserLogin = function (pUserID, pPassword) {
                 localStorage.setItem('pageXMLArray', response.d);
 
                 //$(xmlDoc).find('Table2').each(function (index) {
-                    
+
                 //});
                 //localStorage.removeItem('Column1ForBeakdown');
                 //localStorage.removeItem('PARAMETER_NAME');
+
+                if (logincheckflag == '0') {
+                    errmsg = errmsg + 'Invalid Username or Password.';
+                    $.alert(errmsg);
+                    errmsg = '';
+                }
 
 
             } else {
