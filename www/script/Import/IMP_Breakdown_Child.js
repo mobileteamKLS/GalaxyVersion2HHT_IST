@@ -30,6 +30,8 @@ var showAll = 'N';
 
 $(function () {
 
+    
+
     flightPrefix = amplify.store("flightPrefix");
     flightNo = amplify.store("flightNo");
     flightDisplayDate = amplify.store("flightDisplayDate");
@@ -328,21 +330,21 @@ function SHCSpanHtml(newSHC) {
 
         if (filtered[n].indexOf('~') > -1) {
             if (blink[1] == 'Y' && filtered[n] != '~Y') {
-                spanStr += "<td class='blink_me'>" + blink[0] + "</td>";
+                spanStr += "<td class='blink_me' style='line-height:0.5; width: 20% !important;'>" + blink[0] + "</td>";
                 console.log(filtered[n])
             }
         }
 
         if (filtered[n].indexOf('~') > -1) {
             if (blink[1] == 'N' && filtered[n] != '~N') {
-                spanStr += "<td class='foo'>" + blink[0] + "</td>";
+                spanStr += "<td class='foo' style='width: 20% !important;'>" + blink[0] + "</td>";
                 console.log(filtered[n])
             }
         }
     }
     spanStr += "</tr>";
 
-    $("#TextBoxDiv").html(spanStr);
+    $("#SHCCodeTbl").html(spanStr);
     return spanStr;
 
 }
@@ -412,7 +414,7 @@ function GetULDDetails() {
             success: function (Result) {
                 Result = Result.d;
                 var xmlDoc = $.parseXML(Result);
-
+                console.log(xmlDoc)
                 xmlDamageType = xmlDoc;
 
                 $(xmlDoc).find('Table1').each(function (index) {
@@ -1511,7 +1513,7 @@ function GetHAWBDetails(AWBid) {
                         $('#txtReceivedPkgs').val($(this).find('NPR').text());
                         $('#txtRemainingPkgs').val($(this).find('RemNOP').text());
                         var newSHC = $(this).find('SHCAll').text();
-                        $("#TextBoxDiv").empty();
+                        $("#SHCCodeTbl").empty();
                         SHCSpanHtml(newSHC);
 
                     }
@@ -1592,7 +1594,7 @@ function GetHAWBLevelPiecesDetails(HAWBid) {
                     $('#txtDamagePkgsView').val($(this).find('DmgPkgs').text());
                     $('#txtDamageWtView').val($(this).find('DmgWt').text());
                     var newSHC = $(this).find('SHCAll').text();
-                    $("#TextBoxDiv").empty();
+                    $("#SHCCodeTbl").empty();
                     SHCSpanHtml(newSHC);
 
                     if (PARAMETER_VALUE_for_Groupid == 'N') {
@@ -1714,7 +1716,7 @@ function clearALL() {
     $('#txtScanULD').focus();
     //$('#chkFoundCgo').attr('checked', false);
     //$('#chkShowAll').attr('checked', false);
-    $("#TextBoxDiv").empty();
+    $("#SHCCodeTbl").empty();
 }
 
 function ShowALLRefresh() {
@@ -1738,7 +1740,7 @@ function clearPiecesInfo() {
     $('#txtDamageWt').val('');
     $('#txtScanGroupId').val('');
     $("#txtScanGroupIdFoundCargo").val('');
-    $("#TextBoxDiv").empty();
+    $("#SHCCodeTbl").empty();
 }
 
 function ClearError(ID) {

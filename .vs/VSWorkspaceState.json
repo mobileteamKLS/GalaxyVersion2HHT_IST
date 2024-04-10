@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\www",
-    "\\www\\script",
-    "\\www\\script\\Import"
+    "\\www\\js"
   ],
-  "SelectedNode": "\\www\\script\\Import\\IMP_Location.js",
+  "SelectedNode": "\\www\\js\\jquery.min.js",
   "PreviewInSolutionExplorer": false
 }

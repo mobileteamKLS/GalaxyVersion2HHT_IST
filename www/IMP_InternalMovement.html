@@ -26,6 +26,95 @@
             padding: 3px;
             text-transform: initial;
         }
+
+        #SHCCodeTbl td.foo:nth-child(7n+1) {
+            background-color: rgb(177,112,136);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+2) {
+            background-color: rgb(27,81,141);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+3) {
+            background-color: rgb(13,150,68);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+4) {
+            background-color: rgb(35,29,31);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+5) {
+            background-color: rgb(157,124,43);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+6) {
+            background-color: rgb(14,76,166);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+7) {
+            background-color: rgb(206,84,209);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+8) {
+            background-color: rgb(143,74,219);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+9) {
+            background-color: rgb(198,139,74);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            font-size: 12px;
+        }
+
+        #SHCCodeTbl {
+            margin-bottom: 0px !important;
+            margin-top: 5px;
+        }
+
+        .blink_me {
+            animation: blinker 1s linear infinite;
+            background-color: yellow;
+            padding: 10px;
+            text-align: center;
+            line-height: 50px;
+            font-weight: bolder;
+            line-height: 0.5;
+            text-align: center !important;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body data-ma-theme="green">
@@ -41,8 +130,8 @@
             <div class="navigation-trigger hidden-xl-up">
                 <div class="navigation-trigger__inner">
                     <!--<i class="navigation-trigger__line"></i>
-                <i class="navigation-trigger__line"></i>
-                <i class="navigation-trigger__line"></i>-->
+                    <i class="navigation-trigger__line"></i>
+                    <i class="navigation-trigger__line"></i>-->
                     <a href="ImportOperations.html"><i style="font-size:2rem !important;" class="zmdi zmdi-chevron-left zmdi-hc-2x"></i></a>
 
                 </div>
@@ -84,14 +173,14 @@
 
                 <div class="col-7">
                     <div class="form-group">
-                        <input type="text" inputmode="text" enterkeyhint="Go" maxlength="30" id="txtScanMAWB" autofocus onkeyup="ChkMaxLength(this, '30');AWBNumberScan();" style="height: 30px;color:#2196F3;font-weight:bold;text-transform:uppercase !important;" " class="textfieldClass" placeholder="">
+                        <input type="text" inputmode="text" enterkeyhint="Go" maxlength="34" id="txtScanMAWB" autofocus onkeyup="ChkMaxLength(this, '34');" style="height: 30px;color:#2196F3;font-weight:bold;text-transform:uppercase !important;" " class="textfieldClass" placeholder="">
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
                 <!--<div class="col-3">
-                <button type="button" onclick="Imp_GetHAWBIGMNumbersForMAWBNumber();" id="btnSearch" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>
-                <button onclick="openScanner();" class="btn btn--icon login__block__btn login__block__btn_margin scannerBG"><i class="zmdi zmdi-scanner"></i></button>
-            </div>-->
+                    <button type="button" onclick="Imp_GetHAWBIGMNumbersForMAWBNumber();" id="btnSearch" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>
+                    <button onclick="openScanner();" class="btn btn--icon login__block__btn login__block__btn_margin scannerBG"><i class="zmdi zmdi-scanner"></i></button>
+                </div>-->
 
                 <div class="col-5">
                     <div class="form-group vtMargin">
@@ -118,15 +207,15 @@
                     <hr />
                 </div>
                 <!-- <div class="col-12" style="text-align:left;">
-                    <label class="lbl" id="lblExpectedZone">Expected Zone &nbsp;&nbsp;&nbsp; <span style="font-weight:bold;" id="expectedZone"></span></label>
-                    <hr />
-                </div> -->
+        <label class="lbl" id="lblExpectedZone">Expected Zone &nbsp;&nbsp;&nbsp; <span style="font-weight:bold;" id="expectedZone"></span></label>
+        <hr />
+    </div> -->
 
                 <div class="col-5" style="text-align:left;">
                     <label class="lbl" id="lblNewLoc">New Location</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-7">
-                    <input type="text" id="txtLocation"  onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="" style="width:100% !important; text-transform:uppercase !important;">
+                    <input type="text" id="txtLocation" onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="" style="width:100% !important; text-transform:uppercase !important;">
                     <i class="form-group__bar"></i>
                 </div>
                 <div class="col-5">
@@ -143,7 +232,7 @@
                 </div>
                 <div class="col-7">
                     <input type="text" id="textMoveWght"
-                           style="height: 30px;text-align:right;" class="textfieldClass" 
+                           style="height: 30px;text-align:right;" class="textfieldClass"
                            placeholder="">
                 </div>
 
@@ -153,6 +242,15 @@
                 </div>
                 <div class="col-6">
                     <label class="lbl" id="spnOriginDist"></label>
+                </div>
+
+                <!--<div class="col-5" style="text-align:left;">
+                    <label class="lbl" id="lblshc">SHC</label>
+                </div>-->
+
+                <div class="col-12">
+                    <!--<input type="text" id="txtSHC" disabled class="textfieldClass" placeholder="" style="">-->
+                    <table class="table" id="SHCCodeTbl"></table>
                 </div>
 
                 <div class="col-12">
@@ -175,18 +273,18 @@
                 </div>
             </div>
             <!--<div class="contacts row contacts__itemfortext">
-            <table class="table  table-bordered mb-0">
-                <tbody id="tbTable">
-                    <tr>
-                        <td><span>Origin / Destination</span></td>
-                        <td><span id="spnOriginDist"></span></td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>-->
-            <div class="contacts row contacts__itemfortext" id="LocationDiv" style="display:none;">
                 <table class="table  table-bordered mb-0">
+                    <tbody id="tbTable">
+                        <tr>
+                            <td><span>Origin / Destination</span></td>
+                            <td><span id="spnOriginDist"></span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>-->
+            <div class="contacts row contacts__itemfortext" id="LocationDiv" style="display:none;">
+                <!--<table class="table  table-bordered mb-0">
                     <thead class="theadClass">
                         <tr>
                             <th id="lblPcs">Location</th>
@@ -201,7 +299,7 @@
                         </tr>
 
                     </tbody>
-                </table>
+                </table>-->
             </div>
             <!--<footer>FOOTER</footer>-->
         </section>
@@ -224,29 +322,29 @@
             </div>
         </div>
         <!--<div class="modal fade" id="modalhelp" tabindex="-1" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="border:solid thin #000;">
-                <div class="modal-header">
-                    <h5 class="modal-title pull-left">Record POD</h5><button type="button" class="" data-dismiss="modal">X</button>
-                </div>
-                <div class="modal-body row">
-                    <div class="col-12" style="text-align:justify;text-transform:initial;">This feature Is used for the final delivery of the shipments. The GHA enters the AWB details and clicks on the search icons. All the details of the shipments for that particular AWB is displayed and then the GHA can confirm the delivery of the shipments.GHA capture driver photo by click camera icon and signiture of the driver its optional. </div>
-                    <div class="col-12" style="text-align:justify;"><img src="img/RecorPOD.png" style="width: 99.33%;" /></div>
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content" style="border:solid thin #000;">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left">Record POD</h5><button type="button" class="" data-dismiss="modal">X</button>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-12" style="text-align:justify;text-transform:initial;">This feature Is used for the final delivery of the shipments. The GHA enters the AWB details and clicks on the search icons. All the details of the shipments for that particular AWB is displayed and then the GHA can confirm the delivery of the shipments.GHA capture driver photo by click camera icon and signiture of the driver its optional. </div>
+                        <div class="col-12" style="text-align:justify;"><img src="img/RecorPOD.png" style="width: 99.33%;" /></div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-primary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>-->
+        </div>-->
         <!--<div>
-        <footer class="footer">
-            <div class="container">
-                <center><p class="text-muted" id="RightsReserved"> © Kale Logistics Solutions Private Limited. 2019</p></center>
-            </div>
-        </footer>
-    </div>-->
+            <footer class="footer">
+                <div class="container">
+                    <center><p class="text-muted" id="RightsReserved"> © Kale Logistics Solutions Private Limited. 2019</p></center>
+                </div>
+            </footer>
+        </div>-->
     </main>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -267,3 +365,5 @@
     </script>
 </body>
 </html>
+
+
