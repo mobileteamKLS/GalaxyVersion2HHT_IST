@@ -145,7 +145,9 @@ GetVCTDetailsByVCTNo = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -206,7 +208,9 @@ SaveVCTGateInOut = function () {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }

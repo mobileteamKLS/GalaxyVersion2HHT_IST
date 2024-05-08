@@ -34,7 +34,7 @@ $(function () {
     //    window.location.href = 'Login.html'
     //}, 1200000);
 
-    $('#txtMAWBNo').on('keyup', function() {
+    $('#txtMAWBNo').on('keyup', function () {
         let currentValue = $(this).val();
         let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
         cleanedValue = cleanedValue.replace(/\s+/g, '');
@@ -94,8 +94,8 @@ function setHungarian() {
     $('#lblLocation').text("Lokáció");
     $('#lblPageName').text("Lokáció");
     $('#btnBackp').text("Kilépés");
-    
-    
+
+
 }
 
 
@@ -141,7 +141,7 @@ function calculateWeight() {
 }
 
 GetRNoForAWB = function () {
-    
+
     $("#txtLocation").val('');
     $("#spnTxtOriginDest").text('');
     $("#spnTxtCommodity").text('');
@@ -244,7 +244,7 @@ GetRNoForAWB = function () {
                             .text($(this).find("HOUSE_AWB_NUMBER").text());
                         newOption.appendTo("#ddlHAWBList");
                     } else {
-                   
+
                         if (index == 0) {
                             HAWBROWID = $(this).find("EXPHAWBROWID").text();
                             var newOption = $("<option></option>");
@@ -294,6 +294,8 @@ GetRNoForAWB = function () {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
     // }
@@ -309,60 +311,60 @@ GetBinningAWBDetails = function (HAWBROWID) {
     var InputXML = "<Root><AWBNO>" + hiddenAWBNo + "</AWBNO><EWRNO>" + $("#txtRNo").val() + "</EWRNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><EXPHAWBROWID>" + HAWBROWID + "</EXPHAWBROWID></Root>";
     //console.log(InputXML)
 
-        $('body').mLoading({
-            text: "Please Wait..",
-        });
-        $.ajax({
-            type: 'POST',
-            url: ExpURL + "/GetBinningAWBDetails",
-            data: JSON.stringify({ 'InputXML': InputXML }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response, xhr, textStatus) {
-                // console.log(response.d)
-                HideLoader();
-                var str = response.d;
-                if (str != null && str != "" && str != "<NewDataSet />") {
-                    // $("#btnDiv").show('slow');
-                    // $("#tbTable").show('slow');
-                    var xmlDoc = $.parseXML(str);
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
+    $.ajax({
+        type: 'POST',
+        url: ExpURL + "/GetBinningAWBDetails",
+        data: JSON.stringify({ 'InputXML': InputXML }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            // console.log(response.d)
+            HideLoader();
+            var str = response.d;
+            if (str != null && str != "" && str != "<NewDataSet />") {
+                // $("#btnDiv").show('slow');
+                // $("#tbTable").show('slow');
+                var xmlDoc = $.parseXML(str);
 
-                    $(xmlDoc).find('Table').each(function (index) {
-                        Status = $(this).find('Status').text();
-                        OutMsg = $(this).find('OutMsg').text();
-                        if (Status == 'E') {
-                            //  $(".ibiSuccessMsg1").text(OutMsg).css({ "color": "Red", "font-weight": "bold" });
+                $(xmlDoc).find('Table').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    OutMsg = $(this).find('OutMsg').text();
+                    if (Status == 'E') {
+                        //  $(".ibiSuccessMsg1").text(OutMsg).css({ "color": "Red", "font-weight": "bold" });
 
-                        } else if (Status == 'S') {
-                            // $(".ibiSuccessMsg1").text(OutMsg).css({ 'color': 'green', "font-weight": "bold" });
+                    } else if (Status == 'S') {
+                        // $(".ibiSuccessMsg1").text(OutMsg).css({ 'color': 'green', "font-weight": "bold" });
 
-                        } else {
-                            // $(".ibiSuccessMsg1").text('');
-                        }
-                    });
+                    } else {
+                        // $(".ibiSuccessMsg1").text('');
+                    }
+                });
 
-                    $(xmlDoc).find('Table1').each(function (index) {
-                        $("#spnTxtOriginDest")[0].innerHTML = $(this).find('Origin').text() + "/" + $(this).find('Destination').text();
-                        $("#spnTxtCommodity")[0].innerHTML = $(this).find('CommodityDesc').text();
-                        $("#spnTxtbinnPkgs")[0].innerHTML = $(this).find('RemainingPieces').text();
-                        $("#spnTxtWeight")[0].innerHTML = $(this).find('TotLocatedWt').text()+"/"+$(this).find('Weight').text();
-                        ShipmentWeight=$(this).find('Weight').text();
-                        NPR=$(this).find('NOP').text();
-                        isDataAvail=true;
-                    });
+                $(xmlDoc).find('Table1').each(function (index) {
+                    $("#spnTxtOriginDest")[0].innerHTML = $(this).find('Origin').text() + "/" + $(this).find('Destination').text();
+                    $("#spnTxtCommodity")[0].innerHTML = $(this).find('CommodityDesc').text();
+                    $("#spnTxtbinnPkgs")[0].innerHTML = $(this).find('RemainingPieces').text();
+                    $("#spnTxtWeight")[0].innerHTML = $(this).find('TotLocatedWt').text() + "/" + $(this).find('Weight').text();
+                    ShipmentWeight = $(this).find('Weight').text();
+                    NPR = $(this).find('NOP').text();
+                    isDataAvail = true;
+                });
 
-                    $('#dvRemarkShow').empty();
-                    var Remark = '';
-                    $(xmlDoc).find('Table2').each(function (index) {
+                $('#dvRemarkShow').empty();
+                var Remark = '';
+                $(xmlDoc).find('Table2').each(function (index) {
 
-                        Remark = $(this).find('Remark').text();
-                        // Date = $(this).find('Date').text();
-                        IsHighPriority = $(this).find('IsHighPriority').text();
-                        $('#dvRemarkShow').append(Remark);
-                        $('#remarkPriorityShow').modal('show');
+                    Remark = $(this).find('Remark').text();
+                    // Date = $(this).find('Date').text();
+                    IsHighPriority = $(this).find('IsHighPriority').text();
+                    $('#dvRemarkShow').append(Remark);
+                    $('#remarkPriorityShow').modal('show');
 
 
-                    });
+                });
 
 
             } else {
@@ -372,7 +374,9 @@ GetBinningAWBDetails = function (HAWBROWID) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
     // }
@@ -456,6 +460,8 @@ SaveLocationDetails = function () {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }

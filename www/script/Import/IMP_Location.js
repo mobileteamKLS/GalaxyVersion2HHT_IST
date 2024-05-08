@@ -364,6 +364,8 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -599,6 +601,8 @@ getHWABNoList = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -689,6 +693,8 @@ getIGMNoList = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -807,6 +813,8 @@ _GetBinningLocPkgDetails = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -881,7 +889,9 @@ _SaveBinning = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }

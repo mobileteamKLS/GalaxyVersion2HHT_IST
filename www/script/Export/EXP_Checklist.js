@@ -408,11 +408,11 @@ function GetExportCheckListNext(chkID) {
                 //    //  return;
                 //}
             },
-            error: function (msg) {
-                //debugger;
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                var r = jQuery.parseJSON(msg.responseText);
-                $.alert(r.Message);
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }
@@ -560,11 +560,11 @@ function GetExportCheckListSearch() {
 
 
             },
-            error: function (msg) {
-                //debugger;
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                var r = jQuery.parseJSON(msg.responseText);
-                $.alert(r.Message);
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }
@@ -763,11 +763,11 @@ function GetExportCheckListSave() {
                 });
 
             },
-            error: function (msg) {
-                //debugger;
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                var r = jQuery.parseJSON(msg.responseText);
-                $.alert(r.Message);
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }

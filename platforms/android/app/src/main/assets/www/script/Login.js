@@ -110,10 +110,49 @@ UserLogin = function (pUserID, pPassword) {
             HideLoader();
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
+                localStorage.removeItem('Column1ForBeakdown');
+                localStorage.removeItem('PARAMETER_NAME');
+                localStorage.removeItem('PARAMETER_VALUE_for_Groupid');
+                localStorage.removeItem('PARAMETER_NAME_for_Groupid');
+
+                localStorage.removeItem('PARAMETER_VALUE_for_WDOScanOnAWBHHT');
+                localStorage.removeItem('PARAMETER_NAME_for_WDOScanOnAWBHHT');
+                localStorage.removeItem('pageXMLArray');
 
                 var xmlDoc = $.parseXML(str);
 
+                $(xmlDoc).find('Table1').each(function (index) {
+
+                    if (index == 0) {
+
+                        window.localStorage.setItem("Column1ForBeakdown", $(this).find('PARAMETER_VALUE').text());
+                        window.localStorage.setItem("PARAMETER_NAME", $(this).find('PARAMETER_NAME').text());
+                    }
+
+                    if (index == 1) {
+
+                        window.localStorage.setItem("PARAMETER_VALUE_for_WDOScanOnAWBHHT", $(this).find('PARAMETER_VALUE').text());
+                        window.localStorage.setItem("PARAMETER_NAME_for_WDOScanOnAWBHHT", $(this).find('PARAMETER_NAME').text());
+                    }
+
+                    if (index == 2) {
+
+                        window.localStorage.setItem("PARAMETER_VALUE_for_Groupid", $(this).find('PARAMETER_VALUE').text());
+                        window.localStorage.setItem("PARAMETER_NAME_for_Groupid", $(this).find('PARAMETER_NAME').text());
+                    }
+
+
+                });
+                //$(xmlDoc).find('Table1').each(function (index) {
+
+                //    window.localStorage.setItem("PARAMETER_VALUE_for_Groupid", $(this).find('PARAMETER_VALUE').text());
+                //    window.localStorage.setItem("PARAMETER_NAME_for_Groupid", $(this).find('PARAMETER_NAME').text());
+                //});
+
+                logincheckflag = '0';
+
                 $(xmlDoc).find('Table').each(function (index) {
+                    logincheckflag = '1';
                     window.localStorage.setItem("Userid", $(this).find('Userid').text());
                     window.localStorage.setItem("User_Name", $(this).find('User_Name').text());
                     window.localStorage.setItem("User_group", $(this).find('User_group').text());
@@ -129,14 +168,22 @@ UserLogin = function (pUserID, pPassword) {
                     window.localStorage.setItem("Language", $('#ddlLanguage').find('option:selected').text());
                     window.location = "Dashboard.html";
                 });
-                localStorage.removeItem('Column1ForBeakdown');
-                localStorage.removeItem('PARAMETER_NAME');
 
-                $(xmlDoc).find('Table1').each(function (index) {
-                    window.localStorage.setItem("Column1ForBeakdown", $(this).find('Column1').text());
-                    window.localStorage.setItem("PARAMETER_NAME", $(this).find('PARAMETER_NAME').text());
-                   
-                });
+                localStorage.setItem('pageXMLArray', response.d);
+
+                //$(xmlDoc).find('Table2').each(function (index) {
+
+                //});
+                //localStorage.removeItem('Column1ForBeakdown');
+                //localStorage.removeItem('PARAMETER_NAME');
+
+                if (logincheckflag == '0') {
+                    errmsg = errmsg + 'Invalid Username or Password.';
+                    $.alert(errmsg);
+                    errmsg = '';
+                }
+
+
             } else {
 
                 HideLoader();
@@ -147,7 +194,9 @@ UserLogin = function (pUserID, pPassword) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -237,7 +286,9 @@ spHHT_Get_OrgTypemaster = function (OperationType) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }

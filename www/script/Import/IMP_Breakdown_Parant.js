@@ -370,9 +370,11 @@ function GetFlightDetails() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -609,10 +611,11 @@ function ViewFlightRelatedDetails() {
                 }
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                var r = jQuery.parseJSON(msg.responseText);
-                $.alert(r.Message);
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }

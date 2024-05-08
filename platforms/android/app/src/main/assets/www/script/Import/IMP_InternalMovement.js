@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+
 var _IGMNo;
 var Origin;
 var Destination;
@@ -41,6 +43,8 @@ $(function () {
         $("#txtMovePkgs").val('');
         $("#textMoveWght").val('');
         $("#txtLocation").val('');
+        $("#spnOriginDist").text('');
+
         // ASI(_vlaueofHawb);
         $("#txtBinnPkgs").val(_vlaueofHawb);
         //$("#txtReceived").val(Received);
@@ -68,6 +72,11 @@ $(function () {
     });
 
     $('#txtScanMAWB').keypress(function (event) {
+        $('#ddlHAWBList').empty();
+        $("#txtLocation").val('');
+        $("#txtMovePkgs").val('');
+        $("#textMoveWght").val('');
+        $('#locationShow').text('');
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('body').mLoading({
@@ -103,8 +112,69 @@ $(function () {
             break;
     }
 
+    $("#txtScanMAWB").bind("input", function (e) {
+
+        if (PARAMETER_VALUE_for_Groupid == 'N') {
+            AWBNumberScan();
+        }
+    });
+
+   
+
 });
 
+
+function AWBNumberScan() {
+    $('#ddlHAWBList').empty();
+    $("#txtLocation").val('');
+    $("#txtMovePkgs").val('');
+    $("#textMoveWght").val('');
+    $('#locationShow').text('');
+    if ($('#txtScanMAWB').val().length == 11) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 12) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 16) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 28) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+
+    if ($('#txtScanMAWB').val().length == 34) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
+            getHWABNoList(InputXML);
+        }
+    }
+}
 
 function setTurkish() {
     $('#lblIntlMove').text("İç hareket");
@@ -257,7 +327,12 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
             if (str != null && str != "" && str != "<NewDataSet />") {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
-                $("#tblLocation").show('slow');
+                // $("#tblLocation").show('slow');
+                $("#LocationDiv").empty();
+                $("#txtLocation").val('');
+                $("#txtMovePkgs").val('');
+                $("#textMoveWght").val('');
+                $('#locationShow').text('');
                 var xmlDoc = $.parseXML(str);
 
                 $(xmlDoc).find('Table').each(function (index) {
@@ -271,8 +346,39 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
                     //}
                 });
-                $("#tblLocation").empty();
+
+
+                html = '';
+
+                html += '<table id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Location</th>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Pieces</th>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Weight</th>';
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+
                 $(xmlDoc).find('Table1').each(function (index) {
+
+                    //if (LocCode != '') {
+                    //    $("#LocationDiv").show();
+
+                    //    $('<tr class="valp"></tr>').html('<td class="text-left .tdVal"  >' + LocCode.toUpperCase() + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="display:none;">' + LocId + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
+                    //    //$('<tr></tr>').html('<td class="text-left tdVal">' + LocCode + '</td><td>' + LocPieces + '</td>').appendTo('#tblLocation');
+
+                    //    //$("#spnlocationName").text(LocCode);
+                    //    //$("#spnlocationPackgs").text(LocPieces);
+                    //} else {
+                    //    $("#LocationDiv").hide();
+                    //    //$("#spnlocationName").text('');
+                    //    //$("#spnlocationPackgs").text('');
+                    //}
+
+                  
+
+
                     Origin = $(this).find('Origin').text();
                     Destination = $(this).find('Destination').text();
                     Commodity = $(this).find('Commodity').text();
@@ -286,26 +392,35 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     LocWeight = $(this).find('LocWeight').text();
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
-                    //$("#txtBinnPkgs").val(PendingPieces);
+                    $("#txtBinnPkgs").val(PendingPieces);
                     //$("#txtLocation").text(LocPieces);
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
+                    var sum = LocCode + LocPieces;
 
-                    if (LocCode != '') {
-                        $("#LocationDiv").show();
-                        //
+                    locationDetails(LocCode, LocPieces, LocId, LocWeight);
 
-                        $('<tr></tr>').html('<td class="text-left">' + LocCode + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
+                });
 
-                        //$("#spnlocationName").text(LocCode);
-                        //$("#spnlocationPackgs").text(LocPieces);
-                    } else {
-                        $("#LocationDiv").hide();
-                        //$("#spnlocationName").text('');
-                        //$("#spnlocationPackgs").text('');
-                    }
+                html += "</tbody></table>";
+                if (LocCode != '') {
+                    $("#LocationDiv").show();
 
+                    $('#LocationDiv').append(html);
+                }
+
+                $("#tblLocation").on('click', '.valp', function () {
+                    var selected = $(this).hasClass("highlight");
+                    $("#tblLocation tr").removeClass("highlight");
+                    if (!selected)
+                        $(this).addClass("highlight");
+                    //if (this.style.background == "" || this.style.background == "white") {
+                    //    $(this).css('background', 'green');
+                    //}
+                    //else {
+                    //    $(this).css('background', 'white');
+                    //}
                 });
 
             } else {
@@ -318,6 +433,8 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -444,7 +561,7 @@ getHWABNoList = function (InputXML) {
                 $("#btnDiv").show('slow');
                 $("#tbTable").show('slow');
                 var xmlDoc = $.parseXML(str);
-
+                $('#ddlHAWBList').empty();
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
@@ -452,6 +569,22 @@ getHWABNoList = function (InputXML) {
 
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                         $("#btnSubmit").attr('disabled', 'disabled').css('background-color', '#a7a7a7');
+                        //  $("#txtScanMAWB").val('');
+                        $("#ddlHAWBList").text('');
+                        $("#ddlFlightNoandDate").val('');
+                        $("#txtLocation").val('');
+                        $("#txtMovePkgs").val('');
+                        $("#textMoveWght").val('');
+                        $("#spnOriginDist").text('');
+                        $("#spnCommodity").text('');
+                        $("#spnBinnTotPkgs").text('');
+                        // $("#txtScanMAWB").focus();
+
+                        $("#locationShow").text('');
+                        $("#LocationDiv").hide();
+                        $("#tblLocation").empty();
+                        _textofHawb = "";
+
                     } else if (Status == 'S') {
                         //   $("#btnSubmit").removeAttr('disabled');
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
@@ -476,19 +609,40 @@ getHWABNoList = function (InputXML) {
                     //newOption.val(MAWBId).text(HAWBNo);
                     //newOption.appendTo('#ddlHAWBList');
 
-                    if (index == 0) {
-                        var newOption = $('<option></option>');
-                        newOption.val(0).text('Select');
-                        newOption.appendTo('#ddlHAWBList');
-                    }
+                    //if (index == 0) {
+                    //    var newOption = $('<option></option>');
+                    //    newOption.val(0).text('Select');
+                    //    newOption.appendTo('#ddlHAWBList');
+                    //}
 
-                    var newOption = $('<option></option>');
-                    newOption.val(PendingPieces).text(HAWBNo);
-                    newOption.appendTo('#ddlHAWBList');
-                    $("#ddlHAWBList").trigger('change');
-                    $("#txtLocation").focus();
-                    if (HAWBNo != '') {
-                        $("#ddlHAWBList option:contains(" + HAWBNo + ")").attr('selected', 'selected');
+                    //var newOption = $('<option></option>');
+                    //newOption.val(MAWBId).text(HAWBNo);
+                    //newOption.appendTo('#ddlHAWBList');
+                    //$("#ddlHAWBList").trigger('change');
+                    //$("#txtLocation").focus();
+                    //if (HAWBNo != '') {
+                    //    $("#ddlHAWBList option:contains(" + HAWBNo + ")").attr('selected', 'selected');
+                    //}
+
+                    if ($(xmlDoc).find('Table').length > 1) {
+                        if (index == 0) {
+                            var newOption = $('<option></option>');
+                            newOption.val(0).text('Select');
+                            newOption.appendTo('#ddlHAWBList');
+                        }
+                        var newOption = $('<option></option>');
+                        newOption.val(MAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                    } else {
+                        var newOption = $('<option></option>');
+                        newOption.val(HAWBNo).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBList');
+                        $("#ddlWDONoList").trigger('change');
+                        // GetWDODetailsBLAWB($("#ddlHAWBList :selected").text())
+                        _textofHawb = $('#ddlHAWBList').val();
+                        _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + $("#ddlHAWBList :selected").text() + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
+                        getIGMNoList(_InputXML);
+                        $("#txtLocation").focus();
                     }
                 });
 
@@ -506,8 +660,7 @@ getHWABNoList = function (InputXML) {
 
                 });
 
-                _InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO>" + _textofHawb + "</HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>I</EventType></Root>"
-                getIGMNoList(_InputXML);
+
 
             } else {
                 $("body").mLoading('hide');
@@ -518,7 +671,9 @@ getHWABNoList = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -595,7 +750,9 @@ getIGMNoList = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            /// alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -616,24 +773,60 @@ _GetBinningLocPkgDetails = function (InputXML) {
             //console.log(response.d)
             var str = response.d;
 
-            $("#tblLocation").empty();
+            // $("#tblLocation").empty();
             if (str != null && str != "" && str != "<NewDataSet />") {
                 $("#btnDiv").show('slow');
-                $("#tbTable").show('slow');
+                /*  $("#tbTable").show('slow');*/
+                $("#LocationDiv").empty();
+                $("#SHCCodeTbl").empty();
                 var xmlDoc = $.parseXML(str);
 
-                $(xmlDoc).find('Table').each(function (index) {
-                    //Status = $(this).find('Status').text();
-                    //StrMessage = $(this).find('StrMessage').text();
-                    //if (Status == 'E') {
-                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
-                    //} else if (Status == 'S') {
+                $(xmlDoc).find('Table1').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        return
+                    }
+                    //else if (Status == 'S') {
                     //    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 
                     //}
                 });
+
+
+
+                html = '';
+
+                html += '<table  id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Location</th>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Pieces</th>';
+                html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;font-size:14px" align="center">Weight</th>';
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+
                 $(xmlDoc).find('Table1').each(function (index) {
+
+                    //if (LocCode != '') {
+                    //    $("#LocationDiv").show();
+
+                    //    $('<tr class="valp"></tr>').html('<td class="text-left .tdVal"  >' + LocCode.toUpperCase() + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="display:none;">' + LocId + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
+                    //    //$('<tr></tr>').html('<td class="text-left tdVal">' + LocCode + '</td><td>' + LocPieces + '</td>').appendTo('#tblLocation');
+
+                    //    //$("#spnlocationName").text(LocCode);
+                    //    //$("#spnlocationPackgs").text(LocPieces);
+                    //} else {
+                    //    $("#LocationDiv").hide();
+                    //    //$("#spnlocationName").text('');
+                    //    //$("#spnlocationPackgs").text('');
+                    //}
+
+
+
+
                     Origin = $(this).find('Origin').text();
                     Destination = $(this).find('Destination').text();
                     Commodity = $(this).find('Commodity').text();
@@ -646,6 +839,9 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     ShipmentWeight = $(this).find('shipmentWeightExp').text();
                     LocWeight = $(this).find('LocWeight').text();
                     NPR = $(this).find('NPR').text();
+                    SHCAll = $(this).find('SHCAll').text();
+                    _XmlForSHCCode = SHCAll;
+                    SHCSpanHtml(SHCAll);
                     isDataAvail = true;
                     $("#txtBinnPkgs").val(PendingPieces);
                     //$("#txtLocation").text(LocPieces);
@@ -653,41 +849,49 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     var sum = LocCode + LocPieces;
-                    if (LocCode != '') {
-                        $("#LocationDiv").show();
 
-                        $('<tr class="valp"></tr>').html('<td class="text-left .tdVal"  >' + LocCode + '</td><td style="text-align:right;">' + LocPieces + '</td><td style="display:none;">' + LocId + '</td><td style="text-align:right;">' + LocWeight + '</td>').appendTo('#tblLocation');
-                        //$('<tr></tr>').html('<td class="text-left tdVal">' + LocCode + '</td><td>' + LocPieces + '</td>').appendTo('#tblLocation');
-
-                        //$("#spnlocationName").text(LocCode);
-                        //$("#spnlocationPackgs").text(LocPieces);
-                    } else {
-                        $("#LocationDiv").hide();
-                        //$("#spnlocationName").text('');
-                        //$("#spnlocationPackgs").text('');
-                    }
+                    locationDetails(LocCode, LocPieces, LocId, LocWeight);
 
                 });
+                html += "</tbody></table>";
+                if (LocCode != '') {
+                    $("#LocationDiv").show();
+                    $('#LocationDiv').append(html);
+                }
+
                 $("#tblLocation").on('click', '.valp', function () {
-                    // get the current row
-                    var currentRow = $(this).closest("tr");
-
-                    var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-                    var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-                    var col3 = currentRow.find("td:eq(2)").text(); // get current row 2nd TD
-                    var col4 = currentRow.find("td:eq(3)").text(); // get current row 2nd TD
-                    //  var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
-
-                    var data = col1 + "/" + col2 + "/" + col3 + "/" + col4;
-
-                    getLocation(data);
-                    $('#txtLocation').focus();
-
                     var selected = $(this).hasClass("highlight");
                     $("#tblLocation tr").removeClass("highlight");
                     if (!selected)
                         $(this).addClass("highlight");
+                    //if (this.style.background == "" || this.style.background == "white") {
+                    //    $(this).css('background', 'green');
+                    //}
+                    //else {
+                    //    $(this).css('background', 'white');
+                    //}
                 });
+
+                //$("#tblLocation").on('click', '.valp', function () {
+                //    // get the current row
+                //    var currentRow = $(this).closest("tr");
+
+                //    var col1 = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+                //    var col2 = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+                //    var col3 = currentRow.find("td:eq(2)").text(); // get current row 2nd TD
+                //    var col4 = currentRow.find("td:eq(3)").text(); // get current row 2nd TD
+                //    //  var col3 = currentRow.find("td:eq(2)").text(); // get current row 3rd TD
+
+                //    var data = col1 + "/" + col2 + "/" + col3 + "/" + col4;
+
+                //    getLocation(data);
+                //    $('#txtLocation').focus();
+
+                //    var selected = $(this).hasClass("highlight");
+                //    $("#tblLocation tr").removeClass("highlight");
+                //    if (!selected)
+                //        $(this).addClass("highlight");
+                //});
             } else {
                 $("body").mLoading('hide');
                 //errmsg = "WDO No. not found</br>";
@@ -698,11 +902,25 @@ _GetBinningLocPkgDetails = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
 
-function getLocation(data) {
+
+function locationDetails(LocCode, LocPieces, LocId, LocWeight) {
+
+    html += '<tr class="valp" onclick="getLocation(\'' + LocCode + '\', \'' + LocPieces + '\',\'' + LocId + '\',\'' + LocWeight + '\');">';
+    html += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + LocCode + '</td>';
+    html += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + LocPieces + '</td>';
+    html += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + LocWeight + '</td>';
+    html += '</tr>';
+
+   // console.log(html)
+}
+
+function getLocation(LocCode, LocPieces, LocId, LocWeight) {
 
     //var str = data;
     //var Locpcs = str.substring(0, str.lastIndexOf("/"));
@@ -713,15 +931,20 @@ function getLocation(data) {
     //$("#textMoveWght").val(wt);
     //$("#locationShow").text(Locpcs);
 
-    const str = data.split("/");
+    //const str = data.split("/");
 
-    var _loc = str[0];
-    var _pcs = str[1];
-    currentLocID = str[2];
-    var _wt = str[3];
-    $("#txtMovePkgs").val(_pcs);
-    $("#textMoveWght").val(_wt);
-    $("#locationShow").text(_loc + "/" + _pcs);
+    //var _loc = str[0];
+    //var _pcs = str[1];
+    //currentLocID = str[2];
+    //var _wt = str[3];
+
+
+    currentLocID = LocId;
+    $("#txtMovePkgs").val(LocPieces);
+    $("#textMoveWght").val(LocWeight);
+    $("#locationShow").text(LocCode + "/" + LocPieces);
+
+   
 
 }
 
@@ -770,7 +993,9 @@ _SaveBinning = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -792,10 +1017,12 @@ function clearFunction() {
     $("#txtScanMAWB").focus();
     $(".ibiSuccessMsg1").text('');
     $("#locationShow").text('');
-    $("#LocationDiv").hide();
+    $("#LocationDiv").empty();
     $("#tblLocation").empty();
-    $(".ibiSuccessMsg1").text('');
+    $("#SHCCodeTbl").empty();
     _textofHawb = "";
+    $(".ibiSuccessMsg1").text('');
+
 }
 
 
@@ -816,3 +1043,37 @@ function clearFunction() {
 //    }
 //}
 
+
+
+function SHCSpanHtml(newSHC) {
+    var spanStr = "<tr class=''>";
+    var newSpanSHC = newSHC.split(',');
+    var filtered = newSpanSHC.filter(function (el) {
+        return el != "";
+    });
+
+    for (var n = 0; n < filtered.length; n++) {
+        var blink = filtered[n].split('~');
+
+        if (filtered[n].indexOf('~') > -1) {
+            if (blink[1] == 'Y' && filtered[n] != '~Y') {
+                spanStr += "<td style='line-height:0.5; width: 20% !important;' class='blink_me'>" + blink[0] + "</td>";
+                console.log(filtered[n])
+            }
+        }
+
+        if (filtered[n].indexOf('~') > -1) {
+            if (blink[1] == 'N' && filtered[n] != '~N') {
+                spanStr += "<td class='foo' style='width: 20% !important;'>" + blink[0] + "</td>";
+                console.log(filtered[n])
+            }
+        }
+    }
+    spanStr += "</tr>";
+
+    $("#SHCCodeTbl").html(spanStr);
+    $("#dvForEditBtn").show();
+
+    return spanStr;
+
+}

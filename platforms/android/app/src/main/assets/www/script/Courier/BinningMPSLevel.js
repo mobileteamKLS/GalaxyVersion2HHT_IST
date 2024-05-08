@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+var PARAMETER_NAME_for_Groupid = window.localStorage.getItem("PARAMETER_NAME_for_Groupid");
 var _Status;
 var _StrMessage;
 var _WDOStatus;
@@ -40,10 +42,10 @@ $(function () {
     //    alert('l');
     //}
 
-    window.onload = function () {
-        $("#txtScanGroupID").trigger('focus');
-        // tblArray = [];
-    }
+    //window.onload = function () {
+    //    $("#txtScanGroupID").trigger('focus');
+    //    // tblArray = [];
+    //}
 
 
     $("#btnSearch").click(function () {
@@ -139,7 +141,36 @@ $(function () {
     }
 
     $('#tblCountShow').hide();
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+        $('#txtScanGroupID').attr("disabled", 'disabled');
+    } else {
+        $('#txtScanGroupID').focus();
+        $('#txtScanGroupID').removeAttr('disabled');
+    }
+
 });
+
+//function MPSNumberScan() {
+//    if ($('#txtScanShipLabel').val().length == 34) {
+//        if ($("#txtScanShipLabel").val() != '') {
+//            INPUTXML = "<Root><GroupID>" + $("#txtScanGroupID").val() + "</GroupID><MPSNo>" + $("#txtScanShipLabel").val() + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+//            GetImportActiveLocationsV2(INPUTXML);
+//        }
+//    }
+//}
+
+function MPSNumberScan() {
+    var mpsln = $('#txtScanShipLabel').val().length;
+
+    if (parseInt(mpsln) === 34) {
+        // if ($("#txtScan").val() != '') {
+        INPUTXML = "<Root><GroupID>" + $("#txtScanGroupID").val() + "</GroupID><MPSNo>" + $("#txtScanShipLabel").val() + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+        GetImportActiveLocationsV2(INPUTXML);
+        // }
+    }
+}
 
 function setHungarian() {
 
@@ -223,8 +254,8 @@ searchDetails = function (InputXML) {
             HideLoader();
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
-                $("#txtScanShipLabel").removeAttr('disabled');
-                $("#txtScanShipLabel").trigger('focus');//.focus();
+                //$("#txtScanShipLabel").removeAttr('disabled');
+                //$("#txtScanShipLabel").trigger('focus');//.focus();
 
                 //  createTable();
                 $("#btnDiv").show('slow');
@@ -287,8 +318,12 @@ searchDetails = function (InputXML) {
                     $('#remarkPriorityShow').modal('show');
                 }
                 // html += "</tbody></table>";
+                if (PARAMETER_VALUE_for_Groupid == 'N') {
+                    CreateBinningListTable();
+                } else {
+                    CreateBinningListTable();
+                }
 
-                CreateBinningListTable();
                 //generate table here
 
 
@@ -315,7 +350,9 @@ searchDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -450,7 +487,9 @@ function DeleteRowByISID(ISID) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -492,8 +531,8 @@ function GetImportActiveLocationsV2(INPUTXML) {
                     } else if (Status == 'S') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 
-                        $("#txtScanShipLabel").val("");
-                        $("#txtScanShipLabel").trigger('focus');//.focus();
+                        // $("#txtScanShipLabel").val("");
+                        //  $("#txtScanShipLabel").trigger('focus');//.focus();
                     }
                 });
 
@@ -535,7 +574,9 @@ function GetImportActiveLocationsV2(INPUTXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -544,11 +585,19 @@ function GetImportActiveLocationsV2(INPUTXML) {
 
 function UpdateImportLocationV3(InputXML) {
     console.log("***************** UpdateImportLocationV3 *******************");
-    if (($("#txtScanGroupID").val() == '')) {
-        errmsg = "Please enter/scan Group ID</br>";
-        $.alert(errmsg);
-        return;
+
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+
+    } else {
+        if (($("#txtScanGroupID").val() == '')) {
+            errmsg = "Please enter/scan Group ID</br>";
+            $.alert(errmsg);
+            return;
+        }
     }
+
+
 
     // if (($("#txtScanShipLabel").val() == '')) {
     //     errmsg = "Please enter/scan Group ID</br>";
@@ -615,7 +664,9 @@ function UpdateImportLocationV3(InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -632,6 +683,12 @@ function clearRecords() {
     $("#tblCountShow").hide();
     $("#txtScanGroupID").trigger('focus');//.focus();
     $(".ibiSuccessMsg1").text('');
+
+    if (PARAMETER_VALUE_for_Groupid == 'N') {
+        $('#txtScanShipLabel').focus();
+    } else {
+        $('#txtScanGroupID').focus();
+    }
 }
 
 function clearRecordsBeforeGID() {

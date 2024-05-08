@@ -10,6 +10,8 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
+var PARAMETER_VALUE_for_Groupid = window.localStorage.getItem("PARAMETER_VALUE_for_Groupid");
+var PARAMETER_NAME_for_Groupid = window.localStorage.getItem("PARAMETER_NAME_for_Groupid");
 var flightSeqNo;
 var ULDSeqNo;
 var SavedULDSeqNo;
@@ -27,6 +29,8 @@ var HAWB_Flag;
 var showAll = 'N';
 
 $(function () {
+
+    
 
     flightPrefix = amplify.store("flightPrefix");
     flightNo = amplify.store("flightNo");
@@ -95,12 +99,13 @@ $(function () {
             var value = this.value;// parseInt(this.value, 10),
 
             var res = value.replace(/(\d{3})/, "$1-")
+            let result = res.slice(0, 12);
             dd = document.getElementById('ddlAWBNo'),
                 index = 0;
 
             $.each(dd.options, function (i) {
                 console.log(this.text);
-                if (this.text == res) {
+                if (this.text == result) {
                     index = i;
                 }
             });
@@ -111,10 +116,12 @@ $(function () {
                 // errmsg = "Please scan/enter valid AWB No.";
                 // $.alert(errmsg);
                 $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
+                $("#txtScanAWBNo").val('');
                 return;
             }
             console.log(dd.selectedIndex);
             $('#successMsg').text('');
+
             $('#ddlAWBNo').trigger('change');
             //  $('#hawbLists').focus();
 
@@ -131,7 +138,7 @@ $(function () {
     $("#hawbLists").blur(function () {
 
         if ($("#hawbLists").val() != '') {
-            var value = this.value;// parseInt(this.value, 10),
+            var value = this.value.toUpperCase();// parseInt(this.value, 10),
             dd = document.getElementById('ddlHAWBNo'),
                 index = 0;
 
@@ -148,6 +155,7 @@ $(function () {
                 // errmsg = "Please scan/enter valid HAWB No.";
                 // $.alert(errmsg);
                 $('#successMsg').text('Please scan/enter valid HAWB No.').css('color', 'red');
+                $("#hawbLists").val('');
                 return;
             }
             console.log(dd.selectedIndex);
@@ -170,6 +178,109 @@ $(function () {
     //SHCSpanHtml(stringos);
 
 });
+
+function HAWBNoScan() {
+    // if ($('#hawbLists').val().length == 12) {
+    if ($("#hawbLists").val() != '') {
+        var value = $("#hawbLists").val().toUpperCase();// this.value.toUpperCase();// parseInt(this.value, 10),
+        dd = document.getElementById('ddlHAWBNo'),
+            index = 0;
+
+        $.each(dd.options, function (i) {
+            console.log(this.text);
+            if (this.text == value) {
+                index = i;
+            }
+        });
+
+        dd.selectedIndex = index; // set selected option
+
+        if (dd.selectedIndex == 0) {
+            // errmsg = "Please scan/enter valid HAWB No.";
+            // $.alert(errmsg);
+            $('#successMsg').text('Please scan/enter valid HAWB No.').css('color', 'red');
+            //$("#hawbLists").val('');
+            return;
+        }
+        console.log(dd.selectedIndex);
+        $('#successMsg').text('');
+        $('#ddlHAWBNo').trigger('change');
+
+
+        // GetAWBDetailsForULD($('#ddlULDNo').val())
+    }
+    // }
+}
+
+function AWBNumberScan() {
+    if ($('#txtScanAWBNo').val().length == 11) {
+        if ($("#txtScanAWBNo").val() != '') {
+            var value = $("#txtScanAWBNo").val();// this.value;// parseInt(this.value, 10),
+
+            var res = value.replace(/(\d{3})/, "$1-")
+            let result = res.slice(0, 12);
+            dd = document.getElementById('ddlAWBNo'),
+                index = 0;
+
+            $.each(dd.options, function (i) {
+                console.log(this.text);
+                if (this.text == result) {
+                    index = i;
+                }
+            });
+
+            dd.selectedIndex = index; // set selected option
+
+            //if (dd.selectedIndex == 0) {
+            //    // errmsg = "Please scan/enter valid AWB No.";
+            //    // $.alert(errmsg);
+            //    $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
+            //    return;
+            //}
+            console.log(dd.selectedIndex);
+            $('#successMsg').text('');
+
+            $('#ddlAWBNo').trigger('change');
+            //  $('#hawbLists').focus();
+
+            // GetAWBDetailsForULD($('#ddlULDNo').val())
+        }
+    }
+
+    if ($('#txtScanAWBNo').val().length == 16) {
+        if ($("#txtScanAWBNo").val() != '') {
+            var value = $("#txtScanAWBNo").val();// this.value;// parseInt(this.value, 10),
+
+            var res = value.replace(/(\d{3})/, "$1-")
+            let result = res.slice(0, 12);
+            dd = document.getElementById('ddlAWBNo'),
+                index = 0;
+
+            $.each(dd.options, function (i) {
+                console.log(this.text);
+                if (this.text == result) {
+                    index = i;
+                }
+            });
+
+            dd.selectedIndex = index; // set selected option
+
+            //if (dd.selectedIndex == 0) {
+            //    // errmsg = "Please scan/enter valid AWB No.";
+            //    // $.alert(errmsg);
+            //    $('#successMsg').text('Please scan/enter valid AWB No.').css('color', 'red');
+            //    return;
+            //}
+            console.log(dd.selectedIndex);
+            $('#successMsg').text('');
+
+            $('#ddlAWBNo').trigger('change');
+            //  $('#hawbLists').focus();
+
+            // GetAWBDetailsForULD($('#ddlULDNo').val())
+        }
+    }
+}
 
 function BacktoFlightCheck() {
     // set urs global variable here
@@ -219,21 +330,21 @@ function SHCSpanHtml(newSHC) {
 
         if (filtered[n].indexOf('~') > -1) {
             if (blink[1] == 'Y' && filtered[n] != '~Y') {
-                spanStr += "<td class='blink_me'>" + blink[0] + "</td>";
+                spanStr += "<td class='blink_me' style='line-height:0.5; width: 20% !important;'>" + blink[0] + "</td>";
                 console.log(filtered[n])
             }
         }
 
         if (filtered[n].indexOf('~') > -1) {
             if (blink[1] == 'N' && filtered[n] != '~N') {
-                spanStr += "<td class='foo'>" + blink[0] + "</td>";
+                spanStr += "<td class='foo' style='width: 20% !important;'>" + blink[0] + "</td>";
                 console.log(filtered[n])
             }
         }
     }
     spanStr += "</tr>";
 
-    $("#TextBoxDiv").html(spanStr);
+    $("#SHCCodeTbl").html(spanStr);
     return spanStr;
 
 }
@@ -303,7 +414,7 @@ function GetULDDetails() {
             success: function (Result) {
                 Result = Result.d;
                 var xmlDoc = $.parseXML(Result);
-
+                console.log(xmlDoc)
                 xmlDamageType = xmlDoc;
 
                 $(xmlDoc).find('Table1').each(function (index) {
@@ -406,9 +517,11 @@ function GetULDDetails() {
                 //var selected_ddlDamageType = window.localStorage.getItem('selected_ddlDamageType');
                 //SelectElement("ddlDamageType", selected_ddlDamageType);
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -497,9 +610,11 @@ function GetAWBDetailsForULD(ULDid) {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -574,9 +689,11 @@ function UpdateImportULDClose() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -638,9 +755,11 @@ function UpdateImportULDCloseOnconfirm() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -807,9 +926,14 @@ function SaveImportFoundCargoDetailsV3() {
         //errmsg = "Please enter group Id.";
         //$.alert(errmsg);
         //return;
-        $('#successMsg').text('Please enter group Id.').css('color', 'red');
-        $('#txtScanGroupIdFoundCargo').focus();
-        return;
+        if (PARAMETER_VALUE_for_Groupid == 'N') {
+
+        } else {
+            $('#successMsg').text('Please enter group Id.').css('color', 'red');
+            $('#txtScanGroupIdFoundCargo').focus();
+            return;
+        }
+
     } else {
         $('#successMsg').text('');
     }
@@ -913,9 +1037,11 @@ function SaveImportFoundCargoDetailsV3() {
                 //}
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Some error occurred while saving data');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1132,7 +1258,7 @@ function SaveImportMaifestDetailsV3() {
                         $('#successMsg').text(StrMessage).css('color', 'green');
 
                         GetAWBDetailsForULD($('#ddlULDNo').val())
-                        
+
                         $('#txtScanAWBNo').val('');
                         $('#txtScanAWBNo').focus();
                         $('#ddlAWBNo').val(0);
@@ -1179,9 +1305,11 @@ function SaveImportMaifestDetailsV3() {
                 //}
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Some error occurred while saving data');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1243,9 +1371,10 @@ function onFocusArrivedPkgs() {
 function GetHAWBDetails(AWBid) {
 
 
-
+    $("#successMsg").text('');
 
     if ($("#ddlAWBNo").val() == '0') {
+        clearPiecesInfo();
         return;
     }
 
@@ -1255,7 +1384,13 @@ function GetHAWBDetails(AWBid) {
         $("#hawbLists").focus();
 
     } else if (HAWB_Flag == 'B') {
-        $("#txtScanGroupId").focus();
+
+        if (PARAMETER_VALUE_for_Groupid == 'N') {
+            $('#txtArrivedPkgs').focus();
+        } else {
+            $('#txtScanGroupId').focus();
+        }
+        //$("#txtScanGroupId").focus();
     }
 
     HAWBLists = [];
@@ -1294,16 +1429,20 @@ function GetHAWBDetails(AWBid) {
                 Result = Result.d;
                 var xmlDoc = $.parseXML(Result);
 
-                $(ddlHAWBNo).empty();
-                var newOption = $('<option></option>');
-                newOption.val('0').text('Select');
-                newOption.appendTo('#ddlHAWBNo');
+                $('#ddlHAWBNo').empty();
+
 
                 var houseCount = 0;
 
                 $(xmlDoc).find('Table3').each(function (index) {
                     houseCount++;
                 });
+
+                if (houseCount == 0) {
+                    var newOption = $('<option></option>');
+                    newOption.val('0').text('Select');
+                    newOption.appendTo('#ddlHAWBNo');
+                }
 
 
                 $(xmlDoc).find('Table3').each(function (index) {
@@ -1312,9 +1451,28 @@ function GetHAWBDetails(AWBid) {
                     var HAWBNo;
                     HAWBId = $(this).find('HAWBID').text();
                     HAWBNo = $(this).find('HouseNo').text();
-                    var newOption = $('<option></option>');
-                    newOption.val(HAWBId).text(HAWBNo);
-                    newOption.appendTo('#ddlHAWBNo');
+
+
+                    if ($(xmlDoc).find('Table3').length > 1) {
+                        if (index == 0) {
+                            var newOption = $('<option></option>');
+                            newOption.val(0).text('Select');
+                            newOption.appendTo('#ddlHAWBNo');
+                        }
+                        var newOption = $('<option></option>');
+                        newOption.val(HAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBNo');
+                    } else {
+                        var newOption = $('<option></option>');
+                        newOption.val(HAWBId).text(HAWBNo);
+                        newOption.appendTo('#ddlHAWBNo');
+                        $("#ddlHAWBNo").trigger('change');
+
+                    }
+
+                    //var newOption = $('<option></option>');
+                    //newOption.val(HAWBId).text(HAWBNo);
+                    //newOption.appendTo('#ddlHAWBNo');
 
                     HAWBLists.push({ 'value': HAWBId, 'label': HAWBNo })
 
@@ -1367,7 +1525,7 @@ function GetHAWBDetails(AWBid) {
                         $('#txtReceivedPkgs').val($(this).find('NPR').text());
                         $('#txtRemainingPkgs').val($(this).find('RemNOP').text());
                         var newSHC = $(this).find('SHCAll').text();
-                        $("#TextBoxDiv").empty();
+                        $("#SHCCodeTbl").empty();
                         SHCSpanHtml(newSHC);
 
                     }
@@ -1380,9 +1538,11 @@ function GetHAWBDetails(AWBid) {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1403,7 +1563,7 @@ function GetHAWBDetails(AWBid) {
 }
 
 function GetHAWBLevelPiecesDetails(HAWBid) {
-
+    $("#successMsg").text('');
     if (chkShowAll.checked)
         showAll = 'Y';
     else
@@ -1448,17 +1608,25 @@ function GetHAWBLevelPiecesDetails(HAWBid) {
                     $('#txtDamagePkgsView').val($(this).find('DmgPkgs').text());
                     $('#txtDamageWtView').val($(this).find('DmgWt').text());
                     var newSHC = $(this).find('SHCAll').text();
-                    $("#TextBoxDiv").empty();
+                    $("#SHCCodeTbl").empty();
                     SHCSpanHtml(newSHC);
-                    $('#txtScanGroupId').focus();
+
+                    if (PARAMETER_VALUE_for_Groupid == 'N') {
+                        $('#txtArrivedPkgs').focus();
+                    } else {
+                        $('#txtScanGroupId').focus();
+                    }
+
 
 
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1564,7 +1732,7 @@ function clearALL() {
     $('#txtScanULD').focus();
     //$('#chkFoundCgo').attr('checked', false);
     //$('#chkShowAll').attr('checked', false);
-    $("#TextBoxDiv").empty();
+    $("#SHCCodeTbl").empty();
 }
 
 function ShowALLRefresh() {
@@ -1588,7 +1756,7 @@ function clearPiecesInfo() {
     $('#txtDamageWt').val('');
     $('#txtScanGroupId').val('');
     $("#txtScanGroupIdFoundCargo").val('');
-    $("#TextBoxDiv").empty();
+    $("#SHCCodeTbl").empty();
 }
 
 function ClearError(ID) {
@@ -1634,9 +1802,11 @@ function ImportDeStuffingZoneList() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;

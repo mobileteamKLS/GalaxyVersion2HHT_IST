@@ -708,6 +708,8 @@ GetImportCargoCheckInDetailsOnChange = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -864,6 +866,8 @@ GetImportCargoCheckInDetailsFlightBind = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1073,6 +1077,8 @@ GetImportCargoCheckInDetails = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1121,6 +1127,8 @@ SaveImportMaifestDetailsV2 = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1251,6 +1259,8 @@ ImportCreateNewHouse = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1461,7 +1471,9 @@ ImportGetDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1521,7 +1533,9 @@ ImportSaveDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1598,7 +1612,9 @@ ImportRevokeDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1663,7 +1679,9 @@ SaveFileUploadDetails = function (InputXML, InputImage) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
