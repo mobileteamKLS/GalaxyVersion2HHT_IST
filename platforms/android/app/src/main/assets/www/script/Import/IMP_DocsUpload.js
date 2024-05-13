@@ -10,11 +10,13 @@ var SHED_CODE = window.localStorage.getItem("SHED_CODE");
 var SHED_DESCRIPTION = window.localStorage.getItem("SHED_DESCRIPTION");
 var PRIMARY_CURRENCY_CODE_I606 = window.localStorage.getItem("PRIMARY_CURRENCY_CODE_I606");
 var CompanyCode = window.localStorage.getItem("CompanyCode");
-var FlightSeqNo;
-var UAWBRowId;
-var UShipRowId;
+//var FlightSeqNo;
+//var UAWBRowId;
+//var UShipRowId;
 var imageDataFromCamera = "";
-
+var _FlightSeqNo;
+var _UShipRowId;
+var _UAWBRowId;
 $(function () {
 
 
@@ -49,7 +51,7 @@ $(function () {
     //function onImageFail(message) {
     //    // alert('Failed because: ' + message);
     //}
-    $('#txtScanMAWB').on('keyup', function() {
+    $('#txtScanMAWB').on('keyup', function () {
         let currentValue = $(this).val();
         let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
         cleanedValue = cleanedValue.replace(/\s+/g, '');
@@ -117,6 +119,16 @@ function setTurkish() {
     $('#btnClear').text("Temizle");
     $('#cameraTakePicture').text("Yukle");
     $('#lblPageName').text("Belge Yukleme");
+}
+
+function onChangeFlightDropDown(Val) {
+    const myArray = Val.split("~");
+    _FlightSeqNo = myArray[0];
+    _UShipRowId = myArray[1];
+    _UAWBRowId = myArray[2];
+    //console.log('_FlightSeqNo  == >   ' + _FlightSeqNo)
+    //console.log('_UAWBRowId  == >   ' + _UShipRowId)
+    //console.log('_UAWBRowId  == >   ' + _UAWBRowId)
 }
 
 function cameraTakePicture() {
@@ -283,7 +295,7 @@ _GetFileUploadDetails = function (InputXML) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response, xhr, textStatus) {
-            //console.log(response.d)
+           // console.log(response.d)
             HideLoader();
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
@@ -328,9 +340,38 @@ _GetFileUploadDetails = function (InputXML) {
 
                     var Flight = $(this).find('Flight').text();
                     var newOption = $('<option></option>');
-                    newOption.val(Flight).text(Flight);
+                    newOption.val(FlightSeqNo + '~' + UShipRowId + '~' + UAWBRowId).text(Flight);
                     newOption.appendTo('#ddlFlightNoandDate');
+
+                    if (index == 0) {
+                        $("#ddlFlightNoandDate").trigger('change');
+                        const myArray = $('#ddlFlightNoandDate').val().split("~");
+                        _FlightSeqNo = myArray[0];
+                        _UShipRowId = myArray[1];
+                        _UAWBRowId = myArray[2];
+                    }
+
+
+                    //console.log('_FlightSeqNo  == >   ' + _FlightSeqNo)
+                    //console.log('_UAWBRowId  == >   ' + _UAWBRowId)
+                    //if ($(xmlDoc).find('Table2').length > 1) {
+                    //    if (index == 0) {
+                    //        var newOption = $('<option></option>');
+                    //        newOption.val(0).text('Select');
+                    //        newOption.appendTo('#ddlFlightNoandDate');
+                    //    }
+                    //    var newOption = $('<option></option>');
+                    //    newOption.val(FlightSeqNo).text(Flight);
+                    //    newOption.appendTo('#ddlFlightNoandDate');
+                    //} else {
+                    //    var newOption = $('<option></option>');
+                    //    newOption.val(FlightSeqNo).text(Flight);
+                    //    newOption.appendTo('#ddlFlightNoandDate');
+                    //    $("#ddlFlightNoandDate").trigger('change');
+
+                    //}
                 });
+
 
             } else {
                 $("body").mLoading('hide');
@@ -370,7 +411,7 @@ function saveCameraPhoto() {
         $.alert(errmsg);
         return;
     } else {
-        InputXML = "<Root><FileName>TLogo</FileName><FileExtention>jpg</FileExtention><Description>" + $("#txtDescription").val() + "</Description><FlightSeqNo>" + FlightSeqNo + "</FlightSeqNo><UShipRowId>" + UAWBRowId + "</UShipRowId><Type>I</Type><UAWBRowId>" + UShipRowId + "</UAWBRowId><ULDId>1</ULDId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
+        InputXML = "<Root><FileName>TLogo</FileName><FileExtention>jpg</FileExtention><Description>" + $("#txtDescription").val() + "</Description><FlightSeqNo>" + _FlightSeqNo + "</FlightSeqNo><UShipRowId>" + _UShipRowId + "</UShipRowId><Type>I</Type><UAWBRowId>" + _UAWBRowId + "</UAWBRowId><ULDId>1</ULDId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
         SaveFileUploadDetails(imageDataFromCamera, InputXML);
     }
 

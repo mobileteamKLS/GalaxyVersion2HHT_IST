@@ -22,16 +22,101 @@
             background-color: transparent;
         }
 
-        .table-bordered,
-        .table-bordered td,
-        .table-bordered th {
+        .table-bordered, .table-bordered td, .table-bordered th {
             border: 1px solid #ccc;
             padding: 3px;
             text-transform: initial;
         }
 
-        .table td, .table th {
-            width: 50%;
+       
+
+        #SHCCodeTbl td.foo:nth-child(7n+1) {
+            background-color: rgb(177,112,136);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+2) {
+            background-color: rgb(27,81,141);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+3) {
+            background-color: rgb(13,150,68);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+4) {
+            background-color: rgb(35,29,31);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+5) {
+            background-color: rgb(157,124,43);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+6) {
+            background-color: rgb(14,76,166);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+7) {
+            background-color: rgb(206,84,209);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+8) {
+            background-color: rgb(143,74,219);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl td.foo:nth-child(7n+9) {
+            background-color: rgb(198,139,74);
+            color: white;
+            padding: 3px;
+            text-align: center;
+        }
+
+        #SHCCodeTbl > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            font-size: 12px;
+        }
+
+        #SHCCodeTbl {
+            margin-bottom: 0px !important;
+            margin-top: 5px;
+        }
+
+        .blink_me {
+            animation: blinker 1s linear infinite;
+            background-color: yellow;
+            padding: 10px;
+            text-align: center;
+            line-height: 50px;
+            font-weight: bolder;
+            line-height: 0.5;
+            text-align: center !important;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -49,8 +134,8 @@
             <div class="navigation-trigger hidden-xl-up">
                 <div class="navigation-trigger__inner">
                     <!--<i class="navigation-trigger__line"></i>
-            <i class="navigation-trigger__line"></i>
-            <i class="navigation-trigger__line"></i>-->
+                    <i class="navigation-trigger__line"></i>
+                    <i class="navigation-trigger__line"></i>-->
                     <a href="ImportOperations.html">
                         <i style="font-size:2rem !important;"
                            class="zmdi zmdi-chevron-left zmdi-hc-2x"></i>
@@ -143,7 +228,7 @@
                         </label>
                     </div>
                     <div class="col-7">
-                        <input type="number" id="txtScanAWBNo" class="textfieldClass" onkeyup="ChkMaxLength(this, '16');">
+                        <input type="number" id="txtScanAWBNo" class="textfieldClass" onkeyup="ChkMaxLength(this, '16');AWBNumberScan();">
                     </div>
 
                     <div style="" class="col-5">
@@ -174,7 +259,7 @@
                     </div>
                     <div class="col-7">
                         <!--<input type="text" id="txtScanHAWBNo" class="form-control" maxlength="11">-->
-                        <input type="text" id="hawbLists" class="textfieldClass" maxlength="11">
+                        <input type="text" id="hawbLists" class="textfieldClass" onkeyup="HAWBNoScan();" maxlength="30" style="text-transform:uppercase;">
                     </div>
 
                     <div style="" class="col-5">
@@ -241,8 +326,8 @@
 
                 <div class="row  contacts" id="divArrivedPkgs">
 
-                    <div class="">
-                        <table class="table" id="TextBoxDiv">
+                    <div class="col-12">
+                        <table class="table" id="SHCCodeTbl">
                         </table>
                     </div>
 
@@ -261,17 +346,17 @@
                     </div>
                     <div class="col-7">
                         <input type="number" style="text-align:right;" id="txtArrivedPkgs"
-                               class="textfieldClass" onkeyup="ChkMaxLength(this, '4'); NumberOnly(event);">
+                               class="textfieldClass" onkeyup="ChkMaxLength(this, '5'); NumberOnly(event);">
                     </div>
                 </div>
                 <div class="row contacts" id="divFoundCgoDetails" style="display:none">
 
-                    <div class="col-5">
+                    <div class="col-5" style="display:none;">
                         <label id="lblULDNo" for="txtULDNo" class="lbl">
                             Group Id.
                         </label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-7" style="display:none;">
                         <input type="number" id="txtScanGroupIdFoundCargo" onkeyup="ChkMaxLength(this, '14'); foundCargo();" class="textfieldClass" maxlength="20" onblur="    checkLocation();">
                     </div>
 
