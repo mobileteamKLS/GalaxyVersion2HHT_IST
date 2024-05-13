@@ -382,7 +382,9 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -439,6 +441,8 @@ GetImportSaveCourierDetailsV2 = function () {
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
                 //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }
@@ -523,7 +527,10 @@ searchRecord = function () {
             },
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                // alert('Server not responding...');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
+
             }
         });
     } else {
@@ -616,7 +623,9 @@ searchRecordon34digit = function () {
             },
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                // alert('Server not responding...');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     } else {

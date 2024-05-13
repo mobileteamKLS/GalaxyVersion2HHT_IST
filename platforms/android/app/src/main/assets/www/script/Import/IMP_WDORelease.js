@@ -388,7 +388,9 @@ GetWDOMPSDetailsBL = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
+
         }
     });
 }
@@ -477,7 +479,10 @@ GetWDODetailsBLWDOList = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
+
         }
     });
 }
@@ -617,7 +622,11 @@ GetWDODetailsBLAWB = function (_IdValue) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
             // alert('Server not responding...');
+
         }
     });
 }
@@ -758,7 +767,10 @@ SaveWDODetailsBLAWB = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
+
         }
     });
 }

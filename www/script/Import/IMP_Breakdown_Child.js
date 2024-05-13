@@ -517,9 +517,11 @@ function GetULDDetails() {
                 //var selected_ddlDamageType = window.localStorage.getItem('selected_ddlDamageType');
                 //SelectElement("ddlDamageType", selected_ddlDamageType);
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -608,9 +610,11 @@ function GetAWBDetailsForULD(ULDid) {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -685,9 +689,11 @@ function UpdateImportULDClose() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -749,9 +755,11 @@ function UpdateImportULDCloseOnconfirm() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1029,9 +1037,11 @@ function SaveImportFoundCargoDetailsV3() {
                 //}
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Some error occurred while saving data');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1295,9 +1305,11 @@ function SaveImportMaifestDetailsV3() {
                 //}
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Some error occurred while saving data');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1526,9 +1538,11 @@ function GetHAWBDetails(AWBid) {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1608,9 +1622,11 @@ function GetHAWBLevelPiecesDetails(HAWBid) {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
@@ -1786,9 +1802,11 @@ function ImportDeStuffingZoneList() {
                 });
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Data could not be loaded');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;

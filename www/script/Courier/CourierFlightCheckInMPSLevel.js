@@ -489,7 +489,9 @@ GetImportFlightCourierDetailsV2 = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -647,7 +649,9 @@ searchRecord = function () {
             },
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                // alert('Server not responding...');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     } else {
@@ -713,7 +717,9 @@ GetFlightChangeCourierDetails = function (FlightVal) {
             },
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                // alert('Server not responding...');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     } else {
@@ -827,6 +833,8 @@ GetImportSaveCourierDetailsV2 = function () {
             error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
                 //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }
@@ -1036,7 +1044,9 @@ ImportGetDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1097,7 +1107,9 @@ ImportSaveDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1216,7 +1228,9 @@ ImportRevokeDamageDetails = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1279,7 +1293,9 @@ SaveFileUploadDetails = function (InputXML, InputImage) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }

@@ -27,7 +27,7 @@ var currentLocID;
 var _RemarkId = '0';
 $(function () {
     AWBRemarkReferenceDataGet();
-    
+
     // function preventSpecialCharactersV2(inputField) {
     //     var inputValue = inputField.value;
     //     var regex = /^[a-zA-Z0-9 ]*$/;
@@ -36,12 +36,12 @@ $(function () {
     //         inputField.val(inputValue.replace(/[^a-zA-Z0-9 ]/g, ''));
     //     }
     //     var regex = /^[$&+,:;=?[\]@#|{}'<>.^*()%!-/`~]+$/;
-       
+
 
     //     // Replace disallowed characters with an empty string
     //     if (regex.test(inputValue)) {
     //         inputField.value = inputValue.replace(/[^a-zA-Z0-9 ]/g, '');
-           
+
     //     }
     // }
 
@@ -57,13 +57,13 @@ $(function () {
     function preventSpecialCharactersV2(inputField) {
         var inputValue = inputField.value;
         // Define a regular expression to allow only alphanumeric characters and spaces
-        var regex =  /^[a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]*$/;
+        var regex = /^[a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]*$/;
         if (!regex.test(inputValue)) {
             // If the input contains special characters, remove them
             inputField.value = inputValue.replace(/[^a-zA-Z0-9ğüşöçİĞÜŞÖÇ ]/g, '');
         }
     }
-    
+
     $("#txtRemark").on('input', function () {
         preventSpecialCharactersV2(this);
     });
@@ -95,7 +95,7 @@ $(function () {
     //    console.log($item);
     //})
 
-    $('#txtScanMAWB').on('keyup', function() {
+    $('#txtScanMAWB').on('keyup', function () {
         let currentValue = $(this).val();
         let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
         cleanedValue = cleanedValue.replace(/\s+/g, '');
@@ -283,7 +283,9 @@ function AWBRemarkReferenceDataGet() {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -400,7 +402,9 @@ AWBRemarkGet = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            // alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -465,13 +469,13 @@ function edit_row(RowId, ActivityType, Remark, HighPriority) {
     //$("#ddlActivity option").prop("selected", ActivityType);
     // $("#ddlActivity").val(ActivityType).attr("selected", "selected");
     // $("#ddlActivity option:contains(" + ActivityType + ")").removeAttr('selected');
-   // $("#ddlActivity option:contains(" + ActivityType + ")").attr('selected', 'selected');
-//    $("#ddlActivity option:contains('Select')").remove();
-   $("#ddlActivity option").each(function(){
-        if($(this).text()===ActivityType){
-            $(this).prop("selected",true);
+    // $("#ddlActivity option:contains(" + ActivityType + ")").attr('selected', 'selected');
+    //    $("#ddlActivity option:contains('Select')").remove();
+    $("#ddlActivity option").each(function () {
+        if ($(this).text() === ActivityType) {
+            $(this).prop("selected", true);
         }
-   });
+    });
     _RemarkId = RowId;
 }
 
@@ -522,7 +526,7 @@ function AWBRemarkSaveUpdate() {
         $.alert(errmsg);
         return;
     }
-  
+
 
     var prifix = $("#txtScanMAWB").val().slice(0, 3);
     var AWBNo = $("#txtScanMAWB").val().slice(3, 11);
@@ -577,13 +581,13 @@ function AWBRemarkSaveUpdate() {
                         prifix = $("#txtScanMAWB").val().slice(0, 3);
                         AWBNo = $("#txtScanMAWB").val().slice(3, 11);
                         //InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-                       
+
 
                         //$("#txtHAWBNo").val('');
                         $("#ddlActivity").val('0');
                         $("#txtRemark").val('');
                         $('#remarkPriority').prop("checked", false);
-                 
+
 
                         if ($('#txtHAWBNo').val() != '') {
                             InputXML = "<Root><AWBPrefix>" + prifix + "</AWBPrefix><AWBNumber>" + AWBNo + ',' + $('#txtHAWBNo').val() + "</AWBNumber><UserId>" + Userid + "</UserId></Root>";
@@ -592,7 +596,7 @@ function AWBRemarkSaveUpdate() {
                             InputXML = "<Root><AWBPrefix>" + prifix + "</AWBPrefix><AWBNumber>" + AWBNo + "</AWBNumber><UserId>" + Userid + "</UserId></Root>";
                             AWBRemarkGet(InputXML);
                         }
-                        
+
                     }
                 });
                 _RemarkId = '0';
@@ -607,6 +611,8 @@ function AWBRemarkSaveUpdate() {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 
@@ -665,6 +671,8 @@ function AWBRemarkDelete(rowid) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 
@@ -748,6 +756,8 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -902,7 +912,9 @@ getIGMNoList = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            /// alert('Server not responding...');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1000,6 +1012,8 @@ _GetBinningLocPkgDetails = function (InputXML) {
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
             //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
         }
     });
 }
@@ -1028,7 +1042,7 @@ function clearFunction() {
     $("#txtScanMAWB").val('');
     $("#txtHAWBNo").val('');
     $("#ddlActivity").val('0');
-  
+
     $("#txtRemark").val('');
     $("#divRemarkDetail").empty();
     $('#remarkPriority').prop("checked", false);

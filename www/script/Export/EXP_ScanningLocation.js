@@ -196,10 +196,11 @@ function GetLocationScanDetails() {
                 }
 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                var r = jQuery.parseJSON(msg.responseText);
-                $.alert(r.Message);
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
     }
@@ -303,9 +304,11 @@ function SaveLocationScanDetails() {
 
                 
             },
-            error: function (msg) {
+            error: function (xhr, textStatus, errorThrown) {
                 $("body").mLoading('hide');
-                $.alert('Some error occurred while saving data');
+                //alert('Server not responding...');
+                console.log(xhr.responseText);
+                alert(xhr.responseText);
             }
         });
         return false;
