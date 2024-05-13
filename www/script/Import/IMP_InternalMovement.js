@@ -313,7 +313,9 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
     inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + IGMVal + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
     $("#tblLocation").empty();
-
+    $("#txtWght").val('');
+    $("#txtWght").val('');
+    $(".ibiSuccessMsg1").text('');
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetBinningLocPkgDetails",
@@ -359,7 +361,16 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                 html += '</tr>';
                 html += '</thead>';
                 html += '<tbody>';
+                
+                $(xmlDoc).find('Table1').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                       $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
 
+                    } 
+                });
+                
                 $(xmlDoc).find('Table1').each(function (index) {
 
                     //if (LocCode != '') {
