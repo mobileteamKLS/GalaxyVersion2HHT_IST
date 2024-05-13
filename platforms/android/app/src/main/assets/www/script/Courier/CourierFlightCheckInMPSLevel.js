@@ -307,6 +307,14 @@ function setHungarian() {
     $('#btnSbmit').text("Jóváhagyás");
 
 }
+
+function MPSNumberScan() {
+    if ($('#txtScan').val().length == 34) {
+        if ($("#txtScan").val() != '') {
+            searchRecord();
+        }
+    }
+}
 //function scanBarCode() {
 //    cordova.plugins.barcodeScanner.scan(
 //        function (result) {

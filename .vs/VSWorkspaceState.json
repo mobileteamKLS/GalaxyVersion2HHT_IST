@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\www",
-    "\\www\\js",
-    "\\www\\script"
+    "\\www\\js"
   ],
+  "SelectedNode": "\\www\\js\\jquery.min.js",
   "PreviewInSolutionExplorer": false
 }

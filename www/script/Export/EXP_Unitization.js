@@ -1771,6 +1771,7 @@ function GetExportFlightDetails(shouldClearRecord) {
                 
 
                 $(xmlDoc).find('Table4').each(function (index) {
+                   
                     var newOption1 = $('<option></option>');
                     newOption1.val($(this).find('Value').text()).text($(this).find('Text').text());
                     newOption1.appendTo('#counterLists');
@@ -4058,10 +4059,15 @@ function GetULDs(valFromddloffpoint) {
                 $("#counterLists").empty();
 
                 $(xmlDoc).find('Table3').each(function (index) {
+                    if (index == 0) {
+                        var newOption = $('<option></option>');
+                        newOption.val(0).text('Select');
+                        newOption.appendTo('#uldLists');
+                    }
                     var newOption2 = $('<option></option>');
                     newOption2.val($(this).find('ULD_SEQUENCE_NUMBER').text()).text($(this).find('ULDBULKNO').text());
                     newOption2.appendTo('#uldLists');
-                    $("#uldLists").val($(this).find('ULD_SEQUENCE_NUMBER').text());
+                    //$("#uldLists").val($(this).find('ULD_SEQUENCE_NUMBER').text());
                     $("#btnAddEquipment").prop("disabled", false).css('background-color', '#3c7cd3');
                 });
                 selectedULDSeqNo = $('#uldLists').val();
