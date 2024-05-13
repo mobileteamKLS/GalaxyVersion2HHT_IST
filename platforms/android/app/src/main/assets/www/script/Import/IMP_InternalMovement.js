@@ -313,7 +313,9 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
     inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo>" + _textofHawb + "</HouseNo><IGMNo>" + IGMVal + "</IGMNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
     $("#tblLocation").empty();
-
+    $("#txtWght").val('');
+    $("#txtWght").val('');
+    $(".ibiSuccessMsg1").text('');
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetBinningLocPkgDetails",
@@ -360,6 +362,16 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                 html += '</thead>';
                 html += '<tbody>';
 
+                
+                $(xmlDoc).find('Table1').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                       $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+
+                    } 
+                });
+                
                 $(xmlDoc).find('Table1').each(function (index) {
 
                     //if (LocCode != '') {
@@ -398,7 +410,6 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     var sum = LocCode + LocPieces;
-
                     locationDetails(LocCode, LocPieces, LocId, LocWeight);
 
                 });
@@ -409,7 +420,6 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
                     $('#LocationDiv').append(html);
                 }
-
                 $("#tblLocation").on('click', '.valp', function () {
                     var selected = $(this).hasClass("highlight");
                     $("#tblLocation tr").removeClass("highlight");
@@ -938,12 +948,10 @@ function getLocation(LocCode, LocPieces, LocId, LocWeight) {
     //currentLocID = str[2];
     //var _wt = str[3];
 
-
     currentLocID = LocId;
     $("#txtMovePkgs").val(LocPieces);
     $("#textMoveWght").val(LocWeight);
     $("#locationShow").text(LocCode + "/" + LocPieces);
-
    
 
 }

@@ -179,7 +179,11 @@ function onPageShowHideImport() {
         }
 
         if (index == 3) {
+
             if (Module == 'Import' && PageName == 'IMP_FlightCheckIn.html' && IsActive == '1') {
+
+           // if (Module == 'Import' && Module == 'Import' && PageName == 'IMP_FlightCheckIn.html' && IsActive == '1') {
+
                 $("#FlightCheckIn").show();
             } else {
                 $("#FlightCheckIn").hide();

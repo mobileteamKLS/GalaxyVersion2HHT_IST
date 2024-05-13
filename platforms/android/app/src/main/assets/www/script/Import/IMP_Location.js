@@ -283,6 +283,10 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
     $("#tblLocation").empty();
     $("#lblexploc").text('');
     $("#lblexplochead").hide();
+    $("#txtLocation").val('');
+    $("#txtBinnPkgs").val('');
+    $("#txtWght").val('');
+    $(".ibiSuccessMsg1").text('');
     $.ajax({
         type: 'POST',
         url: ACSServiceURL + "/GetBinningLocPkgDetails",
@@ -310,6 +314,14 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
                     //}
                 });
+                $(xmlDoc).find('Table1').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                       $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+
+                    } 
+                });
                 $("#tblLocation").empty();
                 $(xmlDoc).find('Table1').each(function (index) {
                     Origin = $(this).find('Origin').text();
@@ -331,7 +343,10 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
-                    //$("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
+                    $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
+                    $("#txtBinnPkgs").val(PendingPieces);
+                    calculateWeight();
+
 
                     if (ExpectedZone != "") {
                         $("#lblexplochead").show();

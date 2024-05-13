@@ -165,6 +165,7 @@ function onPageShowHideExport() {
             }
         }
 
+
         //if (index == 4) {
         //    if (Module == 'Export' && PageName == 'IMP_InternalMovement.html' && IsActive == '1') {
         //        $("#InternalMovement").show();
@@ -174,6 +175,7 @@ function onPageShowHideExport() {
         //}
 
         if (index == 4) {
+
             if (Module == 'Export' && PageName == 'EXP_Unitization.html' && IsActive == '1') {
                 $("#Unitization").show();
             } else {
@@ -181,7 +183,9 @@ function onPageShowHideExport() {
             }
         }
 
+
         if (index == 5) {
+
             if (Module == 'Export' && PageName == 'EXP_VCTAcceptance.html' && IsActive == '1') {
                 $("#VCTAcceptance").show();
             } else {

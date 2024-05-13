@@ -281,6 +281,7 @@ function fnClear() {
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
+    $("#lblMPSNo").html('');
     $("#lblMawbNo").html('');
     $("#lblHawbNo").html('');
     $("#lblStatus").html('');
@@ -297,6 +298,7 @@ function fnClearonClear() {
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
+    $("#lblMPSNo").html('');
     $("#lblMawbNo").html('');
     $("#lblHawbNo").html('');
     $("#lblStatus").html('');
@@ -386,9 +388,9 @@ GetWDOMPSDetailsBL = function (InputXML) {
         },
         error: function (xhr, textStatus, errorThrown) {
             $("body").mLoading('hide');
-            //alert('Server not responding...');
             console.log(xhr.responseText);
             alert(xhr.responseText);
+
         }
     });
 }
@@ -424,6 +426,7 @@ GetWDODetailsBLWDOList = function (InputXML) {
                         $("#txtMAWBHAWB").val('');
                         $("#txtMAWBHAWB").focus();
                         $("#lblPkgsWgt").html('');
+                        $("#lblMPSNo").html('');
                         $("#lblMawbNo").html('');
                         $("#lblHawbNo").html('');
                         $("#lblStatus").html('');
@@ -479,6 +482,7 @@ GetWDODetailsBLWDOList = function (InputXML) {
             //alert('Server not responding...');
             console.log(xhr.responseText);
             alert(xhr.responseText);
+
         }
     });
 }
@@ -621,6 +625,8 @@ GetWDODetailsBLAWB = function (_IdValue) {
             //alert('Server not responding...');
             console.log(xhr.responseText);
             alert(xhr.responseText);
+            // alert('Server not responding...');
+
         }
     });
 }
@@ -764,6 +770,7 @@ SaveWDODetailsBLAWB = function (InputXML) {
             //alert('Server not responding...');
             console.log(xhr.responseText);
             alert(xhr.responseText);
+
         }
     });
 }

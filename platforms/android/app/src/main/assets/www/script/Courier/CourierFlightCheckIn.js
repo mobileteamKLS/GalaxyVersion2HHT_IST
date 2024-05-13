@@ -530,6 +530,7 @@ searchRecord = function () {
                 //alert('Server not responding...');
                 console.log(xhr.responseText);
                 alert(xhr.responseText);
+
             }
         });
     } else {

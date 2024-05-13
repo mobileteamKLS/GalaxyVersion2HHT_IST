@@ -281,6 +281,7 @@ function fnClear() {
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
+    $("#lblMPSNo").html('');
     $("#lblMawbNo").html('');
     $("#lblHawbNo").html('');
     $("#lblStatus").html('');
@@ -297,6 +298,7 @@ function fnClearonClear() {
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
+    $("#lblMPSNo").html('');
     $("#lblMawbNo").html('');
     $("#lblHawbNo").html('');
     $("#lblStatus").html('');
@@ -424,6 +426,7 @@ GetWDODetailsBLWDOList = function (InputXML) {
                         $("#txtMAWBHAWB").val('');
                         $("#txtMAWBHAWB").focus();
                         $("#lblPkgsWgt").html('');
+                        $("#lblMPSNo").html('');
                         $("#lblMawbNo").html('');
                         $("#lblHawbNo").html('');
                         $("#lblStatus").html('');
