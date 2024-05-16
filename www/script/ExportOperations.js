@@ -117,6 +117,9 @@ function DisplayScreen(Mode) {
     } else if (Mode == "Checklist") {
         localStorage.setItem('Checklist', 'Checklist');
         window.location.href = "EXP_Checklist.html";
+    } else if (Mode == "Dimension") {
+        localStorage.setItem('Dimension', 'Dimension');
+        window.location.href = "EXP_DimensionScreen.html";
     }
 
 }
@@ -129,6 +132,7 @@ function onPageShowHideExport() {
 
         PageName = $(this).find('PageName').text();
         IsActive = $(this).find('IsActive').text();
+        IsActive ='1';
         Module = $(this).find('Module').text();
 
         if (index == 0) {
