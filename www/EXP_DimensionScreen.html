@@ -16,6 +16,7 @@
         .table-bordered td,
         .table-bordered th {
             /* border: 0px solid #ccc; */
+            border: 1px solid #ccc;
             padding: 3px;
             text-transform: initial;
         }
@@ -85,7 +86,7 @@
         <section class="content" style="margin-top:30px;">
             <div class="contacts row contacts__itemfortext">
                 <div class="col-6" style="text-align:left;">
-                    <label class="lbl" id="lblScan">Scan Barcode</label>
+                    <label class="lbl" id="lblScan">Scan No.</label>
                 </div>
                 <div class="col-6">
                     <input type="text" enterkeyhint="go" id="txtScannedNo" onkeyup="ChkMaxLength(this, '30');" autofocus
@@ -118,11 +119,12 @@
                 <div class="col-6" style="margin-top:10px;">
                 </div>
                 <div class="col-6" style="margin-top:10px;" text-align:center;">
-                    <button type="button" id="btnDockIn" class="btnClass" onclick="GetVCTDimensionDetails();">Search</button>
+                    <button type="button" id="btnDockIn" class="btnClass"
+                        onclick="GetVCTDimensionDetails();">Search</button>
                 </div>
                 <div class="col-12" style="text-align:left;">
-                    <label class="lbl" id="lblDockName"></label>
-                    <label class="ibiSuccessMsg1"></label>
+                    
+                    <label class="ibiSuccessMsg1" id="ibiSuccessMsg1"></label>
                 </div>
             </div>
             <div class="contacts row contacts__itemfortext">
@@ -141,14 +143,13 @@
                 <table id="TextBoxesGroup" class="table  table-bordered mb-0">
                     <tbody class="theadClass">
                         <tr id="TextBoxDiv1m">
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="Pieces1"
-                                    onkeypress="MoveToLen(this);" type="text" /></td>
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="Length1"
-                                    onkeypress="MoveToWid(this);" type="text" /></td>
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="Width1"
-                                    onkeypress="MoveToHei(this);" type="text" /></td>
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="Height1"
-                                    type="text" disabled /></td>
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textLength"
+                                    type="text" /></td>
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textWidth"
+                                    type="text" /></td>
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textHeight"
+                                    type="text" /></td>
+                            <td><input class="textpackges text-right" id="textVolume" type="text" disabled /></td>
                             <td><button type="button" onclick="removeRow();" id="btnAdd" style="background-color: red;"
                                     class="btn btn--icon login__block__btn login__block__btn_margin"><i
                                         class="zmdi zmdi-minus"></i></button></td>
@@ -162,15 +163,15 @@
                     <button type="button" id="btnClear" onclick="clearFunction();" class="btnClass">BACK</button>
                 </div>
                 <div class="col-6" style="text-align:center;">
-                    <button type="button" onclick="dockInStatusSave();" id="btnNext" class="btnClass">CLEAR</button>
+                    <button type="button" onclick="clearFunction();" id="btnNext" class="btnClass">CLEAR</button>
                 </div>
             </div>
             <div class="contacts row contacts__itemfortext">
                 <div class="col-6" style="text-align:left;">
-                    <label class="lbl" id="lblScan">Scan AWB</label>
+                    <label class="lbl" id="lblScan">Scan Label</label>
                 </div>
                 <div class="col-6">
-                    <input type="text" enterkeyhint="go" id="txtScannedNo" onkeyup="ChkMaxLength(this, '30');" autofocus
+                    <input type="text" enterkeyhint="go" id="txtScannedLbl" onkeyup="ChkMaxLength(this, '30');" autofocus
                         style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass"
                         placeholder="">
                 </div>
@@ -183,10 +184,10 @@
                     <label class="lbl" id="lblScan">S. Pcs:</label>
                     <span style="font-weight:bold;" id="savedPcsSpan">0</span>
                 </div>
-                <!-- <div class="col-12" style="text-align:left;">
-                    <label class="lbl" id="lblDockName"></label>
-                    <label class="ibiSuccessMsg1"></label>
-                </div> -->
+                <div class="col-12" style="text-align:left;">
+                   
+                    <label class="ibiSuccessMsg2" id="ibiSuccessMsg2"></label>
+                </div>
             </div>
             <div class="contacts contacts__itemfortext">
                 <div class="col-8" style="text-align:left;">
@@ -220,15 +221,19 @@
                 <div class="modal-content" style="border:solid thin #000;margin-top: 50px;">
                     <div class="modal-header" style="margin-bottom: -40px;">
                         <h5 class="modal-title pull-left" id="eqpTitale">Dimesions</h5>
-                    
+
                     </div>
                     <div class="modal-body contacts row">
 
-                        <div class="contacts row contacts__itemfortext" id="LocationDiv" style="margin-top:50px;margin-left: 10px;margin-right: 10px;box-shadow: none;">
+                        <div class="contacts row contacts__itemfortext" id="LocationDiv"
+                            style="margin-top:50px;margin-left: 10px;margin-right: 10px;box-shadow: none;">
 
-                            <label class="col-6" id="" style="color: #1f63a6; font-weight: 700;font-size: small;"> Label</label>
+                            <label class="col-6" id="" style="color: #1f63a6; font-weight: 700;font-size: small;">
+                                Label</label>
                             <label class="col-6" id="lblNo"></label>
-                            <label class="col-12" id="lblMaterialList" style="color: #1f63a6; font-weight: 700;font-size: small;border-bottom: 1px solid #1f63a6;">Material List</label>
+                            <label class="col-12" id="lblMaterialList"
+                                style="color: #1f63a6; font-weight: 700;font-size: small;border-bottom: 1px solid #1f63a6;">Material
+                                List</label>
                             <table class="table table-bordered mb-0" style="margin-top:10px;" id="TextBoxesGroup">
                                 <thead>
                                     <tr>
@@ -241,15 +246,17 @@
                                 <tbody id="tableDimension"></tbody>
                             </table>
 
-                            <!-- <label class="col-12" id="ibiSuccessMsg"></label>
-                            <div class="col-1" style="margin-top: 10px;"></div> -->
+                            <label class="col-12" id="ibiSuccessMsg"></label>
+                            <div class="col-1" style="margin-top: 10px;"></div>
 
                             <div class="col-4" style="margin-top: 10px;">
-                                <button type="button" id="btnSaveEQ" class="btnClass btn-primary" onclick="saveDimension();">Save</button>
+                                <button type="button" id="btnSaveEQ" class="btnClass btn-primary"
+                                    onclick="saveSelectedDimension();">Save</button>
                             </div>
                             <div class="col-2" style="margin-top: 10px;"></div>
                             <div class="col-4" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBack" class="btnClass btn-primary" onclick="exitModal();">Back</button>
+                                <button type="button" id="btnSubBack" class="btnClass btn-primary"
+                                    onclick="exitModal();">Back</button>
                             </div>
                             <div class="col-1" style="margin-top: 10px;"></div>
                         </div>
