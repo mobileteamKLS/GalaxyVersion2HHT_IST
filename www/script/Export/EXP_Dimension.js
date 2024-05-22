@@ -242,6 +242,13 @@ function GetVCTDimensionDetails() {
 
 }
 
+function clearDimension(){
+    $("#textLength").val('');
+    $("#textWidth").val('');
+    $("#textHeight").val('');
+    $("#textVolume").val('')
+}
+
 function ScanVCTPrintLabelDim() {
     if ($("#txtScannedLbl").val() == '') {
         return;
@@ -281,6 +288,7 @@ function ScanVCTPrintLabelDim() {
                     StrMessage = $(this).find('OutMsg').text();
                     if (Status == "S") {
                         GetVCTDimensionDetails();
+                        clearDimension();
                     }
                     if(Status=="E"){
                         $("#ibiSuccessMsg2").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
@@ -532,6 +540,7 @@ function clearFunction() {
     $("#ibiSuccessMsg2").text('');
     $('#divDimensionDone').empty();
     $('#divDimensionPending').empty();
+   
 }
 
 
