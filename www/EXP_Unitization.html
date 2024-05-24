@@ -909,7 +909,17 @@
                             </table>
 
                             <div class="contacts row contacts__itemfortext" id="ULD" style="padding:5px;">
-
+                                <div class="col-6" style="text-align:left;">
+                                    <label class="lbl" id="lblPcsSclWt">Scan ID</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" id="_txtScanIdModal" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                                        placeholder="" maxlength="30">
+                                </div>
+                                <div class="col-1">
+                                    <img id="btnViewPcsModal" src="img/view.svg"
+                                        style="height: 22px; padding-right: 2px; padding-top: 2px;" />
+                                </div>
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">NOP</label>&nbsp;<font color="red">*</font>
                                 </div>
