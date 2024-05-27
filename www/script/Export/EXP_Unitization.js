@@ -37,13 +37,16 @@ var selectedULDSeqNo = '';
 var isFirstPiece = "0";
 const awbScannedPcsList = [];
 var piecesIdRow;
-
+var temRemWt;
+var tempRemMovWt;
+var tempRemMovVol;
+var scanTypeMode;
 $(function () {
 
     $(document).on('show.bs.modal', '.modal', function (event) {
         var zIndex = 1040 + (10 * $('.modal:visible').length);
         $(this).css('z-index', zIndex);
-        setTimeout(function() {
+        setTimeout(function () {
             $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
         }, 0);
     });
@@ -59,7 +62,7 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             console.log("eneter");
-           UnitizationPendingAWBDetailsScanId();
+            UnitizationPendingAWBDetailsScanId();
         }
 
         event.stopPropagation();
@@ -504,20 +507,31 @@ function deleteRow(itemIndex) {
 
     awbScannedPcsList.splice(parseInt(itemIndex), 1)
     buildPicesList();
-    if($('#txtNOPforRemove').val()!=''){
-        var temNop= $('#txtNOPforRemove').val();
-        $('#txtNOPforRemove').val(parseInt(temNop)-1);
-        var tempWt=$('#txtWeightforRemove').val();
-        $('#txtWeightforRemove').val(parseInt(tempWt)-parseInt(calculateRmWt));
-        var tempVol=$('#txtVolumeforRemove').val();
-        $('#txtVolumeforRemove').val(parseInt(tempVol)-parseInt(calculateVolumeForRm));
-     }
-     if($('#_txtPices').val()!=''){
-        var temNop= $('#_txtPices').val();
-        $('#_txtPices').val(parseInt(temNop)-1);
-        var tempWt=$('#_txtManWt').val();
-        $('#_txtManWt').val(parseInt(tempWt)-parseInt(calculateRmWt));
-     }
+    if ($('#txtNOPforRemove').val() != '') {
+        var temNop = $('#txtNOPforRemove').val();
+        $('#txtNOPforRemove').val(parseInt(temNop) - 1);
+        var tempWt = $('#txtWeightforRemove').val();
+        $('#txtWeightforRemove').val(parseInt(tempWt) - parseInt(tempRemMovWt));
+        var tempVol = $('#txtVolumeforRemove').val();
+        $('#txtVolumeforRemove').val(parseInt(tempVol) - parseInt(tempRemMovVol));
+        totalToRemPieces--;
+        totalToRemWeight=totalToRemWeight-tempRemMovWt;
+        totalToRemVol=totalToRemVol-tempRemMovVol;
+        oldRemNop++;
+        oldRemWt=oldRemWt+tempRemMovWt;
+        oldRemVol=oldRemVol+tempRemMovVol;
+    }
+    if ($('#_txtPices').val() != '') {
+        var temNop = $('#_txtPices').val();
+        $('#_txtPices').val(parseInt(temNop) - 1);
+        var tempWt = $('#_txtManWt').val();
+        console.log(calculateRmWt)
+        $('#_txtManWt').val(parseInt(tempWt) - parseInt(temRemWt));
+        totalPieces--;
+        totalWeight = totalWeight - temRemWt;
+        remNop++;
+        remWt = remWt + temRemWt;
+    }
     console.log(`Item at index ${itemIndex} deleted.`);
     console.log(awbScannedPcsList);
 }
@@ -541,16 +555,16 @@ function buildPicesList() {
     htmlRow += '</tbody></table>';
     $('#divDocsDetail').append(htmlRow);
     getRowValues();
-   
-   
+
+
 }
 function getRowValues() {
     piecesIdRow = "";
-    piecesIdRow += "<Rows>"
+    piecesIdRow += "<PcsData><Rows>"
     for (let i = 0; i < awbScannedPcsList.length; i++) {
         piecesIdRow += "<PcsID>" + awbScannedPcsList[i].DimRowId + "</PcsID>"
     }
-    piecesIdRow += "</Rows>"
+    piecesIdRow += "</Rows></PcsData>"
 }
 
 GetWeightingScaleWt = function () {
@@ -1370,13 +1384,13 @@ function UnitizationPendingAWBDetailsScanId() {
     });
 
 }
-function RemoveScannedPcsLabel(){
+function RemoveScannedPcsLabel() {
     $('#lblMSGForRemove').text('');
     if ($("#_txtScanIdModal").val() == '') {
         return;
     }
     _ManifestSeqNo
-    var InputXML = "<Root><ScanCode>"+$("#_txtScanIdModal").val()+"</ScanCode><ExpManRowID>"+_ManifestSeqNo+"</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>"+Userid+"</UserId></Root>";
+    var InputXML = "<Root><ScanCode>" + $("#_txtScanIdModal").val() + "</ScanCode><ExpManRowID>" + _ManifestSeqNo + "</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1460,8 +1474,8 @@ function UnitizationPendingAWBDetails() {
     //     return;
     // }
     isHAWBNo = '0';
-    if ($("#_txtAWBNo").val().length >= 11) {
-        var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><ScanCode></ScanCode><ScanType></ScanType></Root>";
+    // if ($("#_txtAWBNo").val().length >= 11) {
+        var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><ScanCode>"+$("#_txtAWBNo").val()+"</ScanCode><ScanType></ScanType></Root>";
         $('body').mLoading({
             text: "Please Wait..",
         });
@@ -1552,6 +1566,8 @@ function UnitizationPendingAWBDetails() {
                             RemWt = $(this).find('RemWt').text();
                             remNop = parseFloat(RemNOP);
                             remWt = parseFloat(RemWt);
+                            scanTypeMode=$(this).find('ScanType').text();
+                            console.log(scanTypeMode);
                         }
                         $("#_txtRNoLists").val($(this).find('RNo').text());
                         $("#_txtUnt").text($(this).find('ManNOP').text());
@@ -1599,7 +1615,7 @@ function UnitizationPendingAWBDetails() {
                 alert('Server not responding...');
             }
         });
-    }
+ //   }
 
 }
 var calculateVolumeForRm;
@@ -1654,7 +1670,7 @@ function calculateMAnWeightForShow() {
 var totalPieces = 1;
 var totalWeight = 0;
 
- // Ensure isFirstPiece is initialized
+// Ensure isFirstPiece is initialized
 
 function calculateMAnWeightForShowonScan(piece) {
     var calculateRmWt = 0;
@@ -1675,6 +1691,7 @@ function calculateMAnWeightForShowonScan(piece) {
         isFirstPiece = "1";
         $('#_txtPices').val(totalPieces)
         $('#_txtManWt').val(calculateRmWt);
+        temRemWt = calculateRmWt;
         totalPieces++;
         totalWeight = parseFloat(calculateRmWt);
         console.log(totalPieces + "--" + totalWeight);
@@ -1690,6 +1707,7 @@ function calculateMAnWeightForShowonScan(piece) {
         var weightNew = (remWt / remNop) * piece;
         calculateRmWt = Math.round(weightNew * 100) / 100;
         totalWeight = parseFloat(totalWeight) + parseFloat(calculateRmWt);
+        temRemWt = calculateRmWt;
         $('#_txtPices').val(totalPieces)
         $('#_txtManWt').val(totalWeight);
         totalPieces++;
@@ -1709,9 +1727,6 @@ function calculateMAnWeightForShowonScan(piece) {
 
 
 function UnitizationPendingAWBDetailsWiithHWABNo(HAWBNo) {
-
-
-
     var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><HAWBRowId>" + HAWBNo + "</HAWBRowId><HAWBNo>" + $("#ddlHAWBNo option:selected").text() + "</HAWBNo></Root>";
     $('body').mLoading({
         text: "Please Wait..",
@@ -1817,6 +1832,13 @@ function onBack() {
     $("#offPointLists").removeAttr('disabled');
     $("#txtFlightManpower").removeAttr('disabled');
     $("#btSaveManpower").removeAttr('disabled');
+    $('#divDocsDetail').empty();
+    awbScannedPcsList.length = 0;
+    totalPieces = 1;
+    totalWeight = 0;
+    $("#_txtScanId").val('')
+    $("#_txtDisplayAWBNo").val('');
+    isFirstPiece = "0";
 
 }
 
@@ -1868,8 +1890,13 @@ function UnitizeAWB() {
     //    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>-1</Weight><Volume>-1</Volume></Root>";
     //}
     getRowValues();
-    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave +""+piecesIdRow+ "</Root>";
-
+    var InputXML ;
+    if(scanTypeMode=='G'){
+        InputXML= "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow +"<GroupID>"+$("#_txtAWBNo").val()+"</GroupID></Root>";
+    }
+    else{
+        InputXML= "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow +"<GroupID>"+$("#_txtAWBNo").val()+"</GroupID></Root>";
+    }
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1919,6 +1946,8 @@ function UnitizeAWB() {
                         $("#SHCCodeTbl").empty();
                         $('#divDocsDetail').empty();
                         awbScannedPcsList.length = 0;
+                        totalPieces = 1;
+                        totalWeight = 0;
                         $("#_txtScanId").val('')
                         $("#_txtDisplayAWBNo").val('');
                         isFirstPiece = "0";
@@ -2883,6 +2912,8 @@ function clearAWBRecords() {
     $("#dvForEditBtn").hide();
     $('#divDocsDetail').empty();
     awbScannedPcsList.length = 0;
+    totalPieces = 1;
+    totalWeight = 0;
     $("#_txtScanId").val('')
     $("#_txtDisplayAWBNo").val('');
     isFirstPiece = "0";
@@ -3406,9 +3437,9 @@ function openDetailModalofRemove(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG,
     oldNOPRM = NOP;
     oldVolumeRm = Volume;
     oldWeight = WEIGHT_KG;
-    oldRemWt=WEIGHT_KG;
-    oldRemNop= NOP;
-    oldRemVol= Volume;
+    oldRemWt = WEIGHT_KG;
+    oldRemNop = NOP;
+    oldRemVol = Volume;
     console.log("Initial OLDremNop:", oldRemNop);
     console.log("Initial OLDremWt:", oldRemWt);
     console.log("Initial OLDremVol:", oldRemWt);
@@ -3459,47 +3490,55 @@ function calculateVolumneRemove() {
 
 var totalToRemPieces = 1;
 var totalToRemWeight = 0;
-var totalToRemVol=0;
-var calculateRmWt = 0;
-var calculateVolumeForRm=0;
+var totalToRemVol = 0;
+// var calculateRmWt = 0;
+
 function calculateVolumneRemoveForShowonScan() {
-    // var calculateRmWt = 0;
-    if (isFirstPiece == "0"){
+    var calculateRmWt = 0;
+    var calculateRmVolume = 0;
+    if (isFirstPiece == "0") {
         var weightNew = (parseFloat(oldRemWt) / parseFloat(oldRemNop)) * 1;
         calculateRmWt = Math.round(weightNew * 100) / 100;
+        totalToRemWeight = parseFloat(calculateRmWt);
+
+        var volumeNew = (parseFloat(oldRemVol) / parseFloat(oldRemNop)) * 1;
+        calculateRmVolume = Math.round(volumeNew * 100) / 100;
+        totalToRemVol = parseFloat(calculateRmVolume);
+
+        console.log(totalToRemPieces + "**" + totalToRemWeight + "**" + totalToRemVol);
         isFirstPiece = "1";
         $('#txtWeightforRemove').val(calculateRmWt);
         $('#txtNOPforRemove').val(totalToRemPieces)
+        $('#txtVolumeforRemove').val(calculateRmVolume);
+        tempRemMovWt=calculateRmWt;
+        tempRemMovVol=calculateRmVolume;
         totalToRemPieces++;
-        totalToRemWeight=parseFloat(calculateRmWt);
-        console.log(totalPieces + "**" + totalWeight);
         oldRemNop = parseFloat(oldRemNop) - 1;
         oldRemWt = parseFloat(oldRemWt) - parseFloat(calculateRmWt);
+        oldRemVol = parseFloat(oldRemVol) - parseFloat(calculateRmVolume);
 
-        var volumeNew = (parseFloat(oldRemVol) / parseFloat(oldRemNop)) * 1;
-        calculateVolumeForRm = Math.round(volumeNew * 100) / 100;
-        totalToRemVol=parseFloat(calculateVolumeForRm);
-        $('#txtVolumeforRemove').val(calculateVolumeForRm);
-        oldRemVol=parseFloat(oldRemVol)-parseFloat(calculateVolumeForRm);
     }
-    else{
+    else {
         var weightNew = (parseFloat(oldRemWt) / parseFloat(oldRemNop)) * 1;
         calculateRmWt = Math.round(weightNew * 100) / 100;
-        totalToRemWeight=parseFloat(totalToRemWeight)+parseFloat(calculateRmWt);
-        $('#txtWeightforRemove').val(totalToRemWeight);
-        $('#txtNOPforRemove').val(totalToRemPieces)
-        totalToRemPieces++;
-        console.log(totalPieces + "**" + totalWeight);
-        oldRemWt = parseFloat(oldRemWt) - 1;
-        oldRemWt = parseFloat(oldRemWt) - parseFloat(calculateRmWt);
+        totalToRemWeight = parseFloat(totalToRemWeight) + parseFloat(calculateRmWt);
 
         var volumeNew = (parseFloat(oldRemVol) / parseFloat(oldRemNop)) * 1;
-        calculateVolumeForRm = Math.round(volumeNew * 100) / 100;
-        totalToRemVol=parseFloat(totalToRemVol)+parseFloat(calculateVolumeForRm);
+        calculateRmVolume = Math.round(volumeNew * 100) / 100;
+        totalToRemVol = parseFloat(totalToRemVol) + parseFloat(calculateRmVolume);
+
+        console.log(totalToRemPieces + "*--*" + totalToRemWeight + "*--*" + totalToRemVol);
+        $('#txtWeightforRemove').val(totalToRemWeight);
+        $('#txtNOPforRemove').val(totalToRemPieces)
         $('#txtVolumeforRemove').val(totalToRemVol);
-        oldRemVol=parseFloat(oldRemVol)-parseFloat(calculateVolumeForRm);
+        tempRemMovWt=calculateRmWt;
+        tempRemMovVol=calculateRmVolume;
+        totalToRemPieces++;
+        oldRemNop = parseFloat(oldRemNop) - 1;
+        oldRemWt = parseFloat(oldRemWt) - parseFloat(calculateRmWt);
+        oldRemVol = parseFloat(oldRemVol) - parseFloat(calculateRmVolume);
     }
-  
+
     // $('#txtWeightforRemove').val(calculateRmWt);
     // var enteredNOP = parseInt($('#txtNOPforRemove').val());
     // var volumeNew = (parseFloat(oldVolumeRm) / parseFloat(oldNOPRM)) * enteredNOP;
@@ -3547,10 +3586,10 @@ UnitizationRemoveOffloadShipment = function () {
         ULDNumber = uldsVal.slice(3, 8)
         ULDOwner = uldsVal.slice(8, 11)
     }
-
+    getRowValues();
     InputXML = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
         '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
-        '<ShipmentId>' + ShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark></Root>';
+        '<ShipmentId>' + ShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark>' + piecesIdRow + '</Root>';
     console.log(InputXML)
     //xmlDataForDamage = JSON.stringify(InputXML);
     $('body').mLoading({
@@ -3615,6 +3654,15 @@ function clearRemoveData() {
     $("#ddlReasonforRemove").val('');
     $("#txtRemarkforRmove").val('');
     $("#lblMSGForRemove").text('');
+    $('#divDocsDetail').empty();
+    awbScannedPcsList.length = 0;
+    $("#_txtScanIdModal").val('')
+    isFirstPiece = "0";
+    totalToRemPieces = 1;
+    totalToRemWeight = 0;
+    totalToRemVol = 0;
+    calculateRmWt = 0;
+    calculateRmVolume = 0;
 
 }
 

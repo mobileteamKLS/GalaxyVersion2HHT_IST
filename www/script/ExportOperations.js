@@ -121,6 +121,9 @@ function DisplayScreen(Mode) {
         localStorage.setItem('Dimension', 'Dimension');
         window.location.href = "EXP_DimensionScreen.html";
     }
+    else if (Mode == "GroupIdBinning") {
+        window.location.href = "EXP_GroupId_Binning.html";
+    }
 
 }
 

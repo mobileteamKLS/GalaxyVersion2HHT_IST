@@ -361,7 +361,6 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                 html += '</tr>';
                 html += '</thead>';
                 html += '<tbody>';
-
                 
                 $(xmlDoc).find('Table1').each(function (index) {
                     Status = $(this).find('Status').text();
@@ -410,6 +409,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     var sum = LocCode + LocPieces;
+
                     locationDetails(LocCode, LocPieces, LocId, LocWeight);
 
                 });
@@ -420,6 +420,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
 
                     $('#LocationDiv').append(html);
                 }
+
                 $("#tblLocation").on('click', '.valp', function () {
                     var selected = $(this).hasClass("highlight");
                     $("#tblLocation tr").removeClass("highlight");
@@ -948,10 +949,12 @@ function getLocation(LocCode, LocPieces, LocId, LocWeight) {
     //currentLocID = str[2];
     //var _wt = str[3];
 
+
     currentLocID = LocId;
     $("#txtMovePkgs").val(LocPieces);
     $("#textMoveWght").val(LocWeight);
     $("#locationShow").text(LocCode + "/" + LocPieces);
+
    
 
 }

@@ -117,6 +117,12 @@ function DisplayScreen(Mode) {
     } else if (Mode == "Checklist") {
         localStorage.setItem('Checklist', 'Checklist');
         window.location.href = "EXP_Checklist.html";
+    } else if (Mode == "Dimension") {
+        localStorage.setItem('Dimension', 'Dimension');
+        window.location.href = "EXP_DimensionScreen.html";
+    }
+    else if (Mode == "GroupIdBinning") {
+        window.location.href = "EXP_GroupId_Binning.html";
     }
 
 }
@@ -129,6 +135,7 @@ function onPageShowHideExport() {
 
         PageName = $(this).find('PageName').text();
         IsActive = $(this).find('IsActive').text();
+        IsActive ='1';
         Module = $(this).find('Module').text();
 
         if (index == 0) {
@@ -157,14 +164,13 @@ function onPageShowHideExport() {
         }
 
         if (index == 3) {
-            if (Module == 'Export' && PageName == 'Location.html' && IsActive == '1') {
+            if (Module == 'Export' && PageName == 'EXP_Location.html' && IsActive == '1') {
                 $("#Location").show();
             } else {
                 $("#Location").hide();
 
             }
         }
-
 
         //if (index == 4) {
         //    if (Module == 'Export' && PageName == 'IMP_InternalMovement.html' && IsActive == '1') {
@@ -175,7 +181,6 @@ function onPageShowHideExport() {
         //}
 
         if (index == 4) {
-
             if (Module == 'Export' && PageName == 'EXP_Unitization.html' && IsActive == '1') {
                 $("#Unitization").show();
             } else {
@@ -183,9 +188,7 @@ function onPageShowHideExport() {
             }
         }
 
-
         if (index == 5) {
-
             if (Module == 'Export' && PageName == 'EXP_VCTAcceptance.html' && IsActive == '1') {
                 $("#VCTAcceptance").show();
             } else {

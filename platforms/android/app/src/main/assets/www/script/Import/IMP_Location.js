@@ -108,6 +108,7 @@ $(function () {
 
         if (PARAMETER_VALUE_for_Groupid == 'N') {
             AWBNumberScan();
+            console.log("123");
         }
     });
 
@@ -346,7 +347,6 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     $("#spnTxtWeight").text($(this).find('LocationWtStatus').text());
                     $("#txtBinnPkgs").val(PendingPieces);
                     calculateWeight();
-
 
                     if (ExpectedZone != "") {
                         $("#lblexplochead").show();
