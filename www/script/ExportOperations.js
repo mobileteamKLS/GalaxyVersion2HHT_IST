@@ -124,6 +124,9 @@ function DisplayScreen(Mode) {
     else if (Mode == "GroupIdBinning") {
         window.location.href = "EXP_GroupId_Binning.html";
     }
+    else if (Mode == "SecurityScreening") {
+        window.location.href = "EXP_SecurityScreening.html";
+    }
 
 }
 
