@@ -17,6 +17,7 @@ var _totPkgs;
 var _totWgt;
 var _NOP;
 var _LOCCODE;
+var _GroupID;
 var _STOCKID
 var _WEIGHT
 var _IsSeized
@@ -30,6 +31,7 @@ var arrayofStockId = [];
 var checkBoxCheckStatus = '';
 var arrayOfRows;
 var mpsNoCheck;
+var ScanType;
 $(function () {
 
     //setTimeout(function () {
@@ -81,6 +83,35 @@ $(function () {
                 inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
                 GetWDODetails(inputxml);
             }
+        }
+        //Stop the event from propogation to other handlers
+        //If this line will be removed, then keypress event handler attached 
+        //at document level will also be triggered
+        event.stopPropagation();
+    });
+
+    $('#txtGroupId').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            $('body').mLoading({
+                text: "Please Wait..",
+            });
+            if ($("#txtWDONo").val() == '') {
+                $("body").mLoading('hide');
+                errmsg = "Please enter WDO No.</br>";
+                $.alert(errmsg);
+                return;
+            } 
+            if ($("#txtGroupId").val() == '') {
+                $("body").mLoading('hide');
+                errmsg = "Please enter WDO No.</br>";
+                $.alert(errmsg);
+                return;
+            }
+                inputxml="<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><GroupID>" + $("#txtGroupId").val() + "</GroupID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>"
+               // inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
+               GetWDODetailsByGroupId(inputxml);
+            
         }
         //Stop the event from propogation to other handlers
         //If this line will be removed, then keypress event handler attached 
@@ -164,9 +195,17 @@ function saveWDO() {
     } else {
         //  chkValue = $("#chkLocationStatus").val();
         getRowData();
-        inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><LocDetails>" + arrayOfRows + "</LocDetails></Root>";
-        console.log(inputxml);
-        SaveWDODetails(inputxml);
+        if(ScanType=="G"){
+            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><LocDetails>" + arrayOfRows + "</LocDetails><GroupId>"+$("#txtGroupId").val()+"</GroupId></Root>";
+            console.log(inputxml);
+            SaveWDODetails(inputxml);
+        }
+        else{
+            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><LocDetails>" + arrayOfRows + "</LocDetails></Root>";
+            console.log(inputxml);
+            SaveWDODetails(inputxml);
+        }
+    
         //  var all_checkboxes = $('#tbTable input[type="checkbox"]');
 
         //if (all_checkboxes.length === all_checkboxes.filter(":checked").length) {
@@ -269,9 +308,11 @@ function fnExit() {
 }
 function fnClear() {
     $("#txtWDONo").val('');
+    $("#txtGroupId").val('');
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
+    $("#lblRelePkgsWgt").html('');
     $("#lblMawbNo").html('');
     $("#lblHawbNo").html('');
     $("#lblStatus").html('');
@@ -285,6 +326,7 @@ function fnClear() {
 
 function fnClearonClear() {
     $("#txtWDONo").val('');
+    $("#txtGroupId").val('');
     $("#txtMPSNo").val('');
     $("#tbTable").hide('slow');
     $("#lblPkgsWgt").html('');
@@ -295,6 +337,7 @@ function fnClearonClear() {
     $("#txtWDONo").focus();
     $(".ibiSuccessMsg1").text('');
     $("#locationShow").text('');
+    $("#lblRelePkgsWgt").html('');
 
 
 }
@@ -448,6 +491,7 @@ GetWDODetails = function (InputXML) {
                     _HAWBNo = $(this).find('HAWBno').text();
                     $("#lblMawbNo").text(_MAWBNo);
                     $("#lblHawbNo").text(_HAWBNo);
+                    _GroupID=$(this).find('GroupId').text();
 
                     //$("#spnLocationCode").text(_LOCCODE);
                     //$("#spnPieces").text(_NOP);
@@ -517,13 +561,114 @@ GetWDODetails = function (InputXML) {
     });
 }
 
+GetWDODetailsByGroupId = function (InputXML) {
+
+    $('.ibiSuccessMsg1').text('');
+
+    //    inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
+
+    $.ajax({
+        type: 'POST',
+        url: ACSServiceURL + "/GetWDODetailsByGroupID",
+        data: JSON.stringify({ 'InputXML': InputXML }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            HideLoader();
+            var str = response.d;
+            // console.log(response.d);
+            if (str != null && str != "" && str != "<NewDataSet />") {
+                // $("#btnDiv").show('slow');
+                // $("#tbTable").show('slow');
+                var xmlDoc = $.parseXML(str);
+                // $('#tbTable').empty();
+                $(xmlDoc).find('Table').each(function (index) {
+                    _Status = $(this).find('Status').text();
+                    _StrMessage = $(this).find('StrMessage').text();
+                    if (_Status == 'E') {
+                        // $("#btnDiv").hide();
+                        // $("#txtWDONo").val('');
+                        // $("#lblPkgsWgt").html('');
+                        // $("#lblMawbNo").html('');
+                        // $("#lblHawbNo").html('');
+                        // $("#lblStatus").html('');
+                        // $("#spnSelect").text('');
+                        // $("#spnLocationCode").text('');
+                        // $("#spnPieces").text('');
+                        errmsg = _StrMessage;
+                        $.alert(errmsg);
+                        return;
+                    } else {
+                   
+
+
+                
+
+                    }
+                });
+
+                $(xmlDoc).find('Table1').each(function (index) {
+                    STOCKID = $(this).find('STOCKID').text();
+                    LOCCODE = $(this).find('LOCCODE').text();
+                    NOP = $(this).find('NOP').text();
+                    WEIGHT = $(this).find('WEIGHT').text();
+                    _totRelPkgs = $(this).find('NOP').text();
+                    _totRelWgt = $(this).find('WEIGHT').text();
+                    ScanType=$(this).find('ScanType').text();
+                    $("#lblRelePkgsWgt").text(_totRelPkgs + ' / ' + _totRelWgt);
+
+
+                    for (i = 0; i < arrayofStockId.length; i++) {
+                        console.log(arrayofStockId[i] +"==" +STOCKID);
+                        if (arrayofStockId[i] == STOCKID) {
+                        
+                             $('input[id="' + STOCKID + '"]').prop('checked', true);
+                         
+                        }
+                        else {
+                            // alert('0');
+                        }
+                    }
+                });
+
+                // $(xmlDoc).find('Table1').each(function (index) {
+                //     _WDOStatus = $(this).find('WDOStatus').text();
+                //     _totPkgs = $(this).find('PKG').text();
+                //     _totWgt = $(this).find('WGT').text();
+                //     MPSNoINWDO = $(this).find('MPSNoINWDO').text();
+                //     if (MPSNoINWDO == 'Y') {
+                //         $(".dis").show();
+                //         $('#txtMPSNo').focus();
+                //     } else {
+                //         $(".dis").hide();
+                //     }
+                //     $("#lblStatus").text(_WDOStatus);
+                  
+                // });
+
+
+            } else {
+                $("body").mLoading('hide');
+                errmsg = "WDO No. not found</br>";
+                $.alert(errmsg);
+                return;
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $("body").mLoading('hide');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
+        }
+    });
+}
 
 bindAllCheckBoxes = function () {
     //var str = responsData.d;
     if (PFStatus == 'P') {
-        $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"   class="xmlCheck"  /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
+        $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"   class="xmlCheck"  /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
     } else if (PFStatus == 'F') {
-        $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"  checked="checked" class="xmlCheck" /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
+        $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"  checked="checked" class="xmlCheck" /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
     }
 
     LocXML = '<Rows><StockId>' + _STOCKID + '</StockId><IsSelect>' + checkBoxCheckStatus + '</IsSelect><LocCode>' + _LOCCODE + '</LocCode><Pieces>' + _NOP + '</Pieces><ActualPieces>' + _NOP + '</ActualPieces><IsSeized>' + _IsSeized + '</IsSeized></Rows>';

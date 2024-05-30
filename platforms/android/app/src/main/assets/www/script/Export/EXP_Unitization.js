@@ -558,6 +558,7 @@ function buildPicesList() {
 
 
 }
+
 function getRowValues() {
     piecesIdRow = "";
     piecesIdRow += "<PcsData><Rows>"

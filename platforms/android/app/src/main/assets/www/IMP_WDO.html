@@ -91,8 +91,17 @@
                            style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
                 </div>
 
+                <div class="col-6" style="text-align:left;">
+                    <label class="lbl" id="lblWDONo">Group Id</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" inputmode="text" enterkeyhint="Go" maxlength="20"
+                           autofocus="autofocus" id="txtGroupId" onkeyup="ChkMaxLength(this, '20');"
+                           style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                </div>
+
                 <div class="col-4 dis" style="text-align:left;display:none; ">
-                    <label class="lbl" id="lblPcsWt"> MPS No.</label>
+                    <label class="lbl" id="lblPcsWt">MPS No.</label>
                 </div>
                 <div class="col-8 dis" style="display:none; ">
                     <input type="number" autofocus="autofocus" id="txtMPSNo" maxlength="15" style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass" placeholder="">
@@ -117,12 +126,15 @@
                 <div class="col-md-12">
                     <label class="lbl" id="lblPcsWtshow" style="margin-right: 14px !important;">Pieces / Wt.</label><label class="lbl" id="lblPkgsWgt" style="font-weight: bold;"></label>
                 </div>
+                <div class="col-md-12">
+                    <label class="lbl" id="lblPcsReleasedWtshow" style="margin-right: 14px !important;">Released Pcs / Wt.</label><label class="lbl" id="lblRelePkgsWgt" style="font-weight: bold;"></label>
+                </div>
                 <table class="table  table-bordered mb-0" id="tblTotalPcs">
                     <thead class="theadClass">
                         <tr>
                             <th id="lblSelect">Select</th>
-                            <th id="lblLocationcode">Location Code</th>
-                            <!--<th>Driver No</th>-->
+                            <th>Group Id</th>
+                            <th id="lblLocationcode">NOC</th>
                             <th id="lblPcs">Pieces</th>
                         </tr>
                     </thead>

@@ -125,7 +125,7 @@ function DisplayScreen(Mode) {
         window.location.href = "EXP_GroupId_Binning.html";
     }
     else if (Mode == "SecurityScreening") {
-        window.location.href = "EXP_SecurityScreening.html";
+        window.location.href = "EXP_Security_Screening.html";
     }
 
 }
