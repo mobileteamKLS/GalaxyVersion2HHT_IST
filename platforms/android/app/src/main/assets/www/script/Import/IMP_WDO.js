@@ -688,8 +688,8 @@ function getRowData() {
     for (var i = 1; i < tblTotalPcs.rows.length; i++) {
 
         var valChecked = tblTotalPcs.rows[i].cells[0].children[0].checked;
-        var locationName = tblTotalPcs.rows[i].cells[1].innerText;
-        var actualPcs = tblTotalPcs.rows[i].cells[2].children[0].value;
+        var locationName = tblTotalPcs.rows[i].cells[2].innerText;
+        var actualPcs = tblTotalPcs.rows[i].cells[3].children[0].value;
         //var actualPcsNotChange = tblTotalPcs.rows[i].cells[2].children[0].value;
         var stockidfromtbl = tblTotalPcs.rows[i].cells[0].children[0].id
         var actualPcsNotChange = tblTotalPcs.rows[i].cells[0].children[1].value

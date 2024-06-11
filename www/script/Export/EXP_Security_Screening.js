@@ -61,12 +61,12 @@ $(function () {
         console.log(screenMethodIdRow);
         console.log(exemptCargoIdRow);
         if (ScanType == "G") {
-            var inputxml = "<Root><AWBNumber>" + $("#txtAWBNo").val() + "</AWBNumber><HouseNumber>" + $("#txtHawbNo").val() + "</HouseNumber><AWBROWID>" + AWBROWID + "</AWBROWID><SHIPROWID>" + SHIPROWID + "</SHIPROWID><HAWBROWID>" + HAWBROWID + "</HAWBROWID><ScreeningPieces>" + screeningPcs + "</ScreeningPieces><Origin>" + origin + "</Origin><DESTINATION>" + dest + "</DESTINATION><Commodity>" + Commodity + "</Commodity><CommodityGroup>" + CommodityGroup + "</CommodityGroup><SecurityStatusID>" + $("#ddlSecurityStatus").val() + "</SecurityStatusID><SecurityId>" + $("#ddlSecurityType").val() + "</SecurityId><MachineNo>" + $("#ddlMachineNos").val() + "</MachineNo><GroupID>" + $("#txtScanId").val() + "</GroupID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId>" + screenMethodIdRow + "" + exemptCargoIdRow + "</Root";
+            var inputxml = "<Root><AWBNumber>" + $("#txtAWBNo").val() + "</AWBNumber><HouseNumber>" + $("#txtHawbNo").val() + "</HouseNumber><AWBROWID>" + AWBROWID + "</AWBROWID><SHIPROWID>" + SHIPROWID + "</SHIPROWID><HAWBROWID>" + HAWBROWID + "</HAWBROWID><ScreeningPieces>" + $("#txtScreeningPcs").val() + "</ScreeningPieces><Origin>" + origin + "</Origin><DESTINATION>" + dest + "</DESTINATION><Commodity>" + Commodity + "</Commodity><CommodityGroup>" + CommodityGroup + "</CommodityGroup><SecurityStatusID>" + $("#ddlSecurityStatus").val() + "</SecurityStatusID><SecurityId>" + $("#ddlSecurityType").val() + "</SecurityId><MachineNo>" + $("#ddlMachineNos").val() + "</MachineNo><GroupID>" + $("#txtScanId").val() + "</GroupID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId>" + screenMethodIdRow + "" + exemptCargoIdRow + "</Root>";
             console.log(inputxml);
             saveDetails(inputxml);
         }
         else {
-            var inputxml = "<Root><AWBNumber>" + $("#txtAWBNo").val() + "</AWBNumber><HouseNumber>" + $("#txtHawbNo").val() + "</HouseNumber><AWBROWID>" + AWBROWID + "</AWBROWID><SHIPROWID>" + SHIPROWID + "</SHIPROWID><HAWBROWID>" + HAWBROWID + "</HAWBROWID><ScreeningPieces>" + screeningPcs + "</ScreeningPieces><Origin>" + origin + "</Origin><DESTINATION>" + dest + "</DESTINATION><Commodity>" + Commodity + "</Commodity><CommodityGroup>" + CommodityGroup + "</CommodityGroup><SecurityStatusID>" + $("#ddlSecurityStatus").val() + "</SecurityStatusID><SecurityId>" + $("#ddlSecurityType").val() + "</SecurityId><MachineNo>" + $("#ddlMachineNos").val() + "</MachineNo><GroupID></GroupID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId>" + screenMethodIdRow + "" + exemptCargoIdRow + "</Root";
+            var inputxml = "<Root><AWBNumber>" + $("#txtAWBNo").val() + "</AWBNumber><HouseNumber>" + $("#txtHawbNo").val() + "</HouseNumber><AWBROWID>" + AWBROWID + "</AWBROWID><SHIPROWID>" + SHIPROWID + "</SHIPROWID><HAWBROWID>" + HAWBROWID + "</HAWBROWID><ScreeningPieces>" + $("#txtScreeningPcs").val() + "</ScreeningPieces><Origin>" + origin + "</Origin><DESTINATION>" + dest + "</DESTINATION><Commodity>" + Commodity + "</Commodity><CommodityGroup>" + CommodityGroup + "</CommodityGroup><SecurityStatusID>" + $("#ddlSecurityStatus").val() + "</SecurityStatusID><SecurityId>" + $("#ddlSecurityType").val() + "</SecurityId><MachineNo>" + $("#ddlMachineNos").val() + "</MachineNo><GroupID></GroupID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId>" + screenMethodIdRow + "" + exemptCargoIdRow + "</Root>";
             console.log(inputxml);
             saveDetails(inputxml);
         }
@@ -123,6 +123,8 @@ function getRowValues() {
 }
 
 searchDetails = function (InputXML) {
+    $(".ibiSuccessMsg2").text('');
+    $(".ibiSuccessMsg1").text("");
     $.ajax({
         type: 'POST',
         url: ExpURL + "/HHTGETEXPSCREENINGDATA",
@@ -136,10 +138,11 @@ searchDetails = function (InputXML) {
             if (str != null && str != "" && str != "<NewDataSet />") {
 
                 var xmlDoc = $.parseXML(str);
-                $(xmlDoc).find('Table6').each(function (index) {
+                $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
+                        fnClear();
                         $(".ibiSuccessMsg2").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                         return;
                         //clearRecords();
@@ -151,7 +154,7 @@ searchDetails = function (InputXML) {
                     //     $(".ibiSuccessMsg1").text('');
                     // }
                 });
-                $(xmlDoc).find('Table').each(function (index) {
+                $(xmlDoc).find('Table6').each(function (index) {
 
 
                     MAWB = $(this).find('AWBNumber').text();
@@ -169,6 +172,7 @@ searchDetails = function (InputXML) {
                     HAWBROWID = $(this).find('HAWBROWID').text();
                     Commodity = $(this).find('Commodity').text();
                     CommodityGroup = $(this).find('CommodityGroup').text();
+                    screeningPcs=$("#txtScreeningPcs").val();
 
                     $("#txtAWBNo").val(MAWB);
                     $("#txtHawbNo").val(HAWB);
@@ -335,13 +339,13 @@ function saveDetails(inputXML) {
                         fnClear();
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                         
-                        return;
-
                     }
-                    // else if (Status == 'S') {
-                    //     $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+                    else if (Status == 'S') {
+                        fnClear();
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
 
-                    // } else {
+                    } 
+                    // else {
                     //     $(".ibiSuccessMsg1").text('');
                     // }
                 });
