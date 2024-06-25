@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\www",
-    "\\www\\script"
+    "\\www\\js",
+    "\\www\\script",
+    "\\www\\script\\Import"
   ],
-  "SelectedNode": "\\www\\script\\ExportOperations.js",
   "PreviewInSolutionExplorer": false
 }
