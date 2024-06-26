@@ -142,6 +142,10 @@ function DisplayScreen(Mode) {
         localStorage.setItem('IMP_WDORelease', 'IMP_WDORelease');
         window.location.href = "IMP_WDORelease.html";
     }
+    else if (Mode == "IMP_SearchAWBDetails") {
+        localStorage.setItem('IMP_SearchAWBDetails', 'IMP_SearchAWBDetails');
+        window.location.href = "IMP_SearchAWBDetails.html";
+    }
 }
 
 function onPageShowHideImport() {
@@ -217,6 +221,13 @@ function onPageShowHideImport() {
             $("#divWDORelease").show();
         } else {
             $("#divWDORelease").hide();
+        }
+
+
+        if (Module == 'Import' && PageName == 'IMP_SearchAWBDetails.html' && IsActive == '1') {
+            $("#divSearchAWBDetails").show();
+        } else {
+            $("#divSearchAWBDetails").hide();
         }
 
 

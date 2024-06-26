@@ -157,7 +157,7 @@ function onPageShowHideExport() {
         }
 
         if (index == 3) {
-            if (Module == 'Export' && PageName == 'Location.html' && IsActive == '1') {
+            if (Module == 'Export' && PageName == 'EXP_Location.html' && IsActive == '1') {
                 $("#Location").show();
             } else {
                 $("#Location").hide();
