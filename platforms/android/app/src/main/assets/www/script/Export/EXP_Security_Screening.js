@@ -19,6 +19,7 @@ var checkedItems, checkedItems2;
 $(function () {
     $('#checkbox-list2').hide();
     $("#btnSaveScreeningDetails").click(function () {
+        var validationFailed = false;
         $('body').mLoading({
             text: "Please Wait..",
         });
@@ -29,12 +30,7 @@ $(function () {
             return;
         }
 
-        if ($('#ddlMachineNos').find("option:selected").val() == '0') {
-            $("body").mLoading('hide');
-            errmsg = "Please select Machine No.</br>";
-            $.alert(errmsg);
-            return;
-        }
+        
 
         checkedItems = screeningMethodList.filter(item => $(`#${$.escapeSelector(item.text)}`).is(':checked')).map(item => item.text);
         console.log(checkedItems);
@@ -44,7 +40,25 @@ $(function () {
             return;
         }
 
+        
+        $('#checkbox-list').find('input[type="checkbox"]#XRY\\-X\\-Ray\\ Equipment').each(function() {          
+            if ($(this).is(':checked')) {    
+                var selectedMachineNo = $('#ddlMachineNos').val();
+                if (selectedMachineNo === '0') {
+                    $("body").mLoading('hide');
+                    var errmsg = "Please select Machine No.</br>";
+                    $.alert(errmsg);
+                    validationFailed = true; 
+                    return false;
+                }
+            }
+        });
 
+       
+
+        if (validationFailed) {
+            return false; 
+        }
 
 
         if ($('#checkbox-list2').is(':visible')) {
@@ -125,6 +139,10 @@ function getRowValues() {
 searchDetails = function (InputXML) {
     $(".ibiSuccessMsg2").text('');
     $(".ibiSuccessMsg1").text("");
+    $('#checkbox-list').empty();
+    $('#checkbox-list2').empty();
+    ExemptCargoList.length = 0;
+    screeningMethodList.length = 0;
     $.ajax({
         type: 'POST',
         url: ExpURL + "/HHTGETEXPSCREENINGDATA",
@@ -172,13 +190,14 @@ searchDetails = function (InputXML) {
                     HAWBROWID = $(this).find('HAWBROWID').text();
                     Commodity = $(this).find('Commodity').text();
                     CommodityGroup = $(this).find('CommodityGroup').text();
-                    screeningPcs=$("#txtScreeningPcs").val();
-
+                    // screeningPcs=$("#txtScreeningPcs").val();
+                    $("#txtScreeningPcs").val($(this).find('ScreeningPieces').text());
                     $("#txtAWBNo").val(MAWB);
                     $("#txtHawbNo").val(HAWB);
                     $("#spnPieceGrWtChgWt").text(Pieces + " / " + GrWt + " / " + ChWt);
                     $("#spnOriginDest").text(origin + " / " + dest);
                     $("#spnScreenedTotPcs").text(screenedPcs + " / " + totPcs);
+                    
                 });
 
                 $('#ddlSecurityStatus').empty();

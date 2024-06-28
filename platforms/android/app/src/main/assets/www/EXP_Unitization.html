@@ -920,6 +920,14 @@
                                     <img id="btnViewPcsModal" src="img/view.svg"
                                         style="height: 22px; padding-right: 2px; padding-top: 2px;" />
                                 </div>
+                                <div class="col-6" id="divHawb1" style="text-align:left; display: none;">
+                                    <label id="lblHawbList" class="lbl">HAWB List</label>
+                                </div>
+                                <div class="col-6" id="divHawb2" style="display: none;">
+                                    <select class="textfieldClass" id="ddlHAWBList">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">NOP</label>&nbsp;<font color="red">*</font>
                                 </div>
@@ -957,11 +965,19 @@
                                     <i class="form-group__bar"></i>-->
                                     <select class="textfieldClass" id="ddlReasonforRemove"></select>
                                 </div>
+                                
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">Remark</label>
                                 </div>
                                 <div class="col-6">
                                     <textarea class="textfieldClass" maxlength="50" id="txtRemarkforRmove"></textarea>
+                                </div>
+                                <div class="col-6" id="divGroupId1" style="text-align:left; display: none;">
+                                    <label id="lblFltNo" class="lbl">Group Id</label>
+                                </div>
+                                <div class="col-6" id="divGroupId2" style="display: none;">
+                                    <input type="text" id="_txtGroupIdModal" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                                        placeholder="" maxlength="30">
                                 </div>
                             </div>
 

@@ -41,6 +41,8 @@ var temRemWt;
 var tempRemMovWt;
 var tempRemMovVol;
 var scanTypeMode;
+var isScanned=false;
+var OffLoadShipmentId;
 $(function () {
 
     $(document).on('show.bs.modal', '.modal', function (event) {
@@ -51,12 +53,12 @@ $(function () {
         }, 0);
     });
 
-    $('#_txtAWBNo').on('keyup', function () {
-        let currentValue = $(this).val();
-        let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
-        cleanedValue = cleanedValue.replace(/\s+/g, '');
-        $(this).val(cleanedValue);
-    });
+    // $('#_txtAWBNo').on('keyup', function () {
+    //     let currentValue = $(this).val();
+    //     let cleanedValue = currentValue.replace(/[^\w\s]/gi, '');
+    //     cleanedValue = cleanedValue.replace(/\s+/g, '');
+    //     $(this).val(cleanedValue);
+    // });
 
     $('#_txtScanId').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -1426,18 +1428,20 @@ function RemoveScannedPcsLabel() {
                 });
                 $(xmlDoc).find('Table').each(function (index) {
                     _Status = $(this).find('Status').text();
-                    _StrMessage = $(this).find('StrMessage').text();
+                    _StrMessage = $(this).find('OutMsg').text();
                     if (_Status == 'E') {
                         errmsg = _StrMessage;
                         $.alert(errmsg);
+                        $('#lblMSGForRemove').text(errmsg).css('color', 'red');
 
                         $(".alert_btn_ok").click(function () {
                             // $("#_txtAWBNo").val('');
                             // $("#_txtAWBNo").focus();
                         });
-
+                        isScanned=false;
                         return;
                     }
+                    isScanned=true;
                     $('#_txtPices').prop('disabled', true);
                     $('#_txtManWt').prop('disabled', true);
 
@@ -2231,7 +2235,7 @@ function UnitizationSaveULDDetails() {
 
     $(".ibiSuccessMsg1").text('');
 
-    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#txtULDType").val() + "</ULDType><ULDNo>" + $("#txtULDNo").val() + "</ULDNo><ULDOwner>" + $("#txtULDOwner").val() + "</ULDOwner><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId><ULDSpecification>" + $("#uldTypeULDL").val() + "</ULDSpecification><ULDPriority>" + $("#txtUldPriority").val() + "</ULDPriority></Root>";
+    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#txtULDType").val() + "</ULDType><ULDNo>" + $("#txtULDNo").val() + "</ULDNo><ULDOwner>" + $("#txtULDOwner").val() + "</ULDOwner><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId><ULDSpecification>" + $("#uldTypeULDL").val() + "</ULDSpecification><ULDPriority>" + $("#txtUldPriority").val() + "</ULDPriority></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -3327,7 +3331,7 @@ UnitizedGetAWBDetails = function () {
             console.log(response.d);
             HideLoader();
             $('#tblViewAWBDetails').empty();
-
+            $("#ddlReasonforRemove").val('');
 
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
@@ -3357,8 +3361,10 @@ UnitizedGetAWBDetails = function () {
                     WEIGHT_KG = $(this).find('WEIGHT_KG').text();
                     VOLUME = $(this).find('VOLUME').text();
                     ManifestSeqNo = $(this).find('ManifestSeqNo').text();
-                    ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, VOLUME, ManifestSeqNo);
+                    OffLoadShipmentId = $(this).find('ShipmentId').text();
+                    ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, VOLUME, ManifestSeqNo,OffLoadShipmentId);
                     $('#tblViewAWBDetails').append(html);
+                    console.log("======"+OffLoadShipmentId);
 
 
                 });
@@ -3399,7 +3405,7 @@ UnitizedGetAWBDetails = function () {
 }
 
 
-function ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Volume, ManifestSeqNo) {
+function ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Volume, ManifestSeqNo,OffLoadShipmentId) {
 
     html = '';
     html += "<tr>";
@@ -3412,7 +3418,7 @@ function ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Vol
     html += "<td>" + Volume + "</td>";
     // html += '<td><input onkeyup="NumberOnly(event);" class="textpackges text-right"  id=""   type="text" /></td>';
     // html += '<td><input onkeyup="NumberOnly(event); " class="textpackges text - right"  id=""   type="text" /></td>';
-    html += '<td><button type="button" id="btnClear" onclick="openDetailModalofRemove(\'' + AWBNUMBER + '\',\'' + ULD_SEQUENCE_NUMBER + '\',\'' + NOP + '\',\'' + WEIGHT_KG + '\',\'' + Volume + '\',\'' + ManifestSeqNo + '\');" class="btnClass zmdi zmdi-delete zmdi-hc-fw"></button></td>';
+    html += '<td><button type="button" id="btnClear" onclick="openDetailModalofRemove(\'' + AWBNUMBER + '\',\'' + ULD_SEQUENCE_NUMBER + '\',\'' + NOP + '\',\'' + WEIGHT_KG + '\',\'' + Volume + '\',\'' + ManifestSeqNo + '\',\'' + OffLoadShipmentId + '\');" class="btnClass zmdi zmdi-delete zmdi-hc-fw"></button></td>';
 
     html += "</tr>";
 
@@ -3420,11 +3426,12 @@ function ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Vol
 var oldNOPRM;
 var oldVolumeRm;
 var _ManifestSeqNo;
+var _OffLoadShipmentId;
 var oldWeight;
 var oldRemWt;
 var oldRemNop;
 var oldRemVol;
-function openDetailModalofRemove(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Volume, ManifestSeqNo) {
+function openDetailModalofRemove(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Volume, ManifestSeqNo,OffLoadShipmentId) {
     if ($("#uldLists").val() == '0') {
         $('#tdULDNo').text('Bulk');
     } else {
@@ -3445,6 +3452,10 @@ function openDetailModalofRemove(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG,
     console.log("Initial OLDremWt:", oldRemWt);
     console.log("Initial OLDremVol:", oldRemWt);
     _ManifestSeqNo = ManifestSeqNo;
+    _OffLoadShipmentId=OffLoadShipmentId;
+    console.log("^^^^^^^"+_OffLoadShipmentId+""+OffLoadShipmentId);
+    var inputXML='<Root><FlightSeqNo>'+FltSeqNo+' </FlightSeqNo><ManSeqNo>'+ManifestSeqNo+'</ManSeqNo><AirportCity>'+ SHED_AIRPORT_CITY + '</AirportCity><UserID>'+ Userid +'</UserID></Root>';
+    GetManifestHouseByGroupID(inputXML);
     $('#modalViewRemoveOffload').modal('toggle');
 }
 
@@ -3587,11 +3598,22 @@ UnitizationRemoveOffloadShipment = function () {
         ULDNumber = uldsVal.slice(3, 8)
         ULDOwner = uldsVal.slice(8, 11)
     }
+    
     getRowValues();
-    InputXML = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
+    var inputXml;
+    if(isScanned){
+        inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
         '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
-        '<ShipmentId>' + ShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark>' + piecesIdRow + '</Root>';
-    console.log(InputXML)
+        '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark>' + piecesIdRow + '<GroupID>'+$("#_txtGroupIdModal").val()+'</GroupID><HouseNo>'+$("#ddlHAWBList").val()+'</HouseNo></Root>';
+    console.log(inputXml)
+    }
+    else{
+        inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
+        '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
+        '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark><GroupID>'+$("#_txtGroupIdModal").val()+'</GroupID><HouseNo>'+$("#ddlHAWBList").val()+'</HouseNo></Root>';
+    console.log(inputXml)
+    }
+   
     //xmlDataForDamage = JSON.stringify(InputXML);
     $('body').mLoading({
         text: "Please Wait..",
@@ -3599,7 +3621,7 @@ UnitizationRemoveOffloadShipment = function () {
     $.ajax({
         type: 'POST',
         url: ExpURL + "/UnitizationRemoveOffloadShipment",
-        data: JSON.stringify({ 'InputXML': InputXML }),
+        data: JSON.stringify({ 'InputXML': inputXml }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response, xhr, textStatus) {
@@ -3624,6 +3646,7 @@ UnitizationRemoveOffloadShipment = function () {
                         $("#txtVolumeforRemove").val('');
                         $("#ddlReasonforRemove").val('');
                         $("#txtRemarkforRmove").val('');
+                        $("#_txtGroupIdModal").val('');
                         setTimeout(function () {
                             $('#modalViewRemoveOffload').modal('hide');
                             clearRemoveData()
@@ -3654,6 +3677,7 @@ function clearRemoveData() {
     $("#txtVolumeforRemove").val('');
     $("#ddlReasonforRemove").val('');
     $("#txtRemarkforRmove").val('');
+    $("#_txtGroupIdModal").val('');
     $("#lblMSGForRemove").text('');
     $('#divDocsDetail').empty();
     awbScannedPcsList.length = 0;
@@ -4259,7 +4283,7 @@ UnitizedGetAWBDetailsMove = function () {
             console.log(response.d);
             HideLoader();
             $('#tblViewAWBDetails').empty();
-
+            $("#ddlReasonforRemove").val('');
 
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
@@ -4289,9 +4313,10 @@ UnitizedGetAWBDetailsMove = function () {
                     WEIGHT_KG = $(this).find('WEIGHT_KG').text();
                     VOLUME = $(this).find('VOLUME').text();
                     ManifestSeqNo = $(this).find('ManifestSeqNo').text();
-                    ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, VOLUME, ManifestSeqNo);
+                    OffLoadShipmentId = $(this).find('ShipmentId').text();
+                    ViewAWBDetailsTable(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, VOLUME, ManifestSeqNo,OffLoadShipmentId);
                     $('#tblViewAWBDetails').append(html);
-
+                    console.log("+++++"+OffLoadShipmentId);
 
                 });
 
@@ -4617,6 +4642,96 @@ function GetULDs(valFromddloffpoint) {
             //alert('Server not responding...');
             console.log(xhr.responseText);
             alert(xhr.responseText);
+        }
+    });
+}
+
+function GetManifestHouseByGroupID(InputXML){
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
+    $.ajax({
+        type: 'POST',
+        url: ExpURL + "/HHTGETMANIFESTHOUSESBYGROUPID",
+        data: JSON.stringify({ 'InputXML': InputXML }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            console.log(response.d);
+            HideLoader();
+
+            var str = response.d;
+            if (str != null && str != "" && str != "<NewDataSet />") {
+               
+                var xmlDoc = $.parseXML(str);
+                console.log(xmlDoc)
+                $(xmlDoc).find('Table').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                        $("#divHawb1").hide();
+                        $("#divHawb2").hide();
+                        $("#divGroupId1").hide();
+                        $("#divGroupId2").hide();
+                        return;
+                    } else {
+                        $("#divHawb1").show();
+                        $("#divHawb2").show();
+                        $("#divGroupId1").show();
+                        $("#divGroupId2").show();
+                    }
+
+                });
+                var table1Data = [];
+
+          
+                $(xmlDoc).find('Table1').each(function() {
+                    var houseNo = $(this).find('HouseNo').text();
+                    var pcs = $(this).find('PCS').text();
+                    var weight = $(this).find('WEIGHT').text();
+                    var volume = $(this).find('VOLUME').text();
+                    
+                    table1Data.push({ houseNo: houseNo, pcs: pcs, weight: weight, volume: volume });
+                    
+                    if ($('#ddlHAWBList option[value="' + houseNo + '"]').length === 0) {
+                        // If not, append the new option
+                        $('#ddlHAWBList').append('<option value="' + houseNo + '">' + houseNo + '</option>');
+                    }
+                    $('#ddlHAWBList').val('');
+                    //$('#ddlHAWBList').append('<option value="' + houseNo + '">' + houseNo + '</option>');
+                });
+    
+          
+                $('#ddlHAWBList').on('change', function() {
+                    var selectedHouseNo = $(this).val();
+    
+                 
+                    var selectedData = table1Data.find(function(data) {
+                        return data.houseNo === selectedHouseNo;
+                    });
+    
+                    if (selectedData) {
+                        $('#txtNOPforRemove').val(selectedData.pcs);
+                        $('#txtWeightforRemove').val(selectedData.weight);
+                        $('#txtVolumeforRemove').val(selectedData.volume);
+                    } else {
+                        $('#txtNOPforRemove').val('');
+                        $('#txtWeightforRemove').val('');
+                        $('#txtVolumeforRemove').val('');
+                    }
+                });
+
+
+            } else {
+                $("body").mLoading('hide');
+                //errmsg = "WDO No. not found</br>";
+                //$.alert(errmsg);
+                //return;
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $("body").mLoading('hide');
+            // alert('Server not responding...');
         }
     });
 }
