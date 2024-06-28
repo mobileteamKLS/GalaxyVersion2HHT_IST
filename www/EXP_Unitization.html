@@ -12,7 +12,6 @@
     <link href="css/Loader.css" rel="stylesheet" />
     <link href="css/sweetalert2.min.css" rel="stylesheet" />
     <style type="text/css">
-
         .table-bordered,
         .table-bordered td,
         .table-bordered th {
@@ -28,70 +27,76 @@
         .login__block__btn_margin {
             margin-top: 3px !important;
         }
+
         #SHCCodeTbl td.foo:nth-child(7n+1) {
-            background-color: rgb(177,112,136);
+            background-color: rgb(177, 112, 136);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+2) {
-            background-color: rgb(27,81,141);
+            background-color: rgb(27, 81, 141);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+3) {
-            background-color: rgb(13,150,68);
+            background-color: rgb(13, 150, 68);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+4) {
-            background-color: rgb(35,29,31);
+            background-color: rgb(35, 29, 31);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+5) {
-            background-color: rgb(157,124,43);
+            background-color: rgb(157, 124, 43);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+6) {
-            background-color: rgb(14,76,166);
+            background-color: rgb(14, 76, 166);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+7) {
-            background-color: rgb(206,84,209);
+            background-color: rgb(206, 84, 209);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+8) {
-            background-color: rgb(143,74,219);
+            background-color: rgb(143, 74, 219);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
         #SHCCodeTbl td.foo:nth-child(7n+9) {
-            background-color: rgb(198,139,74);
+            background-color: rgb(198, 139, 74);
             color: white;
             padding: 3px;
             text-align: center;
         }
 
-        #SHCCodeTbl > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        #SHCCodeTbl>tbody>tr>td,
+        .table>tbody>tr>th,
+        .table>tfoot>tr>td,
+        .table>tfoot>tr>th,
+        .table>thead>tr>td,
+        .table>thead>tr>th {
             font-size: 12px;
         }
 
@@ -99,6 +104,7 @@
             margin-bottom: 0px !important;
             margin-top: 5px;
         }
+
         .blink_me {
             animation: blinker 1s linear infinite;
             background-color: yellow;
@@ -133,9 +139,8 @@
                     <i class="navigation-trigger__line"></i>-->
                     <!--<a class="btnHome" style="color:#fff;"><i class="zmdi zmdi-home"></i></a>-->
                     <a href="ExportOperations.html" class="btnHome"
-                       style="font-size:2rem !important;color:#fff !important;">
-                        <i style=""
-                           class="zmdi zmdi-chevron-left"></i>
+                        style="font-size:2rem !important;color:#fff !important;">
+                        <i class="zmdi zmdi-chevron-left"></i>
                     </a>
                 </div>
             </div>
@@ -172,13 +177,14 @@
                     <label id="lblFltNo" class="lbl">Flight No.</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-4">
-                    <input type="text" id="txtFlightAirlineNo" maxlength="2" autofocus style="height: 30px;text-transform:uppercase;"
-                           class="textfieldClass" placeholder="">
+                    <input type="text" id="txtFlightAirlineNo" maxlength="2" autofocus
+                        style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
                     <i class="form-group__bar"></i>
                 </div>
                 <div class="col-4">
-                    <input type="text" id="txtFlightNo" onkeyup="ChkMaxLength(this, '6');" style="height: 30px;text-transform:uppercase;text-align:right;"
-                           class="textfieldClass" placeholder="">
+                    <input type="text" id="txtFlightNo" onkeyup="ChkMaxLength(this, '6');"
+                        style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass"
+                        placeholder="">
                     <i class="form-group__bar"></i>
                 </div>
 
@@ -187,18 +193,18 @@
                 </div>
                 <div class="col-8">
                     <input type="date" id="FlightDate" maxlength="15" style="height: 30px;text-transform:uppercase;"
-                           class="textfieldClass" placeholder="">
+                        class="textfieldClass" placeholder="">
                 </div>
                 <br /><br />
                 <div class="col-6">
                     <button type="button" id="btnExit" class="btnClass btn-primary btnHome"
-                            onclick="fnClear();clearAWB()">
+                        onclick="fnClear();clearAWB()">
                         Clear
                     </button>
                 </div>
                 <div class="col-6">
                     <button type="button" id="btnGet" class="btnClass btn-primary btnHome"
-                            onclick="GetExportFlightDetails(true)">
+                        onclick="GetExportFlightDetails(true)">
                         Get
                         Details
                     </button>
@@ -209,7 +215,7 @@
                 </div>
                 <div class="col-7">
                     <select class="textfieldClass" id="offPointLists"
-                            onchange="GetULDs($('#offPointLists').find('option:selected').text());">
+                        onchange="GetULDs($('#offPointLists').find('option:selected').text());">
                         <option value="0">Select</option>
                     </select>
                 </div>
@@ -218,14 +224,14 @@
                 </div>
                 <div class="col-5">
                     <input type="number" id="txtFlightManpower" maxlength="15" style="height: 30px;text-align:right;"
-                           class="textfieldClass" placeholder="">
+                        class="textfieldClass" placeholder="">
                 </div>
                 <div class="col-6">
 
                 </div>
                 <div class="col-6">
                     <button type="button" id="btSaveManpower" class="btnClass btn-primary btnHome"
-                            onclick="UnitizationSaveFlightManDetails();">
+                        onclick="UnitizationSaveFlightManDetails();">
                         Save
                         Manpower
                     </button>
@@ -254,15 +260,18 @@
                     </div>
                     <div class="col-3">
                         <input type="text" style="text-transform:uppercase;" id="txtULDType"
-                               onkeypress="return blockSpecialChar(event)" maxlength="3" class="textfieldClass" placeholder="">
+                            onkeypress="return blockSpecialChar(event)" maxlength="3" class="textfieldClass"
+                            placeholder="">
                     </div>
                     <div class="col-3">
-                        <input type="number" style="text-align:right;" id="txtULDNo"
-                               onkeyup="ChkMaxLength(this, '5');" onchange="CheckUldNoValidation($('#txtULDNo').val());" class="textfieldClass" placeholder="">
+                        <input type="number" style="text-align:right;" id="txtULDNo" onkeyup="ChkMaxLength(this, '5');"
+                            onchange="CheckUldNoValidation($('#txtULDNo').val());" class="textfieldClass"
+                            placeholder="">
                     </div>
                     <div class="col-3">
                         <input type="text" style="text-transform:uppercase;" id="txtULDOwner"
-                               onkeypress="return blockSpecialChar(event)" maxlength="2" class="textfieldClass" placeholder="">
+                            onkeypress="return blockSpecialChar(event)" maxlength="2" class="textfieldClass"
+                            placeholder="">
                     </div>
                     <div class="col-3">
                         <select class="textfieldClass" id="uldTypeULDL">
@@ -275,8 +284,8 @@
                         <label id="lblUldMan" class="lbl">Priority</label>
                     </div>
                     <div class="col-7">
-                        <input type="text" id="txtUldPriority" pattern="\d*" maxlength="2" style="height: 30px;text-align:right;"
-                               class="textfieldClass" placeholder="">
+                        <input type="text" id="txtUldPriority" pattern="\d*" maxlength="2"
+                            style="height: 30px;text-align:right;" class="textfieldClass" placeholder="">
                     </div>
                     <div class="col-6" style="text-align:center;">
 
@@ -284,7 +293,7 @@
 
                     <div class="col-6" style="text-align:center;margin-top:10px;">
                         <button type="button" id="btnULDSubmit" class="btnClass btn-primary"
-                                onclick="UnitizationSaveULDDetails()">
+                            onclick="UnitizationSaveULDDetails()">
                             Add ULD/Bulk
                         </button>
                     </div>
@@ -314,7 +323,7 @@
                     </div>
                     <div class="col-7">
                         <input type="number" style="text-align:right;" id="ULDScaleWt"
-                               onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="">
+                            onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="">
                     </div>
                     <div class="col-5" style="text-align:left;">
                         <label id="lblCont" class="lbl">Contour</label>
@@ -330,7 +339,7 @@
                     </div>
                     <div class="col-7">
                         <input type="number" id="txtULDManpower" maxlength="15" style="height: 30px;text-align:right;"
-                               class="textfieldClass" placeholder="">
+                            class="textfieldClass" placeholder="">
                     </div>
                     <!-- <div class="col-5" style="text-align:left;">
                         <label id="lblUldMan" class="lbl">Priority</label>
@@ -356,18 +365,20 @@
                     </div>
                     <div class="col-6">
                         <input type="text" style="text-transform:uppercase;" id="bulkType"
-                               onkeypress="return blockSpecialChar(event)" maxlength="3" class="textfieldClass" placeholder="" />
+                            onkeypress="return blockSpecialChar(event)" maxlength="3" class="textfieldClass"
+                            placeholder="" />
                     </div>
 
                     <div class="col-6">
                         <input type="number" style="text-transform:uppercase;" id="bulkNo"
-                               onkeypress="return blockSpecialChar(event)" onkeyup="ChkMaxLength(this, '15');" class="textfieldClass" placeholder="">
+                            onkeypress="return blockSpecialChar(event)" onkeyup="ChkMaxLength(this, '15');"
+                            class="textfieldClass" placeholder="">
                     </div>
                     <div class="col-6" style="text-align:center;">
                     </div>
                     <div class="col-6" style="text-align:center;">
                         <button type="button" id="btnBulkSubmit" class="btnClass btn-primary"
-                                onclick="UnitizationSaveTrolleyDetails()">
+                            onclick="UnitizationSaveTrolleyDetails()">
                             Add ULD/Bulk
                         </button>
                     </div>
@@ -388,15 +399,15 @@
                         <label id="lblBulkManpower" class="lbl">Bulk Manpower</label>
                     </div>
                     <div class="col-7">
-                        <input type="number" id="txtBulkManpower"
-                               onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="">
+                        <input type="number" id="txtBulkManpower" onkeypress="return blockSpecialChar(event)"
+                            class="textfieldClass" placeholder="">
                     </div>
                     <div class="col-5" style="text-align:left;">
                         <label id="lblScab" class="lbl">Scale Weight</label>
                     </div>
                     <div class="col-7">
-                        <input type="number" id="bulkScaleWt"
-                               onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="">
+                        <input type="number" id="bulkScaleWt" onkeypress="return blockSpecialChar(event)"
+                            class="textfieldClass" placeholder="">
                     </div>
                     <div class="col-5" style="text-align:left;">
                         <label id="lblUldMan" class="lbl">Remark</label>
@@ -406,7 +417,7 @@
                     </div>
                 </div>
             </div>
-          
+
 
             <div class="contacts row contacts__itemfortext" id="AWB" style="padding:5px;">
 
@@ -414,18 +425,23 @@
                     <label id="lblUld" class="lbl">ULD No.</label>
                 </div>
                 <div class="col-7">
-                    <input type="text" id="_txtULDNo"
-                           onkeypress="return blockSpecialChar(event)" class="textfieldClass" placeholder="" disabled>
+                    <input type="text" id="_txtULDNo" onkeypress="return blockSpecialChar(event)" class="textfieldClass"
+                        placeholder="" disabled>
                 </div>
                 <div class="col-5" style="text-align:left;">
-                    <label id="lblAWB" class="lbl">AWB No.</label>&nbsp;<font color="red">*</font>
+                    <label id="lblAWB" class="lbl">Scan AWB/Group Id</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-7">
-                    <input type="text" id="_txtAWBNo"
-                           onkeyup="ChkMaxLength(this, '30');" class="textfieldClass" placeholder=""
-                           maxlength="30" onblur="UnitizationPendingAWBDetails()">
+                    <input type="text" id="_txtAWBNo" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                        placeholder="" maxlength="30" onblur="UnitizationPendingAWBDetails()">
                 </div>
-
+                <div class="col-5" style="text-align:left;">
+                    <label id="lblAWB" class="lbl">AWB No.</label>
+                </div>
+                <div class="col-7">
+                    <input type="text" id="_txtDisplayAWBNo" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                        placeholder="" maxlength="30" disabled>
+                </div>
 
                 <div class="col-5" id="divHAWBNo1" style="display:none;">
                     <div class="form-group vtMargin">
@@ -433,7 +449,8 @@
                     </div>
                 </div>
                 <div class="col-7" id="divHAWBNo2" style="display:none;">
-                    <input type="text" id="txtHAWBNo" class="textfieldClass" placeholder="" onkeyup="ChkMaxLength(this, '20');" />
+                    <input type="text" id="txtHAWBNo" class="textfieldClass" placeholder=""
+                        onkeyup="ChkMaxLength(this, '20');" />
                 </div>
 
                 <div class="col-5" id="divHAWBNo3" style="display:none;">
@@ -443,24 +460,46 @@
                 </div>
                 <div class="col-7" id="divHAWBNo4" style="display:none;">
                     <div class="form-group">
-                        <select class="textfieldClass" id="ddlHAWBNo" onchange="UnitizationPendingAWBDetailsWiithHWABNo($('#ddlHAWBNo').val())">
+                        <select class="textfieldClass" id="ddlHAWBNo"
+                            onchange="UnitizationPendingAWBDetailsWiithHWABNo($('#ddlHAWBNo').val())">
                             <option value="0">Select</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="col-5">
-                    <div class="form-group vtMargin">
-                        <label class="lbl" id="lblRNOAWB">R No</label>
-                    </div>
+                    <label class="lbl" id="lblRNOAWB">R No</label>
                 </div>
                 <div class="col-7">
-                    <div class="form-group">
-                        <select class="textfieldClass" id="_txtRNoLists">
-                            <option value="0">Select</option>
-                        </select>
-                    </div>
+                    <select class="textfieldClass" id="_txtRNoLists">
+                        <option value="0">Select</option>
+                    </select>
+
                 </div>
+
+                <div class="col-5" style="text-align:left;">
+                    <label class="lbl" id="lblPcsSclWt">Scan ID</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" id="_txtScanId" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                        placeholder="" maxlength="30">
+                </div>
+                <div class="col-1">
+                    <img id="btnViewPcs" src="img/view.svg"
+                        style="height: 22px; padding-right: 2px; padding-top: 2px;" />
+                </div>
+                <!-- 
+                <div class="col-5" style="text-align:left;">
+                    <label id="lblAWB" class="lbl">Scan Id</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" id="_txtDisplayAWBNo"
+                           onkeyup="ChkMaxLength(this, '30');" class="textfieldClass" placeholder=""
+                           maxlength="30">
+                </div>
+                <div class="col-1">
+                    <img id="btnGetWeight" src="img/weighing_scale.svg" style="height: 22px; padding-right: 2px;">
+                </div> -->
 
                 <div class="col-8" style="text-align:left;">
                     <label id="lblUn" class="lbl">Unt./Total Pieces</label>
@@ -491,8 +530,8 @@
                     <label id="lblPc" class="lbl">Pieces</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-7">
-                    <input type="number" id="_txtPices"
-                           onkeyup="ChkMaxLength(this, '5'); calculateMAnWeightForShow();" class="textfieldClass" placeholder="">
+                    <input type="number" id="_txtPices" onkeyup="ChkMaxLength(this, '5'); calculateMAnWeightForShow();"
+                        class="textfieldClass" placeholder="">
                 </div>
 
                 <div class="col-5" style="text-align:left;">
@@ -512,8 +551,8 @@
                     <label id="lblPc" class="lbl">Weight</label>&nbsp;<font color="red">*</font>
                 </div>
                 <div class="col-7">
-                    <input type="number" id="_txtManWt"
-                           onkeyup="ChkMaxLength(this, '6');" class="textfieldClass" placeholder="">
+                    <input type="number" id="_txtManWt" onkeyup="ChkMaxLength(this, '6');" class="textfieldClass"
+                        placeholder="">
                 </div>
 
             </div>
@@ -522,35 +561,33 @@
             </div>
             <div class="contacts row contacts__itemfortext" id="divbtnInfo">
                 <div class="col-6" style="text-align:center;">
-                    <button type="button" id="btnSaveULD" class="btnClass btn-primary btnHome"
-                            onclick="closeULDBulk()">
+                    <button type="button" id="btnSaveULD" class="btnClass btn-primary btnHome" onclick="closeULDBulk()">
                         Save ULD/Bulk
                     </button>
                 </div>
                 <div class="col-6" style="text-align:center;">
                     <button type="button" onclick="GetUnitizedShipmentDetails();" id="btnAddAWB"
-                            class="btnClass btn-primary">
+                        class="btnClass btn-primary">
                         Add
                         AWB
                     </button>
                 </div>
 
                 <div class="col-6" style="text-align:center;">
-                    <button type="button" id="btnAddEquipment"
-                            class="btnClass btn-primary">
+                    <button type="button" id="btnAddEquipment" class="btnClass btn-primary">
                         Add Equipment
                     </button>
                 </div>
 
                 <div class="col-6" style="text-align:center;">
                     <button type="button" id="btnViewAWB" onclick="UnitizedGetAWBDetails();"
-                            class="btnClass btn-primary">
+                        class="btnClass btn-primary">
                         View AWB
                     </button>
                 </div>
                 <div class="col-6" style="text-align:center;">
                     <button type="button" id="btnViewAWB" onclick="openModalMoveShipment();"
-                            class="btnClass btn-primary">
+                        class="btnClass btn-primary">
                         Move Shipment
                     </button>
                 </div>
@@ -561,20 +598,18 @@
                     <label class="lbl uldMessageSuccess"></label>
                 </div>
                 <div class="col-4" style="text-align:center;">
-                    <button type="button" id="btnBack" class="btnClass btn-primary btnHome"
-                            onclick="onBack();">
+                    <button type="button" id="btnBack" class="btnClass btn-primary btnHome" onclick="onBack();">
                         Back
                     </button>
                 </div>
                 <div class="col-4" style="text-align:center;">
                     <button type="button" id="btnAWBClear" class="btnClass btn-primary btnHome"
-                            onclick="clearAWBRecords();">
+                        onclick="clearAWBRecords();">
                         Clear
                     </button>
                 </div>
                 <div class="col-4" style="text-align:center;">
-                    <button type="button" onclick="UnitizeAWB();" id="btnAWBSbmt"
-                            class="btnClass btn-primary">
+                    <button type="button" onclick="UnitizeAWB();" id="btnAWBSbmt" class="btnClass btn-primary">
                         Submit
                     </button>
                 </div>
@@ -734,11 +769,15 @@
                     </div>
                     <div class="modal-body contacts row">
 
-                        <div class="contacts row contacts__itemfortext" id="LocationDiv" style="margin-top:50px;margin-left: 10px;margin-right: 10px;box-shadow: none;">
+                        <div class="contacts row contacts__itemfortext" id="LocationDiv"
+                            style="margin-top:50px;margin-left: 10px;margin-right: 10px;box-shadow: none;">
 
-                            <label class="col-6" id="lblUldNum" style="color: #1f63a6; font-weight: 700;font-size: small;"> ULD Number</label>
+                            <label class="col-6" id="lblUldNum"
+                                style="color: #1f63a6; font-weight: 700;font-size: small;"> ULD Number</label>
                             <label class="col-6" id="lblUldNumber"></label>
-                            <label class="col-12" id="lblMaterialList" style="color: #1f63a6; font-weight: 700;font-size: small;border-bottom: 1px solid #1f63a6;">Material List</label>
+                            <label class="col-12" id="lblMaterialList"
+                                style="color: #1f63a6; font-weight: 700;font-size: small;border-bottom: 1px solid #1f63a6;">Material
+                                List</label>
 
 
                             <!-- <table class="table  table-bordered mb-0" style="margin-top:10px;width: 100%;" id="TextBoxesGroup" >
@@ -759,7 +798,7 @@
                                         <th id="equpTh" style="width: 50%;">Equipment</th>
                                         <th id="quntTh" style="width: 150px;">Quantity</th>
                                         <th id="quntTh" style="width: 150px;">Weight</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody id="tableEuipRecords"></tbody>
@@ -769,11 +808,13 @@
                             <div class="col-1" style="margin-top: 10px;"></div>
 
                             <div class="col-4" style="margin-top: 10px;">
-                                <button type="button" id="btnSaveEQ" class="btnClass btn-primary" onclick="saveULD();">Save</button>
+                                <button type="button" id="btnSaveEQ" class="btnClass btn-primary"
+                                    onclick="saveULD();">Save</button>
                             </div>
                             <div class="col-2" style="margin-top: 10px;"></div>
                             <div class="col-4" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBack" class="btnClass btn-primary" onclick="exitModal();">Back</button>
+                                <button type="button" id="btnSubBack" class="btnClass btn-primary"
+                                    onclick="exitModal();">Back</button>
                             </div>
                             <div class="col-1" style="margin-top: 10px;"></div>
                         </div>
@@ -793,22 +834,24 @@
                     </div>
                     <div class="modal-body contacts row">
 
-                        <div class="contacts row contacts__itemfortext" id="LocationDiv" style="margin-top: 35px; box-shadow: none;  overflow: scroll; ">
+                        <div class="contacts row contacts__itemfortext" id="LocationDiv"
+                            style="margin-top: 35px; box-shadow: none;  overflow: scroll; ">
 
                             <table class="table table-bordered mb-0" style="margin-top:10px;width:100%;" id="">
                                 <thead>
                                     <tr>
-                                        <td colspan="5" style="text-align:center;font-weight:bolder;"><label id="lblULDNAME"></label></td>
+                                        <td colspan="5" style="text-align:center;font-weight:bolder;"><label
+                                                id="lblULDNAME"></label></td>
                                     </tr>
                                     <tr>
                                         <!--<th id="equpTh" style="">Check</th>-->
-                                        <th id="equpTh" style="">AWB Number</th>
-                                        <th id="quntTh" style="">NOP</th>
-                                        <th id="quntTh" style="">Weight</th>
-                                        <th id="quntTh" style="">Volume</th>
+                                        <th id="equpTh">AWB Number</th>
+                                        <th id="quntTh">NOP</th>
+                                        <th id="quntTh">Weight</th>
+                                        <th id="quntTh">Volume</th>
                                         <!--<th id="quntTh" style="">Move NOP</th>
                                         <th id="quntTh" style="">Move WT.</th>-->
-                                        <th id="quntTh" style="">Action</th>
+                                        <th id="quntTh">Action</th>
 
                                     </tr>
                                 </thead>
@@ -822,7 +865,8 @@
                             </div>-->
 
                             <div class="col-6" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBack" class="btnClass btn-primary" onclick="exitModalAWBDetails();">Back</button>
+                                <button type="button" id="btnSubBack" class="btnClass btn-primary"
+                                    onclick="exitModalAWBDetails();">Back</button>
                             </div>
 
                         </div>
@@ -843,47 +887,74 @@
                         <!-- <button onclick="cleartextboxes();" type="button" class="" data-dismiss="modal">X</button> -->
                     </div>
                     <div class="modal-body">
-                        <div class="contacts row contacts__itemfortext" id="LocationDiv" style="margin-top: 50px; box-shadow: none;  overflow: scroll; ">
+                        <div class="contacts row contacts__itemfortext" id="LocationDiv"
+                            style="margin-top: 50px; box-shadow: none;  overflow: scroll; ">
                             <table class="table table-bordered mb-0" style="margin-top:10px;width:100%;" id="">
                                 <thead>
                                     <tr>
                                         <th id="" style="font-weight:bolder;">AWB No.</th>
-                                        <th id="tdAWBNo" style=""></th>
+                                        <th id="tdAWBNo"></th>
                                         <th id="" style="font-weight:bolder;">ULD No.</th>
-                                        <th id="tdULDNo" style=""></th>
+                                        <th id="tdULDNo"></th>
 
                                     </tr>
                                     <tr>
                                         <th id="" style="font-weight:bolder;">NOP/Weight</th>
-                                        <th id="tdANOP" style=""></th>
+                                        <th id="tdANOP"></th>
                                         <th id="" style="font-weight:bolder;">Volume</th>
-                                        <th id="tdUVolume" style=""></th>
+                                        <th id="tdUVolume"></th>
                                     </tr>
                                 </thead>
 
                             </table>
 
                             <div class="contacts row contacts__itemfortext" id="ULD" style="padding:5px;">
-
+                                <div class="col-6" style="text-align:left;">
+                                    <label class="lbl" id="lblPcsSclWt">Scan ID</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" id="_txtScanIdModal" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                                        placeholder="" maxlength="30">
+                                </div>
+                                <div class="col-1">
+                                    <img id="btnViewPcsModal" src="img/view.svg"
+                                        style="height: 22px; padding-right: 2px; padding-top: 2px;" />
+                                </div>
+                                <div class="col-6" id="divHawb1" style="text-align:left; display: none;">
+                                    <label id="lblHawbList" class="lbl">HAWB List</label>
+                                </div>
+                                <div class="col-6" id="divHawb2" style="display: none;">
+                                    <select class="textfieldClass" id="ddlHAWBList">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">NOP</label>&nbsp;<font color="red">*</font>
                                 </div>
                                 <div class="col-6">
-                                    <input type="number" id="txtNOPforRemove" onkeyup="calculateVolumneRemove();ChkMaxLength(this, '4');" maxlength="2" autofocus="" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                    <input type="number" id="txtNOPforRemove"
+                                        onkeyup="calculateVolumneRemove();ChkMaxLength(this, '4');" maxlength="2"
+                                        autofocus="" style="height: 30px;text-transform:uppercase;"
+                                        class="textfieldClass" placeholder="">
                                     <i class="form-group__bar"></i>
                                 </div>
                                 <div class="col-6" style="text-align:left;">
-                                    <label id="lblFltNo" class="lbl">Gross Weight</label>&nbsp;<font color="red">*</font>
+                                    <label id="lblFltNo" class="lbl">Gross Weight</label>&nbsp;<font color="red">*
+                                    </font>
                                 </div>
                                 <div class="col-6">
-                                    <input type="number" id="txtWeightforRemove" onkeyup="ChkMaxLength(this, '6');" maxlength="2" autofocus="" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                    <input type="number" id="txtWeightforRemove" onkeyup="ChkMaxLength(this, '6');"
+                                        maxlength="2" autofocus="" style="height: 30px;text-transform:uppercase;"
+                                        class="textfieldClass" placeholder="">
                                     <i class="form-group__bar"></i>
                                 </div>
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">Volume</label>&nbsp;<font color="red">*</font>
                                 </div>
                                 <div class="col-6">
-                                    <input type="number" disabled id="txtVolumeforRemove" maxlength="2" autofocus="" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                    <input type="number" disabled id="txtVolumeforRemove" maxlength="2" autofocus=""
+                                        style="height: 30px;text-transform:uppercase;" class="textfieldClass"
+                                        placeholder="">
                                     <i class="form-group__bar"></i>
                                 </div>
                                 <div class="col-6" style="text-align:left;">
@@ -894,27 +965,37 @@
                                     <i class="form-group__bar"></i>-->
                                     <select class="textfieldClass" id="ddlReasonforRemove"></select>
                                 </div>
+                                
                                 <div class="col-6" style="text-align:left;">
                                     <label id="lblFltNo" class="lbl">Remark</label>
                                 </div>
                                 <div class="col-6">
                                     <textarea class="textfieldClass" maxlength="50" id="txtRemarkforRmove"></textarea>
                                 </div>
+                                <div class="col-6" id="divGroupId1" style="text-align:left; display: none;">
+                                    <label id="lblFltNo" class="lbl">Group Id</label>
+                                </div>
+                                <div class="col-6" id="divGroupId2" style="display: none;">
+                                    <input type="text" id="_txtGroupIdModal" onkeyup="ChkMaxLength(this, '30');" class="textfieldClass"
+                                        placeholder="" maxlength="30">
+                                </div>
                             </div>
 
                             <label class="col-12" id="lblMSGForRemove"></label>
                             <div class="col-6" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBackforRemove" class="btnClass btn-primary" onclick="exitModalAWBDetailsforRemove();">Back</button>
+                                <button type="button" id="btnSubBackforRemove" class="btnClass btn-primary"
+                                    onclick="exitModalAWBDetailsforRemove();">Back</button>
                             </div>
 
                             <div class="col-6" style="margin-top: 10px;">
-                                <button type="button" id="btnSubmitforRemove" class="btnClass btn-primary" onclick="UnitizationRemoveOffloadShipment();">Offload/Remove</button>
+                                <button type="button" id="btnSubmitforRemove" class="btnClass btn-primary"
+                                    onclick="UnitizationRemoveOffloadShipment();">Offload/Remove</button>
                             </div>
 
                             <div class="col-6" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnClearforRemove" class="btnClass btn-primary" onclick="clearRemoveData();">Clear</button>
+                                <button type="button" id="btnClearforRemove" class="btnClass btn-primary"
+                                    onclick="clearRemoveData();">Clear</button>
                             </div>
-
                         </div>
                     </div>
 
@@ -933,19 +1014,23 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="contacts row contacts__itemfortext" id="" style="margin-top: 50px; box-shadow: none;">
+                        <div class="contacts row contacts__itemfortext" id=""
+                            style="margin-top: 50px; box-shadow: none;">
 
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">From ULD</label>
                             </div>
                             <div class="col-7">
-                                <input type="text" id="txtFromULD" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input type="text" id="txtFromULD" maxlength="15"
+                                    style="height: 30px;text-transform:uppercase;" class="textfieldClass"
+                                    placeholder="">
                             </div>
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">ULD List</label>
                             </div>
                             <div class="col-7">
-                                <select onchange="UnitizedMoveShipmentGetShipmentData($('#ddlSource').val());" class="textfieldClass" id="ddlSource">
+                                <select onchange="UnitizedMoveShipmentGetShipmentData($('#ddlSource').val());"
+                                    class="textfieldClass" id="ddlSource">
                                 </select>
                             </div>
 
@@ -953,13 +1038,16 @@
                                 <label class="lbl" id="lblRNOAWB">AWB No.</label>
                             </div>
                             <div class="col-7">
-                                <input type="text" id="txtAWBNOMoveShip" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input type="text" id="txtAWBNOMoveShip" maxlength="15"
+                                    style="height: 30px;text-transform:uppercase;" class="textfieldClass"
+                                    placeholder="">
                             </div>
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">AWB List</label>
                             </div>
                             <div class="col-7">
-                                <select class="textfieldClass" onchange="AWBChangeForXML($('#ddlAWBList').val());" id="ddlAWBList">
+                                <select class="textfieldClass" onchange="AWBChangeForXML($('#ddlAWBList').val());"
+                                    id="ddlAWBList">
                                 </select>
                             </div>
 
@@ -967,13 +1055,16 @@
                                 <label class="lbl" id="lblRNOAWB">To ULD</label>
                             </div>
                             <div class="col-7">
-                                <input type="text" id="txtToULD" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input type="text" id="txtToULD" maxlength="15"
+                                    style="height: 30px;text-transform:uppercase;" class="textfieldClass"
+                                    placeholder="">
                             </div>
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">ULD List</label>
                             </div>
                             <div class="col-7">
-                                <select class="textfieldClass" onchange="DestChane($('#ddlDestination').val());" id="ddlDestination">
+                                <select class="textfieldClass" onchange="DestChane($('#ddlDestination').val());"
+                                    id="ddlDestination">
                                 </select>
                             </div>
                             <div class="col-12">
@@ -984,19 +1075,27 @@
                                 <label class="lbl" id="lblRNOAWB">Pieces</label>
                             </div>
                             <div class="col-7">
-                                <input onkeyup="calculateVolumneForMoveShip();NumberOnly(event); ChkMaxLength(this, '11');" type="text" id="txtMovePieces" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input
+                                    onkeyup="calculateVolumneForMoveShip();NumberOnly(event); ChkMaxLength(this, '11');"
+                                    type="text" id="txtMovePieces" maxlength="15"
+                                    style="height: 30px;text-transform:uppercase;" class="textfieldClass"
+                                    placeholder="">
                             </div>
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">Weight</label>
                             </div>
                             <div class="col-7">
-                                <input onkeyup="NumberOnly(event); ChkMaxLength(this, '11');" type="text" id="txtMoveWeight" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input onkeyup="NumberOnly(event); ChkMaxLength(this, '11');" type="text"
+                                    id="txtMoveWeight" maxlength="15" style="height: 30px;text-transform:uppercase;"
+                                    class="textfieldClass" placeholder="">
                             </div>
                             <div class="col-5">
                                 <label class="lbl" id="lblRNOAWB">Volume</label>
                             </div>
                             <div class="col-7">
-                                <input onkeyup="NumberOnly(event); ChkMaxLength(this, '11');" type="text" id="txtMoveVolume" maxlength="15" style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                                <input onkeyup="NumberOnly(event); ChkMaxLength(this, '11');" type="text"
+                                    id="txtMoveVolume" maxlength="15" style="height: 30px;text-transform:uppercase;"
+                                    class="textfieldClass" placeholder="">
                             </div>
                             <!--<div class="col-12" id="tblMoveShipment">
 
@@ -1020,20 +1119,45 @@
 
                             <label class="col-12" id="lblMSGForMoveShipment"></label>
                             <div class="col-4" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBackforRemove" class="btnClass btn-primary" onclick="exitModalMoveShipment();">Back</button>
+                                <button type="button" id="btnSubBackforRemove" class="btnClass btn-primary"
+                                    onclick="exitModalMoveShipment();">Back</button>
                             </div>
                             <div class="col-4" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnClearforMoveShip" class="btnClass btn-primary" onclick="clearMoveShipment();">Clear</button>
+                                <button type="button" id="btnClearforMoveShip" class="btnClass btn-primary"
+                                    onclick="clearMoveShipment();">Clear</button>
                             </div>
                             <div class="col-4" style="margin-top: 10px;">
-                                <button type="button" id="btnSubmitforRemove" class="btnClass btn-primary" onclick="UnitizationMoveShipment();">Move</button>
+                                <button type="button" id="btnSubmitforRemove" class="btnClass btn-primary"
+                                    onclick="UnitizationMoveShipment();">Move</button>
                             </div>
-
-
-
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalViewPcsDetail" tabindex="-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body contacts row">
+                        <div class="contacts row contacts__itemfortext" style="
+                        box-shadow: none !important;
+                    ">
+                            <label class="col-12" id="lblMaterialList"
+                                style="text-align: center; color: #1f63a6; font-weight: 700; font-size: small; border-bottom: 1px solid #1f63a6;">
+                                Pieces List
+                            </label>
+                            <div id="divDocsDetail"></div>
+                            <label class="col-12" id="ibiSuccessMsg"></label>
+                            <div class="col-1" style="margin-top: 10px;"></div>
+                            <div class="col-4" style="margin-top: 10px;"></div>
+                            <div class="col-2" style="margin-top: 10px;"></div>
+                            <div class="col-4" style="text-align:center; margin-top: 10px;">
+                                <button type="button" id="btnleave" class="btnClass btn-primary">Back</button>
+                            </div>
+                        </div>
+                        <div class="col-1" style="margin-top: 10px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1043,7 +1167,8 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content" style="border:solid thin #000;">
                 <div class="modal-header">
-                    <h5 class="modal-title pull-left" id="lblPhoto">AWB Remarks</h5><button type="button" class="" data-dismiss="modal">X</button>
+                    <h5 class="modal-title pull-left" id="lblPhoto">AWB Remarks</h5><button type="button" class=""
+                        data-dismiss="modal">X</button>
                 </div>
                 <div class="modal-body contacts row">
                     <div class="col-12" id="dvRemarkShow">
@@ -1063,7 +1188,8 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content" style="border:solid thin #000;">
                 <div class="modal-header">
-                    <h5 class="modal-title pull-left" id="lblPhoto">Add SHC</h5><button type="button" class="" data-dismiss="modal">X</button>
+                    <h5 class="modal-title pull-left" id="lblPhoto">Add SHC</h5><button type="button" class=""
+                        data-dismiss="modal">X</button>
                 </div>
                 <div class="modal-body contacts row">
                     <div class="col-12" id="dvSHCCode">
@@ -1072,8 +1198,10 @@
                     <span id="spnValdatemsg"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnOk" onclick="getAllSHCCodefromPopup();">Ok</button>
-                    <button type="button" class="btn btn-primary" id="btnCancelSHCCode" data-dismiss="modal" onclick="cleatInvalidSHCCode();">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnOk"
+                        onclick="getAllSHCCodefromPopup();">Ok</button>
+                    <button type="button" class="btn btn-primary" id="btnCancelSHCCode" data-dismiss="modal"
+                        onclick="cleatInvalidSHCCode();">Cancel</button>
 
                 </div>
             </div>

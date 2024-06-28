@@ -142,6 +142,9 @@ function DisplayScreen(Mode) {
         localStorage.setItem('IMP_WDORelease', 'IMP_WDORelease');
         window.location.href = "IMP_WDORelease.html";
     }
+    else if (Mode == "GroupIdBinning") {
+        window.location.href = "IMP_GroupId_Binning.html";
+    }
 }
 
 function onPageShowHideImport() {
@@ -179,11 +182,7 @@ function onPageShowHideImport() {
         }
 
         if (index == 3) {
-
             if (Module == 'Import' && PageName == 'IMP_FlightCheckIn.html' && IsActive == '1') {
-
-           // if (Module == 'Import' && Module == 'Import' && PageName == 'IMP_FlightCheckIn.html' && IsActive == '1') {
-
                 $("#FlightCheckIn").show();
             } else {
                 $("#FlightCheckIn").hide();

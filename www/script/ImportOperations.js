@@ -142,6 +142,9 @@ function DisplayScreen(Mode) {
         localStorage.setItem('IMP_WDORelease', 'IMP_WDORelease');
         window.location.href = "IMP_WDORelease.html";
     }
+    else if (Mode == "GroupIdBinning") {
+        window.location.href = "IMP_GroupId_Binning.html";
+    }
 }
 
 function onPageShowHideImport() {
