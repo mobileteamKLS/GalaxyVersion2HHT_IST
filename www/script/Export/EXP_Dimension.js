@@ -543,5 +543,9 @@ function clearFunction() {
    
 }
 
+function fnExit() {
+    window.location.href = 'ExportOperations.html';
+}
+
 
 

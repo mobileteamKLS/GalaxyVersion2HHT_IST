@@ -602,7 +602,7 @@ GetWeightingScaleWt = function () {
                     if (Status == 'E') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                     } else if (Status == 'S') {
-                        $("#txtScaleWt").val(StrMessage);
+                        $("#ULDScaleWt").val(StrMessage);
                     }
                 });
 
@@ -2771,6 +2771,7 @@ function EXPULDClose() {
             "routepoint": $("#offPointLists").val(),
             "ULDManpower": $("#txtULDManpower").val(),
             "Remark": $("#txtRemark").val(),
+            "Priority":"0"
 
         }),
         contentType: "application/json; charset=utf-8",
