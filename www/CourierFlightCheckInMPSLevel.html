@@ -98,12 +98,15 @@
                 </button>-->
                 </div>
 
-                <div class="col-8">
+                <div class="col-6">
                     <div class="form-group">
                         <input type="text" maxlength="50" inputmode="numeric" enterkeyhint="Go" id="txtScan" onkeypress="return blockSpecialChar(event)"
                                style="height: 30px;color:#2196F3;font-weight:bold;text-align:right;" class="textfieldClass" onkeyup="MPSNumberScan();" placeholder="" autofocus>
                         <i class="form-group__bar"></i>
                     </div>
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScanner();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
                 <!--<div class="col-3">
                 <button type="button" id="btnSearchRecord" onclick="searchRecord()"

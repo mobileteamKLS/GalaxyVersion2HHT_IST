@@ -107,6 +107,8 @@ $(function () {
         event.stopPropagation();
     });
 
+   
+    
     $('#txtScanShipLabel').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
@@ -152,6 +154,80 @@ $(function () {
 
 });
 
+function openScannerGroupID() {
+   
+    cordova.plugins.barcodeScanner.scan(
+        function (result) {
+            // alert(result);
+            barCodeResule = result.text;//.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+            var str = barCodeResule;
+            var res = str.replace("-", ""); 
+            console.log('barCodeResule', barCodeResule)
+            $("#txtScanGroupID").val(res);
+            $('#tableRecords').empty();
+            inputxml = "<Root><GroupID>" + res + "</GroupID><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+            searchDetails(inputxml);
+
+            // var InputXML = "<Root><VCTNo>" + $("#txtVCTNo").val() + "</VCTNo><ScannedNo></ScannedNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><UserId>" + Userid + "</UserId></Root>";
+            // GetVCTDetailsByVCTNo(InputXML);
+
+        },
+        function (error) {
+            // alert("Scanning failed: " + error);
+        },
+        {
+            // preferFrontCamera: false, // iOS and Android
+            // showFlipCameraButton: true, // iOS and Android
+            // showTorchButton: true, // iOS and Android
+            // torchOn: true, // Android, launch with the torch switched on (if available)
+            // saveHistory: true, // Android, save scan history (default false)
+            // prompt: "Place a barcode inside the scan area", // Android
+            // resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            // formats: "CODE_128,QR_CODE,PDF_417,QR_CODE,DATA_MATRIX,UPC_E,UPC_A,EAN_8,EAN_13,CODE_128,CODE_39,CODE_93,CODABAR,ITF,RSS14,PDF417,RSS_EXPANDED", // default: all but PDF_417 and RSS_EXPANDED
+            // orientation: "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+            // disableAnimations: true, // iOS
+            // disableSuccessBeep: false // iOS
+        }
+    );
+
+}
+
+function openScannerScanShip() {
+   
+    cordova.plugins.barcodeScanner.scan(
+        function (result) {
+            // alert(result);
+            barCodeResule = result.text;//.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+            var str = barCodeResule;
+            var res = str.replace("-", ""); 
+            console.log('barCodeResule', barCodeResule)
+            $("#txtScanShipLabel").val(res);
+            INPUTXML = "<Root><GroupID>" + $("#txtScanGroupID").val() + "</GroupID><MPSNo>" + res + "</MPSNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+            GetImportActiveLocationsV2(INPUTXML);
+
+            // var InputXML = "<Root><VCTNo>" + $("#txtVCTNo").val() + "</VCTNo><ScannedNo></ScannedNo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><UserId>" + Userid + "</UserId></Root>";
+            // GetVCTDetailsByVCTNo(InputXML);
+
+        },
+        function (error) {
+            // alert("Scanning failed: " + error);
+        },
+        {
+            // preferFrontCamera: false, // iOS and Android
+            // showFlipCameraButton: true, // iOS and Android
+            // showTorchButton: true, // iOS and Android
+            // torchOn: true, // Android, launch with the torch switched on (if available)
+            // saveHistory: true, // Android, save scan history (default false)
+            // prompt: "Place a barcode inside the scan area", // Android
+            // resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+            // formats: "CODE_128,QR_CODE,PDF_417,QR_CODE,DATA_MATRIX,UPC_E,UPC_A,EAN_8,EAN_13,CODE_128,CODE_39,CODE_93,CODABAR,ITF,RSS14,PDF417,RSS_EXPANDED", // default: all but PDF_417 and RSS_EXPANDED
+            // orientation: "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+            // disableAnimations: true, // iOS
+            // disableSuccessBeep: false // iOS
+        }
+    );
+
+}
 //function MPSNumberScan() {
 //    if ($('#txtScanShipLabel').val().length == 34) {
 //        if ($("#txtScanShipLabel").val() != '') {

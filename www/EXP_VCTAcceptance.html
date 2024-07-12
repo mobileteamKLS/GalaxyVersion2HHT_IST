@@ -81,9 +81,12 @@
                 <div class="col-6" style="text-align:left;">
                     <label class="lbl" id="lblScan">Scan Barcode</label>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <input type="text" enterkeyhint="go" id="txtScannedNo" 
                            onkeyup="ChkMaxLength(this, '30');" autofocus style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass" placeholder="">
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerVCT();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
                 <!--<div class="col-3">
                     <button type="button" id="btnSearchScannedNo" onclick="GetVCTDetails();" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>

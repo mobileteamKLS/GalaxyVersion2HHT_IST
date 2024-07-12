@@ -75,11 +75,15 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <!-- <input type="text" id="txtScanMAWB"  onkeyup="ChkMaxLength(this, '30');" autofocus style="height: 30px;color:#2196F3;font-weight:bold;" class="textfieldClass" placeholder=""> -->
                         <input type="text" inputmode="text" enterkeyhint="Go" id="txtScanMAWB" onkeyup="ChkMaxLength(this, '30');" autofocus style="height: 30px;color:#2196F3;font-weight:bold;" class="textfieldClass" placeholder="">
                     </div>
+                </div>
+
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerAWB();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
                 <!--<div class="col-3">
                     <button type="button" onclick="GetFileUploadDetails();" id="btnSearch" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>

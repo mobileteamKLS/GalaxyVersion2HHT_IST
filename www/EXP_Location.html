@@ -86,11 +86,19 @@
         </aside>
         <section class="content" style="margin-top:30px;">
             <div class="contacts row contacts__itemfortext" style="margin-bottom: 0px;">
-                <div class="col-5">
-                    <div class="form-group vtMargin">
-                        <label class="lbl" id="lblMAWBNo">MAWB No.</label>&nbsp;<font color="red">*</font>
-                    </div>
+                <div class="col-5" style="text-align:left;">
+                    <label class="lbl" id="lblMAWBNo">MAWB No.</label>&nbsp;<font color="red">*</font>
                 </div>
+                <div class="col-5">
+                           <input type="text" inputmode="text" enterkeyhint="Go" maxlength="30" id="txtMAWBNo" autofocus onkeyup="ChkMaxLength(this, '30');"
+                           style="height: 30px;color:#2196F3;font-weight:bold;text-align:left;" class="textfieldClass"
+                           placeholder="" onkeyup="this.value=this.value.replace(/[^[0-9]+$]/g, '')">
+                        </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScanner();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
+                </div>
+
+               
                 <!-- <div class="col-2">
                 <div class="form-group">
                     <input type="text" id="txtFlightPrefix" onkeypress="return blockSpecialChar(event)" autofocus
@@ -100,14 +108,7 @@
                     <i class="form-group__bar"></i>
                 </div>
             </div> -->
-                <div class="col-7">
-                    <div class="form-group">
-                        <input type="text" inputmode="text" enterkeyhint="Go" maxlength="30" id="txtMAWBNo" autofocus onkeyup="ChkMaxLength(this, '30');"
-                               style="height: 30px;color:#2196F3;font-weight:bold;text-align:left;" class="textfieldClass"
-                               placeholder="">
-                        <i class="form-group__bar"></i>
-                    </div>
-                </div>
+              
                 <!--<div class="col-3">
                 <button type="button" onclick="searchAWBNumberAndHAWBNo();" id="btnSearch" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>
                 <button onclick="openScanner();" class="btn btn--icon login__block__btn login__block__btn_margin scannerBG"><i class="zmdi zmdi-scanner"></i></button>

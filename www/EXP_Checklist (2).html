@@ -156,9 +156,13 @@
                                             Scan AWB
                                         </label>
                                     </div>
-                                    <div class="col-xs-6 NoPadding">
+                                    <div class="col-xs-4 NoPadding">
                                         <input type="number" id="txtScanAWBNo" autofocus onblur="GetExportCheckListSearch();" class="form-control" onkeyup="ChkMaxLength(this, '11');">
+                                        <button type="button" id="btnClear" onclick="openScanner();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                                     </div>
+                                    <!-- <div class="col-xs-2 NoPadding">
+                                        <button type="button" id="btnClear" onclick="openScanner();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
+                                    </div> -->
                                 </div>
 
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 NoPadding">

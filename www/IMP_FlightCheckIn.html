@@ -85,10 +85,13 @@
                     </div>
                 </div>
 
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-group">
                         <input type="text" inputmode="text" enterkeyhint="Go" maxlength="30" id="txtScanMAWB" onkeypress="return blockSpecialChar(event)" autofocus style="height: 30px;color:#2196F3;font-weight:bold;" class="textfieldClass" placeholder="">
                     </div>
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerScan();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
                 <!--<div class="col-3">
                 <button type="button" onclick="searchAWBNo();" id="btnSearch" class="btn btn--icon login__block__btn login__block__btn_margin"><i class="zmdi zmdi-search"></i></button>
@@ -99,13 +102,16 @@
                         <label class="lbl" id="lblAWBNo">AWB No.</label>
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-group">
                         <input type="text" enterkeyhint="go" id="txtAWBNo" onkeypress="return blockSpecialChar(event)"
                                onkeyup="NumberOnly(event);" style="height: 30px;text-align:right;" class="textfieldClass"
                                placeholder="">
 
                     </div>
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerAWB();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
 
                 <div class="col-5">

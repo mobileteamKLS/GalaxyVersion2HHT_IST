@@ -85,10 +85,13 @@
                 <div class="col-6" style="text-align:left;">
                     <label class="lbl" id="lblWDONo">MAWB/HAWB No.</label>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <input type="text"  inputmode="text" enterkeyhint="Go" maxlength="40"
                            autofocus="autofocus" id="txtMAWBHAWB" onkeyup="ChkMaxLength(this, '40');"
                            style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="">
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerMAWB();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
 
                 <div class="col-6" style="text-align:left;">

@@ -188,10 +188,12 @@
                             Scan ULD
                         </label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-5">
                         <input type="text" id="txtScanULD" autocomplete="off" class="textfieldClass" maxlength="20" autofocus oninput="this.value = this.value.toUpperCase()">
                     </div>
-
+                    <div class="col-2" style="text-align:center;">
+                        <button type="button" id="btnClear" onclick="openScannerULD();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
+                    </div>
 
                     <div style="" class="col-5">
                         <div class="form-group vtMargin">
@@ -227,8 +229,11 @@
                             Scan MAWB No.
                         </label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-5">
                         <input type="number" id="txtScanAWBNo" class="textfieldClass" onkeyup="ChkMaxLength(this, '16');AWBNumberScan();">
+                    </div>
+                    <div class="col-2" style="text-align:center;">
+                        <button type="button" id="btnClear" onclick="openScannerMAWB();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                     </div>
 
                     <div class="col-5">
@@ -257,11 +262,13 @@
                             Scan HAWB No.
                         </label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-5">
                         <!--<input type="text" id="txtScanHAWBNo" class="form-control" maxlength="11">-->
                         <input type="text" id="hawbLists" class="textfieldClass" onkeyup="HAWBNoScan();" maxlength="30" style="text-transform:uppercase;">
                     </div>
-
+                    <div class="col-2" style="text-align:center;">
+                        <button type="button" id="btnClear" onclick="openScannerHAWB();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
+                    </div>
                     <div  class="col-5">
                         <label id="lblHAWBNo" for="ddlHAWBNo" class="lbl">
                             HAWB

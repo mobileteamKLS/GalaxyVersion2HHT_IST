@@ -88,10 +88,13 @@
                 <div class="col-6" style="text-align:left;">
                     <label class="lbl" id="lblScan">Scan No.</label>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <input type="text" enterkeyhint="go" id="txtScannedNo" onkeyup="ChkMaxLength(this, '30');" autofocus
                         style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass"
                         placeholder="">
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScanner();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
 
                 <div class="col-6" style="text-align:left;">
@@ -170,10 +173,13 @@
                 <div class="col-6" style="text-align:left;">
                     <label class="lbl" id="lblScan">Scan Label</label>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <input type="text" enterkeyhint="go" id="txtScannedLbl" onkeyup="ChkMaxLength(this, '30');" autofocus
                         style="height: 30px;text-transform:uppercase;text-align:right;" class="textfieldClass"
                         placeholder="">
+                </div>
+                <div class="col-2" style="text-align:center;">
+                    <button type="button" id="btnClear" onclick="openScannerScanLabel();" class="btnClass zmdi zmdi-scanner zmdi-hc-fw"></button>
                 </div>
 
                 <div class="col-6" style="margin-top:5px;">
