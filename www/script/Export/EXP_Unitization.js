@@ -974,6 +974,7 @@ function fnClear() {
     $('#dollyDDLDiv').hide()
     $("#offPointLists").empty();
     $("#uldLists").empty();
+    $("#dollyDDL").empty();
     $("#counterLists").empty();
     $("#trolleyLists").empty();
     clearOptions("offPointLists");
@@ -1014,6 +1015,7 @@ function fnClearfornoMsgClear() {
     $("#txtRemark").val('');
     $("#offPointLists").empty();
     $("#uldLists").empty();
+    $("#dollyDDL").empty();
     $("#counterLists").empty();
     $("#trolleyLists").empty();
     clearOptions("offPointLists");
@@ -2202,22 +2204,22 @@ function GetExportFlightDetails(shouldClearRecord) {
 
                     // $("#trolleyLists").val($(this).find('TrolleySeqNo').text());
                 });
-                // $(xmlDoc).find('Table6').each(function (index) {
-                //     IsDolly = $(this).find('IsDolly').text();
-                //     if (IsDolly == 'Y') {
-                //         $('#dollyLbl').show()
-                //         $('#dollyDDLDiv').show()
-                //     } else {
-                //         $('#dollyLbl').hide()
-                //         $('#dollyDDLDiv').hide()
-                //     }
-                // });
-                // $('#dollyDDL').empty();
-                // $(xmlDoc).find('Table7').each(function (index) {
-                //     var newOption2 = $('<option></option>');
-                //     newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
-                //     newOption2.appendTo('#dollyDDL');
-                // });
+                $(xmlDoc).find('Table6').each(function (index) {
+                    IsDolly = $(this).find('IsDolly').text();
+                    if (IsDolly == 'Y') {
+                        $('#dollyLbl').show()
+                        $('#dollyDDLDiv').show()
+                    } else {
+                        $('#dollyLbl').hide()
+                        $('#dollyDDLDiv').hide()
+                    }
+                });
+                $('#dollyDDL').empty();
+                $(xmlDoc).find('Table7').each(function (index) {
+                    var newOption2 = $('<option></option>');
+                    newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
+                    newOption2.appendTo('#dollyDDL');
+                });
 
                 //if (Offpoint != "" && !offPointLoaded) {
                 //    offPointLoaded = true;
@@ -4677,22 +4679,22 @@ function GetULDs(valFromddloffpoint) {
                     // $("#trolleyLists").val($(this).find('TrolleySeqNo').text());
                 });
 
-                // $(xmlDoc).find('Table6').each(function (index) {
-                //     IsDolly = $(this).find('IsDolly').text();
-                //     if (IsDolly == 'Y') {
-                //         $('#dollyLbl').show()
-                //         $('#dollyDDLDiv').show()
-                //     } else {
-                //         $('#dollyLbl').hide()
-                //         $('#dollyDDLDiv').hide()
-                //     }
-                // });
-                // $('#dollyDDL').empty();
-                // $(xmlDoc).find('Table7').each(function (index) {
-                //     var newOption2 = $('<option></option>');
-                //     newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
-                //     newOption2.appendTo('#dollyDDL');
-                // });
+                $(xmlDoc).find('Table6').each(function (index) {
+                    IsDolly = $(this).find('IsDolly').text();
+                    if (IsDolly == 'Y') {
+                        $('#dollyLbl').show()
+                        $('#dollyDDLDiv').show()
+                    } else {
+                        $('#dollyLbl').hide()
+                        $('#dollyDDLDiv').hide()
+                    }
+                });
+                $('#dollyDDL').empty();
+                $(xmlDoc).find('Table7').each(function (index) {
+                    var newOption2 = $('<option></option>');
+                    newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
+                    newOption2.appendTo('#dollyDDL');
+                });
                 //if (Offpoint != "" && !offPointLoaded) {
                 //    offPointLoaded = true;
                 //    GetExportFlightDetails(true);
