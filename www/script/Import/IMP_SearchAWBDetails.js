@@ -29,6 +29,11 @@ var NPR;
 var ShipmentWeight;
 var isDataAvail = false;
 var appHtm = '';
+var awbFlag = '0';
+var locationFlag = '0';
+var WDOFlag = '0';
+var flightDFlag = '0';
+var appHtmFlight;
 $(function () {
 
 
@@ -70,7 +75,6 @@ $(function () {
                 return;
             } else {
                 inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
-
                 GetAWBDetails(inputData);
             }
         }
@@ -86,55 +90,60 @@ $(function () {
 
 
 function AWBNumberScan() {
-    //$('#ddlHAWBList').empty();
-    //$("#txtLocation").val('');
-    //$("#txtMovePkgs").val('');
-    //$("#textMoveWght").val('');
-    //$('#locationShow').text('');
-    //if ($('#txtScanMAWB').val().length == 11) {
+    $("#divAWBdetails").empty();
+    $('#LocationDiv').empty();
+    $('#LocationDivForWt').empty();
+    $('#divFlightDetails').empty();
+    awbFlag = '0';
+    locationFlag = '0';
+    WDOFlag = '0';
+    flightDFlag = '0';
+    $('.ibiSuccessMsg1').text('');
 
-    //    if ($("#txtScanMAWB").val() != '') {
-    //        var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
-    //        InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-    //        getHWABNoList(InputXML);
-    //    }
-    //}
+    if ($('#txtScanMAWB').val().length == 11) {
 
-    //if ($('#txtScanMAWB').val().length == 12) {
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+            GetAWBDetails(inputData);
+        }
+    }
 
-    //    if ($("#txtScanMAWB").val() != '') {
-    //        var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
-    //        InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-    //        getHWABNoList(InputXML);
-    //    }
-    //}
+    if ($('#txtScanMAWB').val().length == 12) {
 
-    //if ($('#txtScanMAWB').val().length == 16) {
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+            GetAWBDetails(inputData);
+        }
+    }
 
-    //    if ($("#txtScanMAWB").val() != '') {
-    //        var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
-    //        InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-    //        getHWABNoList(InputXML);
-    //    }
-    //}
+    if ($('#txtScanMAWB').val().length == 16) {
 
-    //if ($('#txtScanMAWB').val().length == 28) {
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+            GetAWBDetails(inputData);
+        }
+    }
 
-    //    if ($("#txtScanMAWB").val() != '') {
-    //        var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
-    //        InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-    //        getHWABNoList(InputXML);
-    //    }
-    //}
+    if ($('#txtScanMAWB').val().length == 28) {
 
-    //if ($('#txtScanMAWB').val().length == 34) {
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+            GetAWBDetails(inputData);
+        }
+    }
 
-    //    if ($("#txtScanMAWB").val() != '') {
-    //        var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
-    //        InputXML = "<Root><MAWBNO>" + $("#txtScanMAWB").val() + "</MAWBNO><HAWBNO></HAWBNO><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><EventType>A</EventType></Root>"
-    //        getHWABNoList(InputXML);
-    //    }
-    //}
+    if ($('#txtScanMAWB').val().length == 34) {
+
+        if ($("#txtScanMAWB").val() != '') {
+            var value = $("#txtScanMAWB").val();// this.value;// parseInt(this.value, 10),
+            inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+            GetAWBDetails(inputData);
+        }
+    }
 }
 
 function setTurkish() {
@@ -173,16 +182,16 @@ function setHungarian() {
 
 
 
-function GetAWBDetails() {
-
+function GetAWBDetails(inputData) {
+    $('.ibiSuccessMsg1').text('');
     if ($("#txtScanMAWB").val() == '') {
         return;
     }
 
     //$("#txtScanMAWB")
 
-    inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
-    $("#tblLocation").empty();
+    // inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -197,14 +206,16 @@ function GetAWBDetails() {
             console.log(response.d)
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
-                $("#btnDiv").show('slow');
-                $("#tbTable").show('slow');
-                // $("#tblLocation").show('slow');
-                $("#LocationDiv").empty();
-                $("#txtLocation").val('');
-                $("#txtMovePkgs").val('');
-                $("#textMoveWght").val('');
-                $('#locationShow').text('');
+
+                $("#divAWBdetails").empty();
+                $('#LocationDiv').empty();
+                $('#LocationDivForWt').empty();
+                $('#divFlightDetails').empty();
+
+                awbFlag = '0';
+                locationFlag = '0';
+                WDOFlag = '0';
+                flightDFlag = '0';
                 var xmlDoc = $.parseXML(str);
                 appHtm = '';
                 $(xmlDoc).find('Table').each(function (index) {
@@ -212,7 +223,9 @@ function GetAWBDetails() {
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
                         $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
+                        return true;
+                    } else {
+                        $('.ibiSuccessMsg1').text('');
                     }
 
                     //else if (Status == 'S') {
@@ -221,13 +234,10 @@ function GetAWBDetails() {
                     //}
                 });
 
-                $('#divAWBdetails').hide();
-                $('#divAWBdetails').empty();
-                $('#tblDetails').empty();
-                $('#LocationDivForWt').empty();
-                $("#LocationDiv").empty();
+
                 html = '';
                 $(xmlDoc).find('Table1').each(function (index) {
+                    awbFlag = '1';
                     if (index == 0) {
 
                         AWB = $(this).find('AWB').text();
@@ -248,9 +258,12 @@ function GetAWBDetails() {
                     }
 
                 });
-                html += "</tbody></table>";
-                $('#divAWBdetails').show();
-                $('#divAWBdetails').append(html);
+                if (awbFlag == '1') {
+                    html += "</tbody></table>";
+                    $('#divAWBdetails').show();
+                    $('#divAWBdetails').append(html);
+                }
+
 
 
                 _html = '';
@@ -269,7 +282,7 @@ function GetAWBDetails() {
                 _html += '<tbody>';
 
                 $(xmlDoc).find('Table2').each(function (index) {
-
+                    locationFlag = '1';
                     FlightNo = $(this).find('FlightNo').text();
                     HouseNo = $(this).find('HouseNo').text();
                     PiecesAtLocation = $(this).find('PiecesAtLocation').text();
@@ -279,14 +292,16 @@ function GetAWBDetails() {
                     locationDetails(FlightNo, Location, PiecesAtLocation, WeightAtLocation);
 
                 });
+                if (locationFlag == '1') {
+                    _html += "</tbody></table>";
+                    $("#LocationDiv").show();
+                    $('#LocationDiv').append(_html);
 
-                _html += "</tbody></table>";
-                $("#LocationDiv").show();
-                $('#LocationDiv').append(_html);
+                }
 
 
+                appHtm = '';
 
-               
                 appHtm += '<table id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;text-transform: capitalize;">';
                 appHtm += '<thead>';
                 appHtm += '<tr><h5>WDO Details</h5>';
@@ -303,7 +318,7 @@ function GetAWBDetails() {
                 appHtm += '<tbody>';
 
                 $(xmlDoc).find('Table3').each(function (index) {
-
+                    WDOFlag = '1';
                     IMPSHIPROWID = $(this).find('IMPSHIPROWID').text();
                     WDONO = $(this).find('WDONO').text();
                     RELEASEDNOP = $(this).find('RELEASEDNOP').text();
@@ -311,14 +326,255 @@ function GetAWBDetails() {
                     WDORelDate = $(this).find('WDORelDate').text();
                     WDORelTime = $(this).find('WDORelTime').text();
                     WDOStatus = $(this).find('Status').text();
+                    StatusColorCode = $(this).find('StatusColorCode').text();
 
-                    locationDetailsForWt(WDONO,RELEASEDNOP, RELEASEDWT, WDORelDate, WDORelTime, WDOStatus);
+                    locationDetailsForWt(WDONO, RELEASEDNOP, RELEASEDWT, WDORelDate, WDORelTime, WDOStatus, StatusColorCode);
 
                 });
+                if (WDOFlag == '1') {
+                    appHtm += "</tbody></table>";
+                    $("#LocationDivForWt").show();
+                    $('#LocationDivForWt').append(appHtm);
+                }
 
-                appHtm += "</tbody></table>";
-                $("#LocationDivForWt").show();
-                $('#LocationDivForWt').append(appHtm);
+                appHtmFlight = '';
+                appHtmFlight += '<table id="tblFD" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;text-transform: capitalize;">';
+                appHtmFlight += '<thead>';
+                appHtmFlight += '<tr><h5>Flight Details</h5>';
+                appHtmFlight += '</tr>';
+                appHtmFlight += '<tr>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Flight No.</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >ATA</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Rcvd. Pcs.</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Rcvd. Wt.</th>';
+                appHtmFlight += '</tr>';
+                appHtmFlight += '</thead>';
+                appHtmFlight += '<tbody>';
+
+                $(xmlDoc).find('Table4').each(function (index) {
+                    flightDFlag = '1';
+                    FlightNo = $(this).find('FlightNo').text();
+                    ATA = $(this).find('ATA').text();
+                    NPR = $(this).find('NPR').text();
+                    WeightReceived = $(this).find('WeightReceived').text();
+
+                    flightDetailsGrid(FlightNo, ATA, NPR, WeightReceived);
+
+                });
+                if (flightDFlag == '1') {
+                   
+                    appHtmFlight += "</tbody></table>";
+                    $("#divFlightDetails").show();
+                    $('#divFlightDetails').append(appHtmFlight);
+                }
+
+
+
+            } else {
+                $("body").mLoading('hide');
+                //errmsg = "WDO No. not found</br>";
+                //$.alert(errmsg);
+                //return;
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $("body").mLoading('hide');
+            //alert('Server not responding...');
+            console.log(xhr.responseText);
+            alert(xhr.responseText);
+        }
+    });
+}
+
+function GetAWBDetailsonButtonClick() {
+
+    if ($("#txtScanMAWB").val() == '') {
+        $(".ibiSuccessMsg1").text('Please enter AWB/HAWB No.').css({ "color": "Red", "font-weight": "bold" });
+
+        return;
+    } else {
+        $('.ibiSuccessMsg1').text('');
+    }
+
+    //$("#txtScanMAWB")
+
+    inputData = "<Root><AWBNo>" + $("#txtScanMAWB").val() + "</AWBNo><HouseNo></HouseNo><UserId>" + Userid + "</UserId><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>"
+    $("#tblLocation").empty();
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
+    $.ajax({
+        type: 'POST',
+        url: ACSServiceURL + "/GetAWBDetails",
+        data: JSON.stringify({ 'InputXML': inputData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            HideLoader();
+            console.log(response.d)
+            var str = response.d;
+            if (str != null && str != "" && str != "<NewDataSet />") {
+
+                $("#divAWBdetails").empty();
+                $('#LocationDiv').empty();
+                $('#LocationDivForWt').empty();
+                awbFlag = '0';
+                locationFlag = '0';
+                WDOFlag = '0';
+                flightDFlag = '0';
+                var xmlDoc = $.parseXML(str);
+                appHtm = '';
+                $(xmlDoc).find('Table').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('StrMessage').text();
+                    if (Status == 'E') {
+                        $(".ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        return true;
+                    } else {
+                        $('.ibiSuccessMsg1').text('');
+                    }
+
+                    //else if (Status == 'S') {
+                    //    $(".ibiSuccessMsg1").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
+
+                    //}
+                });
+
+
+                html = '';
+                $(xmlDoc).find('Table1').each(function (index) {
+                    awbFlag = '1';
+                    if (index == 0) {
+
+                        AWB = $(this).find('AWB').text();
+                        TotalNPX = $(this).find('TotalNPX').text();
+                        TotalExpectedWeight = $(this).find('TotalExpectedWeight').text();
+                        TotalNPR = $(this).find('TotalNPR').text();
+                        TotalReceivedWeight = $(this).find('TotalReceivedWeight').text();
+                        ORIGIN = $(this).find('ORIGIN').text();
+                        DESTINATION = $(this).find('DESTINATION').text();
+                        SHC = $(this).find('SHC').text();
+                        ChrgWt = $(this).find('ChrgWt').text();
+                        NOPDelivered = $(this).find('NOPDelivered').text();
+                        ConsigneeName = $(this).find('ConsigneeName').text();
+                        Description = $(this).find('Description').text();
+
+                        shipSummeryDetails(ORIGIN, DESTINATION, ConsigneeName, Description, TotalNPX, TotalExpectedWeight);
+
+                    }
+
+                });
+                if (awbFlag == '1') {
+                    html += "</tbody></table>";
+                    $('#divAWBdetails').show();
+                    $('#divAWBdetails').append(html);
+                }
+
+
+
+                _html = '';
+
+                _html += '<table id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;">';
+                _html += '<thead>';
+                _html += '<tr><h5>Location Details</h5>';
+                _html += '</tr>';
+                _html += '<tr>';
+                _html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Flight No.</th>';
+                _html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Location</th>';
+                _html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Pieces</th>';
+                _html += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Weight</th>';
+                _html += '</tr>';
+                _html += '</thead>';
+                _html += '<tbody>';
+
+                $(xmlDoc).find('Table2').each(function (index) {
+                    locationFlag = '1';
+                    FlightNo = $(this).find('FlightNo').text();
+                    HouseNo = $(this).find('HouseNo').text();
+                    PiecesAtLocation = $(this).find('PiecesAtLocation').text();
+                    WeightAtLocation = $(this).find('WeightAtLocation').text();
+                    Location = $(this).find('Location').text();
+
+                    locationDetails(FlightNo, Location, PiecesAtLocation, WeightAtLocation);
+
+                });
+                if (locationFlag == '1') {
+                    _html += "</tbody></table>";
+                    $("#LocationDiv").show();
+                    $('#LocationDiv').append(_html);
+
+                }
+
+
+
+
+                appHtm += '<table id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;text-transform: capitalize;">';
+                appHtm += '<thead>';
+                appHtm += '<tr><h5>WDO Details</h5>';
+                appHtm += '</tr>';
+                appHtm += '<tr>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >WDO No.</th>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Pieces</th>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Weight</th>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Date</th>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Time</th>';
+                appHtm += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Status</th>';
+                appHtm += '</tr>';
+                appHtm += '</thead>';
+                appHtm += '<tbody>';
+
+                $(xmlDoc).find('Table3').each(function (index) {
+                    WDOFlag = '1';
+                    IMPSHIPROWID = $(this).find('IMPSHIPROWID').text();
+                    WDONO = $(this).find('WDONO').text();
+                    RELEASEDNOP = $(this).find('RELEASEDNOP').text();
+                    RELEASEDWT = $(this).find('RELEASEDWT').text();
+                    WDORelDate = $(this).find('WDORelDate').text();
+                    WDORelTime = $(this).find('WDORelTime').text();
+                    WDOStatus = $(this).find('Status').text();
+                    StatusColorCode = $(this).find('StatusColorCode').text();
+
+                    locationDetailsForWt(WDONO, RELEASEDNOP, RELEASEDWT, WDORelDate, WDORelTime, WDOStatus, StatusColorCode);
+
+                });
+                if (WDOFlag == '1') {
+                    appHtm += "</tbody></table>";
+                    $("#LocationDivForWt").show();
+                    $('#LocationDivForWt').append(appHtm);
+                }
+
+
+                appHtmFlight += '<table id="tblLocation" border="1" style="width:100%;table-layout:fixed;word-break:break-word;border-color: #ccc;margin-top: 2%;text-transform: capitalize;">';
+                appHtmFlight += '<thead>';
+                appHtmFlight += '<tr><h5>WDO Details</h5>';
+                appHtmFlight += '</tr>';
+                appHtmFlight += '<tr>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >WDO No.</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Pieces</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Weight</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Date</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Time</th>';
+                appHtmFlight += '<th height="30" style="background-color:rgb(208, 225, 244);padding: 3px 3px 3px 0px;text-align:center;font-size:14px;text-transform: capitalize;" >Status</th>';
+                appHtmFlight += '</tr>';
+                appHtmFlight += '</thead>';
+                appHtmFlight += '<tbody>';
+
+                $(xmlDoc).find('Table3').each(function (index) {
+                    flightDFlag = '1';
+                    FlightNo = $(this).find('FlightNo').text();
+                    ATA = $(this).find('ATA').text();
+                    NPR = $(this).find('NPR').text();
+                    WeightReceived = $(this).find('WeightReceived').text();
+
+                    flightDetailsGrid(FlightNo, ATA, NPR, WeightReceived);
+
+                });
+                if (flightDFlag == '1') {
+                    appHtm += "</tbody></table>";
+                    $("#divFlightDetails").show();
+                    $('#divFlightDetails').append(appHtmFlight);
+                }
+
 
 
             } else {
@@ -376,18 +632,37 @@ function locationDetails(FlightNo, Location, PiecesAtLocation, WeightAtLocation)
     // console.log(html)
 }
 
-function locationDetailsForWt(WDONO, RELEASEDNOP, RELEASEDWT, WDORelDate, WDORelTime, WDOStatus) {
+function locationDetailsForWt(WDONO, RELEASEDNOP, RELEASEDWT, WDORelDate, WDORelTime, WDOStatus, StatusColorCode) {
 
     appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + WDONO + '</td>';
     appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + RELEASEDNOP + '</td>';
     appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + RELEASEDWT + '</td>';
     appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + WDORelDate + '</td>';
     appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + WDORelTime + '</td>';
-    appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + WDOStatus + '</td>';
+    if (StatusColorCode == 'Green') {
+        appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;color:green;font-weight:bold;">' + WDOStatus + '</td>';
+
+    }
+    if (StatusColorCode == 'Red') {
+        appHtm += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;color:red;font-weight:bold;">' + WDOStatus + '</td>';
+    }
     appHtm += '</tr>';
 
     // console.log(html)
 }
+
+
+function flightDetailsGrid(FlightNo, ATA, NPR, WeightReceived) {
+
+    appHtmFlight += '<td style="padding-left: 4px;font-size:14px;text-align:left;padding-right: 4px;">' + FlightNo + '</td>';
+    appHtmFlight += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + ATA + '</td>';
+    appHtmFlight += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + NPR + '</td>';
+    appHtmFlight += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + WeightReceived + '</td>';
+    appHtmFlight += '</tr>';
+
+    // console.log(html)
+}
+
 
 function getLocation(LocCode, LocPieces, LocId, LocWeight) {
 
@@ -418,7 +693,7 @@ function getLocation(LocCode, LocPieces, LocId, LocWeight) {
 }
 
 function exitFunction() {
-    window.location.href = 'ExportOperations.html';
+    window.location.href = 'ImportOperations.html';
 }
 
 function clearFunction() {
@@ -429,4 +704,7 @@ function clearFunction() {
     $('#tblDetails').empty();
     $('#LocationDivForWt').empty();
     $("#LocationDiv").empty();
+    $("#divFlightDetails").empty();
+    $(".ibiSuccessMsg1").text('');
+
 }
