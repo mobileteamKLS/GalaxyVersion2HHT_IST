@@ -44,7 +44,7 @@ $(function () {
         $("#textMoveWght").val('');
         $("#txtLocation").val('');
         $("#spnOriginDist").text('');
-
+        $("#spnShipmentStatus").text('');
         // ASI(_vlaueofHawb);
         $("#txtBinnPkgs").val(_vlaueofHawb);
         //$("#txtReceived").val(Received);
@@ -404,6 +404,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     NPR = $(this).find('NPR').text();
                     isDataAvail = true;
                     $("#txtBinnPkgs").val(PendingPieces);
+                    $("#spnShipmentStatus").text($(this).find('ShipmentStatus').text());
                     //$("#txtLocation").text(LocPieces);
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
                     $("#spnCommodity").text(Commodity);
@@ -587,6 +588,7 @@ getHWABNoList = function (InputXML) {
                         $("#txtMovePkgs").val('');
                         $("#textMoveWght").val('');
                         $("#spnOriginDist").text('');
+                        $("#spnShipmentStatus").text('');
                         $("#spnCommodity").text('');
                         $("#spnBinnTotPkgs").text('');
                         // $("#txtScanMAWB").focus();
@@ -857,6 +859,7 @@ _GetBinningLocPkgDetails = function (InputXML) {
                     $("#txtBinnPkgs").val(PendingPieces);
                     //$("#txtLocation").text(LocPieces);
                     $("#spnOriginDist").text(Origin + ' / ' + Destination);
+                    $("#spnShipmentStatus").text($(this).find('ShipmentStatus').text());
                     $("#spnCommodity").text(Commodity);
                     $("#spnBinnTotPkgs").text(LocationStatus);
                     var sum = LocCode + LocPieces;
@@ -1023,6 +1026,7 @@ function clearFunction() {
     $("#txtMovePkgs").val('');
     $("#textMoveWght").val('');
     $("#spnOriginDist").text('');
+    $("#spnShipmentStatus").text('');
     $("#spnCommodity").text('');
     $("#spnBinnTotPkgs").text('');
     $("#txtScanMAWB").focus();

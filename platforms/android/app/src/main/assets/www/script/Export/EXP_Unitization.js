@@ -3351,9 +3351,12 @@ UnitizedGetAWBDetails = function () {
                     //    $(".ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                     //}
                 });
-
-                $("#lblULDNAME").text($("#uldLists option:selected").text());
-
+                if($("#ULDCheckbox").prop("checked"))     {
+                    $("#lblULDNAME").text($("#uldLists option:selected").text());      
+                }
+                else if ($("#bulkCheckBox").prop("checked")){
+                    $("#lblULDNAME").text($("#trolleyLists option:selected").text());
+                }
                 $(xmlDoc).find('Table1').each(function (index) {
                     isTable1Av = '1';
                     AWBNUMBER = $(this).find('AWBNUMBER').text();
@@ -3433,11 +3436,18 @@ var oldRemWt;
 var oldRemNop;
 var oldRemVol;
 function openDetailModalofRemove(AWBNUMBER, ULD_SEQUENCE_NUMBER, NOP, WEIGHT_KG, Volume, ManifestSeqNo,OffLoadShipmentId) {
-    if ($("#uldLists").val() == '0') {
-        $('#tdULDNo').text('Bulk');
-    } else {
-        uldsVal = $("#uldLists option:selected").text().replace(' ', '');
-        $('#tdULDNo').text(uldsVal);
+   
+    if($("#ULDCheckbox").prop("checked")){
+        if ($("#uldLists").val() == '0') {
+            $('#tdULDNo').text('Bulk');
+        } else {
+            uldsVal = $("#uldLists option:selected").text().replace(' ', '');
+            $('#tdULDNo').text(uldsVal);
+        }
+    }
+    else if ($("#bulkCheckBox").prop("checked")){
+        trolleysVal = $("#trolleyLists option:selected").text().replace(' ', '');
+        $('#tdULDNo').text(trolleysVal);
     }
     $('#tdAWBNo').text(AWBNUMBER);
 
@@ -4303,8 +4313,12 @@ UnitizedGetAWBDetailsMove = function () {
                     //    $(".ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
                     //}
                 });
-
-                $("#lblULDNAME").text($("#uldLists option:selected").text());
+                if($("#ULDCheckbox").prop("checked"))     {
+                    $("#lblULDNAME").text($("#uldLists option:selected").text());      
+                }
+                else if ($("#bulkCheckBox").prop("checked")){
+                    $("#lblULDNAME").text($("#trolleyLists option:selected").text());
+                }
 
                 $(xmlDoc).find('Table1').each(function (index) {
                     isTable1Av = '1';

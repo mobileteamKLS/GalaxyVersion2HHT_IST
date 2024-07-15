@@ -487,10 +487,7 @@ GetWDODetails = function (InputXML) {
                     _WEIGHT = $(this).find('WEIGHT').text();
                     _IsSeized = $(this).find('IsSeized').text();
                     arrayofStockId.push(stockIdList);
-                    _MAWBNo = $(this).find('AWBno').text();
-                    _HAWBNo = $(this).find('HAWBno').text();
-                    $("#lblMawbNo").text(_MAWBNo);
-                    $("#lblHawbNo").text(_HAWBNo);
+                   
                     _GroupID=$(this).find('GroupId').text();
 
                     //$("#spnLocationCode").text(_LOCCODE);
@@ -507,6 +504,10 @@ GetWDODetails = function (InputXML) {
                     _totPkgs = $(this).find('PKG').text();
                     _totWgt = $(this).find('WGT').text();
                     MPSNoINWDO = $(this).find('MPSNoINWDO').text();
+                    _MAWBNo = $(this).find('AWBno').text();
+                    _HAWBNo = $(this).find('HAWBno').text();
+                    $("#lblMawbNo").text(_MAWBNo);
+                    $("#lblHawbNo").text(_HAWBNo);
                     if (MPSNoINWDO == 'Y') {
                         $(".dis").show();
                         $('#txtMPSNo').focus();
@@ -617,18 +618,29 @@ GetWDODetailsByGroupId = function (InputXML) {
                     ScanType=$(this).find('ScanType').text();
                     $("#lblRelePkgsWgt").text(_totRelPkgs + ' / ' + _totRelWgt);
 
+                    var isChecked = false;
 
-                    for (i = 0; i < arrayofStockId.length; i++) {
+                    for (var i = 0; i < arrayofStockId.length; i++) {
                         console.log(arrayofStockId[i] +"==" +STOCKID);
-                        if (arrayofStockId[i] == STOCKID) {
-                        
-                             $('input[id="' + STOCKID + '"]').prop('checked', true);
-                         
-                        }
-                        else {
-                            // alert('0');
+                        if (arrayofStockId[i] === STOCKID) {     
+                            isChecked = true;
+                            break;
                         }
                     }
+                    
+                    $('input[id="' + STOCKID + '"]').prop('checked', isChecked);
+                    $('input[id!="' + STOCKID + '"]').prop('checked', false);
+
+                    // for (i = 0; i < arrayofStockId.length; i++) {
+                    //     console.log(arrayofStockId[i] +"==" +STOCKID);
+                    //     if (arrayofStockId[i] === STOCKID) {     
+                    //          $('input[id="' + STOCKID + '"]').prop('checked', true);
+                    //          break;
+                    //     }
+                    //     else {
+                    //         $('input[id="' + STOCKID + '"]').prop('checked', false);
+                    //     }
+                    // }
                 });
 
                 // $(xmlDoc).find('Table1').each(function (index) {
