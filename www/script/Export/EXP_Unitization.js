@@ -145,6 +145,13 @@ $(function () {
         $(".ibiSuccessMsg1").text('');
     });
 
+    // $("#dollyDDL").change(function () {
+    //     if ($('#ddlWeighingScale').find("option:selected").val() != '0'){
+    //         $("#ULDScaleWt").val('');
+    //     }
+       
+    // });
+
     $("#btnGetWeight").click(function () {
         GetWeightingScaleWt();
     });
@@ -2216,6 +2223,11 @@ function GetExportFlightDetails(shouldClearRecord) {
                 });
                 $('#dollyDDL').empty();
                 $(xmlDoc).find('Table7').each(function (index) {
+                    if (index == 0) {
+                        var newOption = $('<option></option>');
+                        newOption.val(0).text('Select');
+                        newOption.appendTo('#dollyDDL');
+                    }
                     var newOption2 = $('<option></option>');
                     newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
                     newOption2.appendTo('#dollyDDL');
@@ -4691,7 +4703,13 @@ function GetULDs(valFromddloffpoint) {
                 });
                 $('#dollyDDL').empty();
                 $(xmlDoc).find('Table7').each(function (index) {
+                    if (index == 0) {
+                        var newOption = $('<option></option>');
+                        newOption.val(0).text('Select');
+                        newOption.appendTo('#dollyDDL');
+                    }
                     var newOption2 = $('<option></option>');
+                    
                     newOption2.val($(this).find('Value').text()).text($(this).find('Label').text());
                     newOption2.appendTo('#dollyDDL');
                 });
