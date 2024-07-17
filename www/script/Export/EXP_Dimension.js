@@ -292,6 +292,7 @@ function ScanVCTPrintLabelDim() {
             var str = response.d;
             console.log(response.d);
             $("#ddlDoorList").empty()
+            $("#ibiSuccessMsg2").text();
             if (str != null && str != "" && str != "<NewDataSet />") {
                 var xmlDoc = $.parseXML(str);
                 $(xmlDoc).find('Table').each(function (index) {

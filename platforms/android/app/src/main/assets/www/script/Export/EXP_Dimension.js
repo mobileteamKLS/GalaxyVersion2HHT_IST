@@ -164,6 +164,14 @@ function GetVCTDimensionDetails() {
             if (str != null && str != "" && str != "<NewDataSet />") {
                 var xmlDoc = $.parseXML(str);
                 $(xmlDoc).find('Table').each(function (index) {
+                    Status = $(this).find('Status').text();
+                    StrMessage = $(this).find('OutMsg').text();
+                    if(Status=="E"){
+                        $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                    }
+
+                });
+                $(xmlDoc).find('Table1').each(function (index) {
                     VCTNo = $(this).find('TokenNo').text();
                     MawbNo = $(this).find('DocumentNo').text();
                     HawbNo = $(this).find('HouseNo').text();
@@ -188,7 +196,7 @@ function GetVCTDimensionDetails() {
                 html += '</tr>';
                 html += '</thead>';
                 html += '<tbody class="">';
-                $(xmlDoc).find('Table1').each(function (index) {
+                $(xmlDoc).find('Table2').each(function (index) {
 
                     $('#lblMessage').text('');
                     barcodeLabel = $(this).find('BARCODE_LABEL_NUMBER').text();
@@ -222,6 +230,9 @@ function GetVCTDimensionDetails() {
                 $(xmlDoc).find('Table3').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('OutMsg').text();
+                    if(Status=="E"){
+                        $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                    }
 
                 });
 
@@ -281,6 +292,7 @@ function ScanVCTPrintLabelDim() {
             var str = response.d;
             console.log(response.d);
             $("#ddlDoorList").empty()
+            $("#ibiSuccessMsg2").text();
             if (str != null && str != "" && str != "<NewDataSet />") {
                 var xmlDoc = $.parseXML(str);
                 $(xmlDoc).find('Table').each(function (index) {
