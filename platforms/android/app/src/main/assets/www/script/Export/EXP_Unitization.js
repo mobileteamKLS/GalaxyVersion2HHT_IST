@@ -3696,7 +3696,7 @@ UnitizationRemoveOffloadShipment = function () {
                             $('#modalViewRemoveOffload').modal('hide');
                             clearRemoveData()
                             UnitizedGetAWBDetails();
-                        }, 3000);
+                        }, 1000);
                     }
 
                 });
