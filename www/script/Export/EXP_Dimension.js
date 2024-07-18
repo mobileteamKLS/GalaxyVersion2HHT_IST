@@ -168,6 +168,8 @@ function GetVCTDimensionDetails() {
                     StrMessage = $(this).find('OutMsg').text();
                     if(Status=="E"){
                         $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                    }else{
+                        $('#textLength').focus();
                     }
 
                 });
@@ -476,6 +478,7 @@ function calculateVolume() {
                     volume = $(this).find('OutMsg').text();
                     if (Status == "S") {
                         $("#textVolume").val(volume);
+                        $('#txtScannedLbl').focus();
                     }
                 });
             } else {
