@@ -3625,6 +3625,13 @@ UnitizationRemoveOffloadShipment = function () {
         $('#lblMSGForRemove').text('');
     }
 
+    if ($('#ddlHAWBList option').length > 1) {
+        if ($("#ddlHAWBList option:selected").text() == "Select") {
+            $('#lblMSGForRemove').text('Please select HAWB.').css('color', 'red');
+            return;
+        }
+    }
+    
 
 
     if ($("#bulkCheckBox").prop("checked")) {
@@ -4760,7 +4767,7 @@ function GetManifestHouseByGroupID(InputXML) {
                     table1Data.push({ houseNo: houseNo, pcs: pcs, weight: weight, volume: volume });
 
                     if ($('#ddlHAWBList option[value="' + houseNo + '"]').length === 0) {
-                        // If not, append the new option
+                      
                         $('#ddlHAWBList').append('<option value="' + houseNo + '">' + houseNo + '</option>');
                     }
                     $('#ddlHAWBList').val('');
