@@ -155,8 +155,7 @@ $(function () {
     $("#btnGetWeight").click(function () {
         GetWeightingScaleWt();
     });
-
-
+    
 
 
     // $('#txtQuantity').on('input', function() {
@@ -1000,6 +999,7 @@ function fnClear() {
     $("#txtUldPriority").val('');
     $("#txtRemark").val('');
     $("#uldTypeULDL").val('0');
+    $("#editUldType").val('0');
     $("#txtFlightManpower").val('');
 
 
@@ -2033,11 +2033,13 @@ function GetExportULDData(Input) {
                         uldRemark = $(this).find('REMARKS').text();
                         uldManpower = $(this).find('ULDManpower').text();
                         uldCONTOUR = $(this).find('CONTOUR').text();
+                        uldTYPE = $(this).find('ULDPosition').text();
 
                         $("#ULDScaleWt").val(uldScaleWeight);
                         $("#txtRemark").val(uldRemark);
                         $("#txtULDManpower").val(uldManpower);
                         $("#txtPriority").val('00');
+                        $("#editUldType").val(uldTYPE);
                         selectedvalue = uldCONTOUR;
                         if (uldCONTOUR == "" || uldCONTOUR == " ") {
                             selectedvalue = "0"
@@ -2334,6 +2336,7 @@ function UnitizationSaveULDDetails() {
                     $('#txtULDOwner').val('');
                     $("#txtUldPriority").val('')
                     $("#uldTypeULDL").val('0');
+                    $("#editUldType").val('0');
                 });
 
 
@@ -2702,6 +2705,11 @@ function EXPULDClose() {
         $.alert("Please Enter Flight Date");
         return;
     }
+
+    if ($("#editUldType").val() == "0") {
+        $.alert("Please select ULD Position.");
+        return;
+    }
     //if ($("#txtULDType").val() == "") {
     //    $.alert("Please Enter ULD Type and No.");
     //    return;
@@ -2819,7 +2827,8 @@ function EXPULDClose() {
             "routepoint": $("#offPointLists").val(),
             "ULDManpower": $("#txtULDManpower").val(),
             "Remark": $("#txtRemark").val(),
-            "Priority": "0"
+            "Priority": "0",
+            "ULDPosition":$("#editUldType").val()
 
         }),
         contentType: "application/json; charset=utf-8",
@@ -3528,6 +3537,7 @@ function exitModalAWBDetailsforRemove() {
     clearRemoveData();
     $('#modalViewRemoveOffload').modal('hide');
 }
+
 var calculateVolumeForRm;
 function calculateVolumneRemove() {
 

@@ -278,6 +278,10 @@ function ScanVCTPrintLabelDim() {
         $.alert("Please enter Height.");
         return;
     }
+    if ($("#textVolume").val() == '') {
+        $.alert("Please calculate Valume.");
+        return;
+    }
 
     $('body').mLoading({
         text: "Please Wait..",

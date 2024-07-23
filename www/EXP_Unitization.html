@@ -304,9 +304,16 @@
                     <div class="col-5" style="text-align:left;">
                         <label id="lblUld" class="lbl">ULD`s</label>&nbsp;<font color="red">*</font>
                     </div>
-                    <div class="col-7">
+                    <div class="col-5">
                         <select class="textfieldClass" id="uldLists" onchange="isAddEquip();">
                             <option value="0">Select</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <select class="textfieldClass" id="editUldType" style="padding: 0;">
+                            <option value="0"></option>
+                            <option value="LD">LD</option>
+                            <option value="UD">MD</option>
                         </select>
                     </div>
                     <div class="col-5" id="dollyLbl" style="text-align:left;display: none;">
@@ -1010,9 +1017,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div class="modal fade" id="modaltblMoveShipment" tabindex="-1" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content" style="border: solid thin #000; margin-top: 50px;">
