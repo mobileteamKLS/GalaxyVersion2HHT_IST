@@ -143,11 +143,11 @@
                 <table id="TextBoxesGroup" class="table  table-bordered mb-0">
                     <tbody class="theadClass">
                         <tr id="TextBoxDiv1m">
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textLength"
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textLength" onblur="calculateVolume();"
                                     type="text" /></td>
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textWidth"
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textWidth" onblur="calculateVolume();"
                                     type="text" /></td>
-                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textHeight"
+                            <td><input onkeyup="NumberOnly(event);" class="textpackges text-right" id="textHeight" onblur="calculateVolume();"
                                     type="text" /></td>
                             <td><input class="textpackges text-right" id="textVolume" type="text" disabled /></td>
                             <td><button type="button" onclick="clearDimension();" id="btnAdd" style="background-color: red;"

@@ -3649,6 +3649,12 @@ UnitizationRemoveOffloadShipment = function () {
         $('#lblMSGForRemove').text('');
     }
 
+    if ($('#ddlHAWBList option').length > 1) {
+        if ($("#ddlHAWBList option:selected").text() == "Select") {
+            $('#lblMSGForRemove').text('Please select HAWB.').css('color', 'red');
+            return;
+        }
+    }
 
 
     if ($("#bulkCheckBox").prop("checked")) {

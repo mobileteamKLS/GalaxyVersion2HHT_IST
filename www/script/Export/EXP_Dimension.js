@@ -168,6 +168,7 @@ function GetVCTDimensionDetails() {
                     StrMessage = $(this).find('OutMsg').text();
                     if(Status=="E"){
                         $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                        clearFunctionOnGet();
                     }else{
                         $('#textLength').focus();
                     }
@@ -305,8 +306,8 @@ function ScanVCTPrintLabelDim() {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('OutMsg').text();
                     if (Status == "S") {
-                        GetVCTDimensionDetails();
-                        clearDimension();
+                        //GetVCTDimensionDetails();scan label clear, increment s pc ,rem from pending and add it to lbl list
+                        //clearDimension();
                     }
                     if(Status=="E"){
                         $("#ibiSuccessMsg2").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
@@ -540,6 +541,23 @@ function calculateSelectedVolume() {
         }
     });
 
+}
+function clearFunctionOnGet() {
+    $("#txtVCTNo").val('');
+    $("#txtMAWBNo").val('');
+    $("#txtHAWBNo").val('');
+    $("#textLength").val('');
+    $("#textWidth").val('');
+    $("#textHeight").val('');
+    $("#textVolume").val('');
+    $("#txtScannedLbl").val('');
+    $("#totPcsSpan").text('');
+    $("#savedPcsSpan").text('');
+    $("#ibiSuccessMsg").text('');
+    $("#ibiSuccessMsg2").text('');
+    $('#divDimensionDone').empty();
+    $('#divDimensionPending').empty();
+   
 }
 
 function clearFunction() {
