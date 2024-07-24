@@ -70,6 +70,16 @@ $(function () {
         event.stopPropagation();
     });
 
+    $('#_txtScanIdForMove').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            console.log("eneter");
+            MoveScannedPcsLabel();
+        }
+
+        event.stopPropagation();
+    });
+
     $('#_txtScanIdModal').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
@@ -131,6 +141,15 @@ $(function () {
     });
 
     $("#btnViewPcsModal").click(function () {
+
+        $('#modalViewPcsDetail').modal('show');
+        $('#divDocsDetail').empty();
+
+        buildPicesList();
+
+    });
+
+    $("#btnViewPcsForMove").click(function () {
 
         $('#modalViewPcsDetail').modal('show');
         $('#divDocsDetail').empty();
@@ -1485,6 +1504,80 @@ function RemoveScannedPcsLabel() {
         }
     });
 }
+
+function MoveScannedPcsLabel() {
+    $('#lblMSGForRemove').text('');
+    if ($("#_txtScanIdModal").val() == '') {
+        return;
+    }
+    _ManifestSeqNo
+    var InputXML = "<Root><ScanCode>" + $("#_txtScanIdForMove").val() + "</ScanCode><ExpManRowID>" + _ManifestSeqNo + "</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
+    $('body').mLoading({
+        text: "Please Wait..",
+    });
+    $.ajax({
+        type: 'POST',
+        url: ExpURL + "/MoveScannedPcsLabel",
+        data: JSON.stringify({ 'InputXML': InputXML }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response, xhr, textStatus) {
+            HideLoader();
+            var str = response.d;
+            if (str != null && str != "" && str != "<NewDataSet />") {
+                var xmlDoc = $.parseXML(str);
+                $(xmlDoc).find('Table1').each(function (index) {
+                    respNOP = 1;
+                    respDimId = $(this).find('DimRowID').text();
+                    respScanId = $(this).find('BarCode').text();
+                    for (let i = 0; i < awbScannedPcsList.length; i++) {
+                        console.log(awbScannedPcsList[i].ScanId);
+                        if (awbScannedPcsList[i].DimRowId === respDimId) {
+                            $('#lblMSGForMoveShipment').text('Scan Id is already scanned').css('color', 'red');
+                            $("#_txtScanIdForMove").val('');
+                            return;
+                        }
+                    }
+                    //  _StrMessage = $(this).find('StrMessage').text();
+                    const item = { NOP: respNOP, DimRowId: respDimId, ScanId: respScanId }
+                    awbScannedPcsList.push(item);
+                  //  calculateVolumneRemoveForShowonScan();
+
+                });
+                $(xmlDoc).find('Table').each(function (index) {
+                    _Status = $(this).find('Status').text();
+                    _StrMessage = $(this).find('OutMsg').text();
+                    if (_Status == 'E') {
+                        errmsg = _StrMessage;
+                        $.alert(errmsg);
+                        $('#lblMSGForMoveShipment').text(errmsg).css('color', 'red');
+
+                        $(".alert_btn_ok").click(function () {
+                            // $("#_txtAWBNo").val('');
+                            // $("#_txtAWBNo").focus();
+                        });
+                        isScanned = false;
+                        return;
+                    }
+                    isScanned = true;
+                    $('#_txtPices').prop('disabled', true);
+                    $('#_txtManWt').prop('disabled', true);
+
+
+                });
+
+            } else {
+                $("body").mLoading('hide');
+                return;
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $("body").mLoading('hide');
+            alert('Server not responding...');
+        }
+    });
+}
+
 
 var RemNOP;
 var RemWt;

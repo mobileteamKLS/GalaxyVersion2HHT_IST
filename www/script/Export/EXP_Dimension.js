@@ -1,5 +1,6 @@
 var Userid = window.localStorage.getItem("Userid");
 var SHED_AIRPORT_CITY = window.localStorage.getItem("SHED_AIRPORT_CITY");
+var incrementSpcs=0;
 
 $(function () {
     $('#txtScannedNo').keypress(function (event) {
@@ -24,7 +25,7 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('#textWidth').focus();
-            calculateVolume();
+            calculateVolume(false);
         }
 
         event.stopPropagation();
@@ -33,7 +34,7 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             $('#textHeight').focus();
-            calculateVolume();
+            calculateVolume(false);
         }
 
         event.stopPropagation();
@@ -41,7 +42,7 @@ $(function () {
     $('#textHeight').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
-            calculateVolume();
+            calculateVolume(false);
         }
         event.stopPropagation();
     });
@@ -77,8 +78,8 @@ function editDimension(dimId, barcodeLabel) {
     $('#modalDimensionDetail').modal('show');
 }
 
-function deleteLabel(dimId) {
-    deleteSelectedLabelDim(dimId);
+function deleteLabel(dimId,lableId) {
+    deleteSelectedLabelDim(dimId,lableId);
 
 }
 
@@ -93,28 +94,21 @@ function saveSelectedDimension() {
 }
 
 function DimDoneList(barcodeLabel, dimId) {
-
-    html += '<tr id="row1' + barcodeLabel + '">';
-    html += '<td id="ActivityType' + barcodeLabel + '">' + barcodeLabel + '</td>';
-    html += '<td style="padding: 2px; width: 50px; text-align: center;">';  // Adjust width as needed
+    html += '<tr id="' + barcodeLabel + '">';
+    html += '<td id="' + barcodeLabel + '">' + barcodeLabel + '</td>';
+    html += '<td style="padding: 2px; width: 50px; text-align: center;">';  
     html += '<button type="button"  onclick="editDimension(\'' + dimId + '\', \'' + barcodeLabel + '\');" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete" style="margin: 0 auto; display: block;">';
     html += '<i class="zmdi zmdi-edit"></i></button></td>';
-    html += '<td style="padding: 2px; width: 50px; text-align: center;">';  // Adjust width as needed
-    html += '<button type="button" style="background-color: red;" onclick="deleteLabel(\'' + dimId + '\'); " id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete" style="margin: 0 auto; display: block;">';
+    html += '<td style="padding: 2px; width: 50px; text-align: center;">'; 
+    html += '<button type="button" style="background-color: red;" onclick="deleteLabel(\'' + dimId + '\', \'' + barcodeLabel + '\'); " id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete" style="margin: 0 auto; display: block;">';
     html += '<i class="zmdi zmdi-minus"></i></button></td>';
     html += '</tr>';
-
 }
 
-function DimPendingList(barcodeName) {
-
-    html1 += '<tr id="row1' + barcodeName + '">';
-    html1 += '<td id="ActivityType' + barcodeName + '">' + barcodeName + '</td>';
-    // html1 += '<td style="padding: 2px; width: 50px; text-align: center;">';  // Adjust width as needed
-    // html1 += '<button type="button" style="background-color: red;" onclick="AWBRemarkDelete(\'' + barcodeName + '\'); removeRow();" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete" style="margin: 0 auto; display: block;">';
-    // html1 += '<i class="zmdi zmdi-minus"></i></button></td>';
+function DimPendingList(barcodeName,id) {
+    html1 += '<tr id="' + barcodeName + '">';
+    html1 += '<td id="' + id + '">' + barcodeName + '</td>';
     html1 += '</tr>';
-
 }
 
 function createDynamicDimensionTable(dimId, length, width, height, volume) {
@@ -123,19 +117,19 @@ function createDynamicDimensionTable(dimId, length, width, height, volume) {
     tblhtml += "<tr>";
 
     tblhtml += "<td >";
-    tblhtml += "<input type='number' id='tblLength' value='" + length + "'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    tblhtml += "<input type='number' id='tblLength' value='" + length + "'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField' onblur='calculateSelectedVolume()'>";
     tblhtml += "</td>";
 
     tblhtml += "<td >";
-    tblhtml += "<input type='number' id='tblWidth' value='" + width + "'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    tblhtml += "<input type='number' id='tblWidth' value='" + width + "'  style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField' onblur='calculateSelectedVolume()' >";
     tblhtml += "</td>";
 
     tblhtml += "<td >";
-    tblhtml += "<input type='number' id='tblHeight' value='" + height + "'   style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    tblhtml += "<input type='number' id='tblHeight' value='" + height + "'   style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField' onblur='calculateSelectedVolume()' >";
     tblhtml += "</td>";
 
     tblhtml += "<td >";
-    tblhtml += "<input type='number' id='tblVolume' value='" + volume + "' style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField'>";
+    tblhtml += "<input type='number' id='tblVolume' value='" + volume + "' style='height: 30px;color:#2196F3;font-weight:bold;text-align:right;' class='textfieldClass clsField' onblur='calculateSelectedVolume()' >";
     tblhtml += "</td>";
     tblhtml += "</tr>";
 
@@ -181,6 +175,7 @@ function GetVCTDimensionDetails() {
                     TotPcs = $(this).find('TotPcs').text();
                     ScannedPcs = $(this).find('ScannedPcs').text();
                     VCTRowId = $(this).find('VCTRowID').text();
+                    incrementSpcs=parseInt(ScannedPcs);
                     $("#txtVCTNo").val(VCTNo);
                     $("#txtMAWBNo").val(MawbNo);
                     $("#txtHAWBNo").val(HawbNo);
@@ -220,24 +215,25 @@ function GetVCTDimensionDetails() {
                 html1 += '</tr>';
                 html1 += '</thead>';
                 html1 += '<tbody class="">';
-                $(xmlDoc).find('Table2').each(function (index) {
+                $(xmlDoc).find('Table3').each(function (index) {
 
                     $('#lblMessage').text('');
                     barcodeName = $(this).find('BARCODE_LABEL_NUMBER').text();
+                    id=$(this).find('ID').text();
                     console.log("-------" + barcodeName);
-                    DimPendingList(barcodeName);
+                    DimPendingList(barcodeName,id);
                 });
                 html1 += "</tbody></table>";
                 $('#divDimensionPending').append(html1);
 
-                $(xmlDoc).find('Table3').each(function (index) {
-                    Status = $(this).find('Status').text();
-                    StrMessage = $(this).find('OutMsg').text();
-                    if(Status=="E"){
-                        $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-                    }
+                // $(xmlDoc).find('Table4').each(function (index) {
+                //     Status = $(this).find('Status').text();
+                //     StrMessage = $(this).find('OutMsg').text();
+                //     if(Status=="E"){
+                //         $("#ibiSuccessMsg1").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+                //     }
 
-                });
+                // });
 
 
 
@@ -299,7 +295,7 @@ function ScanVCTPrintLabelDim() {
             var str = response.d;
             console.log(response.d);
             $("#ddlDoorList").empty()
-            $("#ibiSuccessMsg2").text();
+            $("#ibiSuccessMsg2").text('');
             if (str != null && str != "" && str != "<NewDataSet />") {
                 var xmlDoc = $.parseXML(str);
                 $(xmlDoc).find('Table').each(function (index) {
@@ -308,6 +304,10 @@ function ScanVCTPrintLabelDim() {
                     if (Status == "S") {
                         //GetVCTDimensionDetails();scan label clear, increment s pc ,rem from pending and add it to lbl list
                         //clearDimension();
+                        incrementSpcs++;
+                        $("#savedPcsSpan").text(incrementSpcs);
+                        moveRow($("#txtScannedLbl").val(),StrMessage);
+                        $("#txtScannedLbl").val('')
                     }
                     if(Status=="E"){
                         $("#ibiSuccessMsg2").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
@@ -325,6 +325,25 @@ function ScanVCTPrintLabelDim() {
             alert('Server not responding...');
         }
     });
+}
+
+function moveRow(rowId, dataId) {
+   
+    var row = $('#' + rowId).clone();
+    row.find('td').first().attr('id', rowId).text(rowId);
+    row.append('<td style="padding: 2px; width: 50px; text-align: center;"><button type="button" onclick="editDimension(\'' + dataId + '\', \'' + rowId + '\');" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete" style="margin: 0 auto; display: block;"><i class="zmdi zmdi-edit"></i></button></td>');
+    row.append('<td style="padding: 2px; width: 50px; text-align: center;"><button type="button" style="background-color: red;" onclick="deleteLabel(\'' + dataId + '\', \'' + rowId + '\');" id="btnAdd" class="btn btn--icon login__block__btn login__block__btn_margin Delete"><i class="zmdi zmdi-minus"></i></button></td>');
+    $('#' + rowId).remove();
+        $('#divDimensionDone tbody').append(row);
+    
+}
+
+function moveRowToPending(rowId, dataId) {
+    var row = $('#' + rowId).clone();
+    row.find('td').first().attr('id', dataId).text(rowId);
+    row.find('td:gt(0)').remove();
+    $('#' + rowId).remove();
+    $('#divDimensionPending tbody').append(row);
 }
 
 function getSelectedLabelDim(dimId) {
@@ -394,7 +413,11 @@ function saveSelectedLabelDim(dimId, length, width, height, volume) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('OutMsg').text();
                     if(Status=="S"){
-                        exitModal();
+                        $("#ibiSuccessMsg").text("Dimensions saved successfuly").css({ "color": "green", "font-weight": "bold" });
+                        setTimeout(function () {
+                            exitModal();
+                        }, 1500);
+                        
                     }
                     if(Status=="E"){
                         $("#ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
@@ -418,7 +441,7 @@ function saveSelectedLabelDim(dimId, length, width, height, volume) {
     });
 }
 
-function deleteSelectedLabelDim(dimId) {
+function deleteSelectedLabelDim(dimId, labelId) {
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -440,7 +463,11 @@ function deleteSelectedLabelDim(dimId) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('OutMsg').text();
                     if(Status=="S"){
-                        GetVCTDimensionDetails();
+                        moveRowToPending(labelId,dimId);
+                        incrementSpcs--;
+                        $("#savedPcsSpan").text(incrementSpcs);
+                        $.alert(StrMessage);
+                        // GetVCTDimensionDetails();
                     }
                 });
 
@@ -458,7 +485,7 @@ function deleteSelectedLabelDim(dimId) {
     });
 }
 
-function calculateVolume() {
+function calculateVolume(isEdit) {
     // $('body').mLoading({
     //     text: "Please Wait..",
     // });
