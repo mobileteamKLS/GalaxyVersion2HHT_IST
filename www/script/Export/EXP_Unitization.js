@@ -1510,8 +1510,7 @@ function MoveScannedPcsLabel() {
     if ($("#_txtScanIdModal").val() == '') {
         return;
     }
-    _ManifestSeqNo
-    var InputXML = "<Root><ScanCode>" + $("#_txtScanIdForMove").val() + "</ScanCode><ExpManRowID>" + _ManifestSeqNo + "</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
+    var InputXML = "<Root><ScanCode>" + $("#_txtScanIdForMove").val() + "</ScanCode><ExpManRowID>" + EmiSeqNo + "</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -3907,6 +3906,41 @@ function calculateVolumneForMoveShip() {
 
 
 }
+
+function calculateVolumneForMoveShipOnScan() {
+    if ($('#txtMovePieces').val() == '') {
+        $('#txtMoveWeight').val('');
+        $('#txtMoveVolume').val('');
+        return;
+    }
+
+    if (parseInt($('#txtMovePieces').val()) > parseInt(SNOPMOVE)) {
+        $('#lblMSGForMoveShipment').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
+        $('#txtMovePieces').val('');
+        $('#txtMoveVolume').val('');
+
+        return;
+    } else {
+        $('#lblMSGForMoveShipment').text('');
+
+    }
+
+    var enteredwt = parseInt($('#txtMovePieces').val());
+    var wtNew = (parseFloat(SWTMAN) / parseFloat(SNOPMAN)) * enteredwt;
+    calculateWtForMoveShip = Math.round(wtNew * 100) / 100;
+    $('#txtMoveWeight').val(calculateWtForMoveShip);
+
+
+    var enteredNOP = parseInt($('#txtMovePieces').val());
+    var volumeNew = (parseFloat(SVOLMOVE) / parseFloat(SNOPMOVE)) * enteredNOP;
+    calculateVolumeForMoveShip = Math.round(volumeNew * 100) / 100;
+    $('#txtMoveVolume').val(calculateVolumeForMoveShip);
+
+
+
+}
+
+
 var EAID;
 var ESID;
 var SNOPMAN;
