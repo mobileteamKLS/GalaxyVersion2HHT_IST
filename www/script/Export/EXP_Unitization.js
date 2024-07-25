@@ -3907,34 +3907,67 @@ function calculateVolumneForMoveShip() {
 
 }
 
-function calculateVolumneForMoveShipOnScan() {
-    if ($('#txtMovePieces').val() == '') {
-        $('#txtMoveWeight').val('');
-        $('#txtMoveVolume').val('');
-        return;
-    }
+var totalToMovPieces = 1;
+var totalToMovWeight = 0;
+var totalToMovVol = 0;
 
+function calculateVolumneForMoveShipOnScan() {
+    var calculateMovWt = 0;
+    var calculateMovVolume = 0;
     if (parseInt($('#txtMovePieces').val()) > parseInt(SNOPMOVE)) {
         $('#lblMSGForMoveShipment').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
         $('#txtMovePieces').val('');
         $('#txtMoveVolume').val('');
-
         return;
     } else {
         $('#lblMSGForMoveShipment').text('');
 
     }
 
-    var enteredwt = parseInt($('#txtMovePieces').val());
-    var wtNew = (parseFloat(SWTMAN) / parseFloat(SNOPMAN)) * enteredwt;
-    calculateWtForMoveShip = Math.round(wtNew * 100) / 100;
-    $('#txtMoveWeight').val(calculateWtForMoveShip);
 
 
-    var enteredNOP = parseInt($('#txtMovePieces').val());
-    var volumeNew = (parseFloat(SVOLMOVE) / parseFloat(SNOPMOVE)) * enteredNOP;
-    calculateVolumeForMoveShip = Math.round(volumeNew * 100) / 100;
-    $('#txtMoveVolume').val(calculateVolumeForMoveShip);
+    if (isFirstPiece == "0") {
+        var weightNew = (parseFloat(oldMovWt) / parseFloat(oldMovNop)) * 1;
+        calculateMovWt = Math.round(weightNew * 100) / 100;
+        totalToMovWeight = parseFloat(calculateMovWt);
+
+        var volumeNew = (parseFloat(oldMovVol) / parseFloat(oldMovNop)) * 1;
+        calculateMovVolume = Math.round(volumeNew * 100) / 100;
+        totalToMovVol = parseFloat(calculateMovVolume);
+
+        console.log(totalToMovPieces + "**" + totalToMovWeight + "**" + totalToMovPieces);
+        isFirstPiece = "1";
+        $('#txtMoveWeight').val(calculateMovWt);
+        $('#txtMovePieces').val(totalToMovPieces)
+        $('#txtMoveVolume').val(calculateMovVolume);
+        tempRemMovWt = calculateMovWt;
+        tempRemMovVol = calculateMovVolume;
+        totalToMovPieces++;
+        oldMovNop = parseFloat(oldMovNop) - 1;
+        oldMovWt = parseFloat(oldMovWt) - parseFloat(calculateRmWt);
+        oldMovVol = parseFloat(oldMovVol) - parseFloat(calculateMovVolume);
+
+    }
+    else {
+        var weightNew = (parseFloat(oldMovWt) / parseFloat(oldMovNop)) * 1;
+        calculateMovWt = Math.round(weightNew * 100) / 100;
+        totalToMovWeight = parseFloat(totalToMovWeight) + parseFloat(calculateRmWt);
+
+        var volumeNew = (parseFloat(oldMovVol) / parseFloat(oldMovNop)) * 1;
+        calculateMovVolume = Math.round(volumeNew * 100) / 100;
+        totalToMovVol = parseFloat(totalToMovVol) + parseFloat(calculateMovVolume);
+
+        console.log(totalToMovPieces + "*--*" + totalToMovWeight + "*--*" + totalToMovPieces);
+        $('#txtMoveWeight').val(totalToMovWeight);
+        $('#txtMovePieces').val(totalToMovPieces)
+        $('#txtMoveVolume').val(totalToMovVol);
+        tempRemMovWt = calculateMovWt;
+        tempRemMovVol = calculateMovVolume;
+        totalToMovPieces++;
+        oldMovNop = parseFloat(oldMovNop) - 1;
+        oldMovWt = parseFloat(oldMovWt) - parseFloat(calculateMovWt);
+        oldMovVol = parseFloat(oldMovVol) - parseFloat(calculateMovVolume);
+    }
 
 
 
@@ -3950,6 +3983,9 @@ var SWTMAN;
 var SWTMOVE;
 var SVOLMAN;
 var SVOLMOVE;
+var oldMovWt;
+var oldMovNop;
+var oldMovVol;
 function AWBChangeForXML(allValues) {
     $("#lblMSGForMoveShipment").text('');
     alvalSplit = allValues.split('~');
@@ -3963,6 +3999,10 @@ function AWBChangeForXML(allValues) {
     SWTMOVE = alvalSplit[6];
     SVOLMAN = alvalSplit[7];
     SVOLMOVE = alvalSplit[8];
+    oldMovWt=SWTMAN;
+    oldMovNop=SNOPMAN;
+    oldMovVol=SVOLMOVE;
+    
     if ($("#ddlAWBList option:selected").text() == 'Select') {
         $("#txtMovePieces").val('');
         $("#txtMoveWeight").val('');
