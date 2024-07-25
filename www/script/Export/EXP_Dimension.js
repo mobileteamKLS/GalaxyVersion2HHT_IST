@@ -3,6 +3,25 @@ var SHED_AIRPORT_CITY = window.localStorage.getItem("SHED_AIRPORT_CITY");
 var incrementSpcs=0;
 
 $(function () {
+
+    var language = window.localStorage.getItem("Language");
+
+    switch (language) {
+        case "English":
+            //setEnglish();
+            break;
+        case "Hungarian":
+            setHungarian();
+            break;
+        case "Turkish":
+            setTurkish();
+            break;
+    }
+
+    function setTurkish(){
+        $('#titUni').text("Gruplandirma");
+    }
+
     $('#txtScannedNo').keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {

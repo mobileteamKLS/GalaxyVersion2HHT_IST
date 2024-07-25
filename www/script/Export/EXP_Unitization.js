@@ -61,7 +61,9 @@ $(function () {
     // });
 
     $('#_txtScanId').keypress(function (event) {
+        console.log("keypress");
         var keycode = (event.keyCode ? event.keyCode : event.which);
+        console.log(keycode);
         if (keycode == '13') {
             console.log("eneter");
             UnitizationPendingAWBDetailsScanId();
@@ -1395,12 +1397,31 @@ function UnitizationPendingAWBDetailsScanId() {
             var str = response.d;
             if (str != null && str != "" && str != "<NewDataSet />") {
                 var xmlDoc = $.parseXML(str);
+
+                $(xmlDoc).find('Table').each(function (index) {
+                    _Status = $(this).find('Status').text();
+                    _StrMessage = $(this).find('StrMessage').text();
+                    if (_Status == 'E') {
+                        errmsg = _StrMessage;
+                        $.alert(errmsg);
+                        $(".alert_btn_ok").click(function () {
+                        });
+                        return;
+                    }else{
+                        $('#_txtPices').prop('disabled', true);
+                    $('#_txtManWt').prop('disabled', true);
+                    $("#_txtScanId").val('');
+                    }
+                    
+
+                });
+
                 $(xmlDoc).find('Table1').each(function (index) {
                     respNOP = $(this).find('NOP').text();
                     respDimId = $(this).find('DimRowID').text();
                     respScanId = $(this).find('ScanCode').text();
                     for (let i = 0; i < awbScannedPcsList.length; i++) {
-                        console.log(awbScannedPcsList[i].ScanId);
+                        console.log("@@@@@"+awbScannedPcsList[i].DimRowId+"@@@@"+respDimId);
                         if (awbScannedPcsList[i].DimRowId === respDimId) {
                             $.alert("Scan Id is already scanned");
                             $(".alert_btn_ok").click(function () {
@@ -1416,25 +1437,7 @@ function UnitizationPendingAWBDetailsScanId() {
                     calculateMAnWeightForShowonScan(respNOP);
 
                 });
-                $(xmlDoc).find('Table').each(function (index) {
-                    _Status = $(this).find('Status').text();
-                    _StrMessage = $(this).find('StrMessage').text();
-                    if (_Status == 'E') {
-                        errmsg = _StrMessage;
-                        $.alert(errmsg);
-
-                        $(".alert_btn_ok").click(function () {
-                            // $("#_txtAWBNo").val('');
-                            // $("#_txtAWBNo").focus();
-                        });
-
-                        return;
-                    }
-                    $('#_txtPices').prop('disabled', true);
-                    $('#_txtManWt').prop('disabled', true);
-                    $("#_txtScanId").val('');
-
-                });
+       
 
             } else {
                 $("body").mLoading('hide');
@@ -1506,7 +1509,7 @@ function RemoveScannedPcsLabel() {
                     $('#_txtScanIdModal').val('');
                     $('#txtNOPforRemove').prop('disabled', true);
                     $('#txtWeightforRemove').prop('disabled', true);
-
+                    $('#txtVolumeforRemove').prop('disabled', true);
 
                 });
 
@@ -1579,6 +1582,7 @@ function MoveScannedPcsLabel() {
                     $("#_txtScanIdForMove").val('');
                     $('#txtMovePieces').prop('disabled', true);
                     $('#txtMoveWeight').prop('disabled', true);
+                    $('#txtMoveVolume').prop('disabled', true);
 
 
                 });
@@ -1825,6 +1829,7 @@ function calculateMAnWeightForShowonScan(piece) {
         console.error("Invalid number detected.");
         return;
     }
+    
 
     if (isFirstPiece == "0") {
         var weightNew = (remWt / remNop) * piece;
@@ -1856,7 +1861,16 @@ function calculateMAnWeightForShowonScan(piece) {
         remNop = remNop - piece;
         remWt = remWt - calculateRmWt;
     }
+    if (parseInt($('#_txtPices').val()) > parseInt(RemNOP)) {
+        $('.uldMessageSuccess').text('Entered NOP should not greater than remaining NOP ( ' + RemNOP + ' )').css('color', 'red');
+        $('#_txtPices').val('');
+        $('#_txtManWt').val('');
 
+        return;
+    } else {
+        $('.uldMessageSuccess').text('');
+
+    }
     console.log("Updated remNop:", remNop);
     console.log("Updated remWt:", remWt);
     console.log("Updated totalWeight:", totalWeight);
@@ -3880,6 +3894,7 @@ function clearRemoveData() {
     calculateRmVolume = 0;
     $('#txtNOPforRemove').prop('disabled', false);
     $('#txtWeightforRemove').prop('disabled', false);
+    $('#txtVolumeforRemove').prop('disabled', false);
 }
 
 function clearMoveShipment() {
@@ -3905,6 +3920,7 @@ function clearMoveShipment() {
     awbScannedPcsList.length = 0;
     $('#txtMovePieces').prop('disabled', false);
     $('#txtMoveWeight').prop('disabled', false);
+    $('#txtMoveVolume').prop('disabled', false);
 }
 
 var calculateVolumeForMoveShip;
@@ -4046,7 +4062,7 @@ function AWBChangeForXML(allValues) {
         $("#txtMovePieces").val(SNOPMOVE);
         $("#txtMoveWeight").val(SWTMOVE);
         $("#txtMoveVolume").val(SVOLMOVE);
-        $("#mantiya").text(SNOPMAN + ' / ' + SWTMAN + ' / ' + SWTMAN);
+        $("#mantiya").text(SNOPMAN + ' / ' + SWTMAN + ' / ' + SVOLMOVE);
     }
 
 
