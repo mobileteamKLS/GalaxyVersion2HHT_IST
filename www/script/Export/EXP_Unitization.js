@@ -548,6 +548,22 @@ function deleteRow(itemIndex) {
         oldRemWt = oldRemWt + tempRemMovWt;
         oldRemVol = oldRemVol + tempRemMovVol;
     }
+
+    if ($('#txtMovePieces').val() != '') {
+        var temNop = $('#txtMovePieces').val();
+        $('#txtMovePieces').val(parseInt(temNop) - 1);
+        var tempWt = $('#txtMoveWeight').val();
+        $('#txtMoveWeight').val(parseInt(tempWt) - parseInt(tempRemMovWt));
+        var tempVol = $('#txtMoveVolume').val();
+        $('#txtMoveVolume').val(parseInt(tempVol) - parseInt(tempRemMovVol));
+        totalToMovPieces--;
+        totalToMovWeight = totalToMovWeight - tempRemMovWt;
+        totalToMovVol = totalToMovVol - tempRemMovVol;
+        oldMovNop++;
+        oldMovWt = oldRemWt + tempRemMovWt;
+        oldMovVol = oldRemVol + tempRemMovVol;
+    }
+
     if ($('#_txtPices').val() != '') {
         var temNop = $('#_txtPices').val();
         $('#_txtPices').val(parseInt(temNop) - 1);
@@ -588,11 +604,11 @@ function buildPicesList() {
 
 function getRowValues() {
     piecesIdRow = "";
-    piecesIdRow += "<PcsData><Rows>"
+    piecesIdRow += "<PcsData>"
     for (let i = 0; i < awbScannedPcsList.length; i++) {
-        piecesIdRow += "<PcsID>" + awbScannedPcsList[i].DimRowId + "</PcsID>"
+        piecesIdRow += "<Rows><PcsID>" + awbScannedPcsList[i].DimRowId + "</PcsID></Rows>"
     }
-    piecesIdRow += "</Rows></PcsData>"
+    piecesIdRow += "</PcsData>"
 }
 
 GetWeightingScaleWt = function () {
@@ -1416,7 +1432,7 @@ function UnitizationPendingAWBDetailsScanId() {
                     }
                     $('#_txtPices').prop('disabled', true);
                     $('#_txtManWt').prop('disabled', true);
-
+                    $("#_txtScanId").val('');
 
                 });
 
@@ -1487,8 +1503,9 @@ function RemoveScannedPcsLabel() {
                         return;
                     }
                     isScanned = true;
-                    $('#_txtPices').prop('disabled', true);
-                    $('#_txtManWt').prop('disabled', true);
+                    $('#_txtScanIdModal').val('');
+                    $('#txtNOPforRemove').prop('disabled', true);
+                    $('#txtWeightforRemove').prop('disabled', true);
 
 
                 });
@@ -1506,8 +1523,8 @@ function RemoveScannedPcsLabel() {
 }
 
 function MoveScannedPcsLabel() {
-    $('#lblMSGForRemove').text('');
-    if ($("#_txtScanIdModal").val() == '') {
+    $('#lblMSGForMoveShipment').text('');
+    if ($("#_txtScanIdForMove").val() == '') {
         return;
     }
     var InputXML = "<Root><ScanCode>" + $("#_txtScanIdForMove").val() + "</ScanCode><ExpManRowID>" + EmiSeqNo + "</ExpManRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
@@ -1540,7 +1557,7 @@ function MoveScannedPcsLabel() {
                     //  _StrMessage = $(this).find('StrMessage').text();
                     const item = { NOP: respNOP, DimRowId: respDimId, ScanId: respScanId }
                     awbScannedPcsList.push(item);
-                  //  calculateVolumneRemoveForShowonScan();
+                    calculateVolumneForMoveShipOnScan();
 
                 });
                 $(xmlDoc).find('Table').each(function (index) {
@@ -1559,8 +1576,9 @@ function MoveScannedPcsLabel() {
                         return;
                     }
                     isScanned = true;
-                    $('#_txtPices').prop('disabled', true);
-                    $('#_txtManWt').prop('disabled', true);
+                    $("#_txtScanIdForMove").val('');
+                    $('#txtMovePieces').prop('disabled', true);
+                    $('#txtMoveWeight').prop('disabled', true);
 
 
                 });
@@ -1962,7 +1980,8 @@ function onBack() {
     $("#_txtScanId").val('')
     $("#_txtDisplayAWBNo").val('');
     isFirstPiece = "0";
-
+    $('#_txtPices').prop('disabled', false);
+    $('#_txtManWt').prop('disabled', false);
 }
 
 
@@ -2072,6 +2091,8 @@ function UnitizeAWB() {
                         totalPieces = 1;
                         totalWeight = 0;
                         $("#_txtScanId").val('')
+                        $('#_txtPices').prop('disabled', false);
+                        $('#_txtManWt').prop('disabled', false);
                         $("#_txtDisplayAWBNo").val('');
                         isFirstPiece = "0";
                         $("#_txtAWBNo").focus();
@@ -3058,6 +3079,8 @@ function clearAWBRecords() {
     $("#_txtWeightUnt").text('');
     $("#_txtWeightTotal").text('');
     $("#_txtPices").val('');
+    $('#_txtPices').prop('disabled', false);
+    $('#_txtManWt').prop('disabled', false);
     $("#_txtRNoLists").empty();
     clearOptions("_txtRNoLists");
     $("#tableRecords").empty();
@@ -3855,7 +3878,8 @@ function clearRemoveData() {
     totalToRemVol = 0;
     calculateRmWt = 0;
     calculateRmVolume = 0;
-
+    $('#txtNOPforRemove').prop('disabled', false);
+    $('#txtWeightforRemove').prop('disabled', false);
 }
 
 function clearMoveShipment() {
@@ -3871,6 +3895,16 @@ function clearMoveShipment() {
     $("#mantiya").text('');
     $("#lblMSGForMoveShipment").text('');
     $("#txtFromULD").focus();
+    $("#_txtScanIdForMove").val('')
+    isFirstPiece = "0";
+    totalToMovPieces = 1;
+    totalToMovWeight = 0;
+    totalToMovVol = 0;
+    calculateMovWt = 0;
+    calculateMovVolume = 0;
+    awbScannedPcsList.length = 0;
+    $('#txtMovePieces').prop('disabled', false);
+    $('#txtMoveWeight').prop('disabled', false);
 }
 
 var calculateVolumeForMoveShip;
@@ -3923,9 +3957,6 @@ function calculateVolumneForMoveShipOnScan() {
         $('#lblMSGForMoveShipment').text('');
 
     }
-
-
-
     if (isFirstPiece == "0") {
         var weightNew = (parseFloat(oldMovWt) / parseFloat(oldMovNop)) * 1;
         calculateMovWt = Math.round(weightNew * 100) / 100;
@@ -3935,7 +3966,7 @@ function calculateVolumneForMoveShipOnScan() {
         calculateMovVolume = Math.round(volumeNew * 100) / 100;
         totalToMovVol = parseFloat(calculateMovVolume);
 
-        console.log(totalToMovPieces + "**" + totalToMovWeight + "**" + totalToMovPieces);
+        console.log(totalToMovPieces + "**" + totalToMovWeight + "**" + totalToMovVol);
         isFirstPiece = "1";
         $('#txtMoveWeight').val(calculateMovWt);
         $('#txtMovePieces').val(totalToMovPieces)
@@ -3944,20 +3975,20 @@ function calculateVolumneForMoveShipOnScan() {
         tempRemMovVol = calculateMovVolume;
         totalToMovPieces++;
         oldMovNop = parseFloat(oldMovNop) - 1;
-        oldMovWt = parseFloat(oldMovWt) - parseFloat(calculateRmWt);
+        oldMovWt = parseFloat(oldMovWt) - parseFloat(calculateMovWt);
         oldMovVol = parseFloat(oldMovVol) - parseFloat(calculateMovVolume);
 
     }
     else {
         var weightNew = (parseFloat(oldMovWt) / parseFloat(oldMovNop)) * 1;
         calculateMovWt = Math.round(weightNew * 100) / 100;
-        totalToMovWeight = parseFloat(totalToMovWeight) + parseFloat(calculateRmWt);
+        totalToMovWeight = parseFloat(totalToMovWeight) + parseFloat(calculateMovWt);
 
         var volumeNew = (parseFloat(oldMovVol) / parseFloat(oldMovNop)) * 1;
         calculateMovVolume = Math.round(volumeNew * 100) / 100;
         totalToMovVol = parseFloat(totalToMovVol) + parseFloat(calculateMovVolume);
 
-        console.log(totalToMovPieces + "*--*" + totalToMovWeight + "*--*" + totalToMovPieces);
+        console.log(totalToMovPieces + "*--*" + totalToMovWeight + "*--*" + totalToMovVol);
         $('#txtMoveWeight').val(totalToMovWeight);
         $('#txtMovePieces').val(totalToMovPieces)
         $('#txtMoveVolume').val(totalToMovVol);
@@ -4074,6 +4105,7 @@ UnitizationMoveShipment = function () {
 
     destSplit = $("#ddlDestination").val().split('_');
     finaldestSplit = destSplit[0];
+    getRowValues();
     InputXML = '<awbULDs>' +
         '<ULDdata>' +
         '<EAID>' + EAID + '</EAID>' +
@@ -4084,8 +4116,9 @@ UnitizationMoveShipment = function () {
         '<SWTMAN>' + SWTMAN + '</SWTMAN>' +
         '<SWTMOVE>' + $("#txtMoveWeight").val() + '</SWTMOVE>' +
         '<SourceULD>' + finalSplitSource + '</SourceULD>' +
-        '<TargetULD>' + finaldestSplit + '</TargetULD>' +
+        '<TargetUD>' + finaldestSplit + '</TargetUD>' +
         '</ULDdata>' +
+        piecesIdRow+
         '</awbULDs>';
     console.log(InputXML)
     $('body').mLoading({
@@ -4134,6 +4167,7 @@ UnitizationMoveShipment = function () {
                         $("#txtFromULD").val('');
                         $("#txtToULD").val('');
                         $("#mantiya").text('');
+                        clearMoveShipment();
                         $("#lblMSGForMoveShipment").text(StrMessage).css({ "color": "green", "font-weight": "bold" });
                     }
                     //else if (Status == 'S') {
@@ -4392,19 +4426,9 @@ UnitizedMoveShipmentGetShipmentData = function (sqno) {
 }
 
 function exitModalMoveShipment() {
-    $("#ddlSource").val('0');
-    $("#ddlAWBList").empty();
-    $("#ddlDestination").val('0');
-    $("#txtMovePieces").val('');
-    $("#txtMoveWeight").val('');
-    $("#txtMoveVolume").val('');
-    $("#txtAWBNOMoveShip").val('');
-    $("#txtFromULD").val('');
-    $("#txtToULD").val('');
-    $("#mantiya").text('');
-    $("#lblMSGForMoveShipment").text('');
-    $("#txtFromULD").focus();
+    clearMoveShipment();
     $('#modaltblMoveShipment').modal('hide');
+    
 }
 
 
