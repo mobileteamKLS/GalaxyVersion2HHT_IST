@@ -1163,21 +1163,22 @@ SaveImportMaifestDetailsV2 = function (InputXML) {
             if (str != null && str != "" && str != "<NewDataSet />") {
                 $("#btnDiv").show('slow');
                 var xmlDoc = $.parseXML(str);
-                clearFunction();
+                
+                // $(xmlDoc).find('Table').each(function (index) {
+                //     Status = $(this).find('Status').text();
+                //     StrMessage = $(this).find('StrMessage').text();
+                //     if (Status == 'E') {
+                //         $(".ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
+
+                //     }
+                // });
                 $(xmlDoc).find('Table').each(function (index) {
                     Status = $(this).find('Status').text();
                     StrMessage = $(this).find('StrMessage').text();
                     if (Status == 'E') {
                         $(".ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
-
-                    }
-                });
-                $(xmlDoc).find('Table1').each(function (index) {
-                    Status = $(this).find('Status').text();
-                    StrMessage = $(this).find('StrMessage').text();
-                    if (Status == 'E') {
-                        $(".ibiSuccessMsg").text(StrMessage).css({ "color": "Red", "font-weight": "bold" });
                     } else if (Status == 'S') {
+                        clearFunction();
                         $("#txtGroupCode").val('');
                         $("#txArrivedPakg").val('');
                         $(".ibiSuccessMsg").text(StrMessage).css({ 'color': 'green', "font-weight": "bold" });
