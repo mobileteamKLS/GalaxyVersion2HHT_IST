@@ -28,10 +28,14 @@ var _Culture
 var LocXML;
 var rowCollection = [];
 var arrayofStockId = [];
+var arrayofStockId2 = [];
 var checkBoxCheckStatus = '';
 var arrayOfRows;
 var mpsNoCheck;
 var ScanType;
+var isFirst=true;
+var _totRelPkgs=0;
+var _totRelWgt=0.0;
 $(function () {
 
     //setTimeout(function () {
@@ -196,12 +200,12 @@ function saveWDO() {
         //  chkValue = $("#chkLocationStatus").val();
         getRowData();
         if(ScanType=="G"){
-            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><LocDetails>" + arrayOfRows + "</LocDetails><GroupId>"+$("#txtGroupId").val()+"</GroupId></Root>";
+            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><ScanType>"+ScanType+"</ScanType><LocDetails>" + arrayOfRows + "</LocDetails><GroupId>"+$("#txtGroupId").val()+"</GroupId></Root>";
             console.log(inputxml);
             SaveWDODetails(inputxml);
         }
         else{
-            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><LocDetails>" + arrayOfRows + "</LocDetails></Root>";
+            inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture><Username>" + Userid + "</Username><ScanType></ScanType><LocDetails>" + arrayOfRows + "</LocDetails></Root>";
             console.log(inputxml);
             SaveWDODetails(inputxml);
         }
@@ -320,8 +324,15 @@ function fnClear() {
     $("#txtWDONo").focus();
     // $(".ibiSuccessMsg1").text('');
     $("#locationShow").text('');
+    clearList();
 
 
+}
+function clearList(){
+    isFirst=true;
+    arrayofStockId2.length=0;
+    _totRelWgt=0.0;
+    _totRelPkgs=0;
 }
 
 function fnClearonClear() {
@@ -338,7 +349,7 @@ function fnClearonClear() {
     $(".ibiSuccessMsg1").text('');
     $("#locationShow").text('');
     $("#lblRelePkgsWgt").html('');
-
+    clearList();
 
 }
 
@@ -433,7 +444,7 @@ GetWDOMPSDetailsBL = function (InputXML) {
 GetWDODetails = function (InputXML) {
 
     $('.ibiSuccessMsg1').text('');
-
+    ScanType="";
     //    inputxml = "<Root><WDONo>" + $("#txtWDONo").val() + "</WDONo><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><Culture>" + language + "</Culture></Root>";
 
     $.ajax({
@@ -472,7 +483,7 @@ GetWDODetails = function (InputXML) {
                         _WDONo = $(this).find('WDONo').text();
                         _AirportCity = $(this).find('AirportCity').text();
                         _Culture = $(this).find('Culture').text();
-
+                        $("#lblRelePkgsWgt").text($(this).find('Rpcs').text() + ' / ' + $(this).find('RWt').text());
                     }
                 });
 
@@ -489,7 +500,7 @@ GetWDODetails = function (InputXML) {
                     arrayofStockId.push(stockIdList);
                    
                     _GroupID=$(this).find('GroupId').text();
-
+                    
                     //$("#spnLocationCode").text(_LOCCODE);
                     //$("#spnPieces").text(_NOP);
                     //$('<tr></tr>').html('<td>' + '<input type="checkbox" checked="checked" class="xmlCheck" />' + '</td><td>' + _LOCCODE + '</td><td>' + _NOP + '</td>').appendTo('#tbTable');
@@ -516,6 +527,7 @@ GetWDODetails = function (InputXML) {
                     }
                     $("#lblStatus").text(_WDOStatus);
                     $("#lblPkgsWgt").text(_totPkgs + ' / ' + _totWgt);
+                    $("#lblRelePkgsWgt").text($(this).find('Rpcs').text() + ' / ' + $(this).find('RWt').text());
 
                 });
                 $('#dvRemarkShow').empty();
@@ -600,7 +612,7 @@ GetWDODetailsByGroupId = function (InputXML) {
                         $.alert(errmsg);
                         return;
                     } else {
-                   
+                        $("#txtGroupId").val('');
 
 
                 
@@ -613,23 +625,49 @@ GetWDODetailsByGroupId = function (InputXML) {
                     LOCCODE = $(this).find('LOCCODE').text();
                     NOP = $(this).find('NOP').text();
                     WEIGHT = $(this).find('WEIGHT').text();
-                    _totRelPkgs = $(this).find('NOP').text();
-                    _totRelWgt = $(this).find('WEIGHT').text();
+                    relNop = $(this).find('NOP').text();
+                    relWt = $(this).find('WEIGHT').text();
                     ScanType=$(this).find('ScanType').text();
-                    $("#lblRelePkgsWgt").text(_totRelPkgs + ' / ' + _totRelWgt);
-
-                    var isChecked = false;
-
-                    for (var i = 0; i < arrayofStockId.length; i++) {
-                        console.log(arrayofStockId[i] +"==" +STOCKID);
-                        if (arrayofStockId[i] === STOCKID) {     
-                            isChecked = true;
-                            break;
+                    
+                    if (isFirst) {
+                        arrayofStockId2.push(STOCKID);
+                        console.log("STOCKID-" + STOCKID);
+                        isFirst = false;
+                        _totRelPkgs=parseInt(relNop);
+                        _totRelWgt=parseFloat(relWt);
+                    }
+                    for (let i = 0; i < arrayofStockId2.length; i++) {
+                        if (arrayofStockId2[i] !== STOCKID) {
+                            arrayofStockId2.push(STOCKID);
+                            console.log("STOCKID-" + STOCKID);
+                            _totRelPkgs = _totRelPkgs + parseInt(relNop);
+                            _totRelWgt = _totRelWgt + parseFloat(relWt);
                         }
                     }
-                    
-                    $('input[id="' + STOCKID + '"]').prop('checked', isChecked);
-                    $('input[id!="' + STOCKID + '"]').prop('checked', false);
+                    $("#lblRelePkgsWgt").text(_totRelPkgs + ' / ' + _totRelWgt);
+                    // var isChecked = false;
+
+                    // for (var i = 0; i < arrayofStockId.length; i++) {
+                    //     console.log(arrayofStockId[i] +"==" +STOCKID);
+                    //     if (arrayofStockId[i] === STOCKID) {     
+                    //         isChecked = true;
+                    //         break;
+                    //     }
+                    // }
+                    // $('input[id="' + STOCKID + '"]').prop('checked', isChecked);
+                    // $('input[id!="' + STOCKID + '"]').prop('checked', false);
+
+                    for (var i = 0; i < arrayofStockId2.length; i++){
+                        var currentStockId = arrayofStockId2[i];
+                        var isChecked = arrayofStockId.includes(currentStockId);
+                        $('input[id="' + currentStockId + '"]').prop('checked', isChecked);
+                    }
+                    $('input[type="checkbox"]').each(function() {
+                        var checkboxId = $(this).attr('id');
+                        if (checkboxId && !arrayofStockId2.includes(checkboxId)) {
+                            $(this).prop('checked', false);
+                        }
+                    });
 
                     // for (i = 0; i < arrayofStockId.length; i++) {
                     //     console.log(arrayofStockId[i] +"==" +STOCKID);
@@ -695,6 +733,7 @@ bindAllCheckBoxes = function () {
 }
 var getAllrowsVal = [];
 function getRowData() {
+    getAllrowsVal=[];
     var tblTotalPcs = document.getElementById('tblTotalPcs');
 
     for (var i = 1; i < tblTotalPcs.rows.length; i++) {
