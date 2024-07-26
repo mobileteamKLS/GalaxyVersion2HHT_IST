@@ -65,8 +65,18 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         console.log(keycode);
         if (keycode == '13') {
-            console.log("eneter");
-            UnitizationPendingAWBDetailsScanId();
+            console.log("eneter"+RemNOP);
+            if (0== parseInt(RemNOP)) {
+                $('.uldMessageSuccess').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
+                $('#_txtPices').val('');
+                $('#_txtManWt').val('');
+                return;
+            } else {
+                $('.uldMessageSuccess').text('');
+                UnitizationPendingAWBDetailsScanId();
+        
+            }
+            
         }
 
         event.stopPropagation();
@@ -76,7 +86,18 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             console.log("eneter");
-            MoveScannedPcsLabel();
+            if (0== parseInt(SNOPMOVE)) {
+                $('#lblMSGForMoveShipment').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
+                $('#txtMovePieces').val('');
+                $('#txtMoveVolume').val('');
+                $('#txtMoveWeight').val('');
+                return;
+            } else {
+                $('#lblMSGForMoveShipment').text('');
+                MoveScannedPcsLabel();
+        
+            }
+           
         }
 
         event.stopPropagation();
@@ -86,7 +107,18 @@ $(function () {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             console.log("eneter");
-            RemoveScannedPcsLabel()
+            if (0== parseInt(oldNOPRM)) {
+                $('#lblMSGForRemove').text('Entered NOP should not greater than remaining NOP ( ' + oldNOPRM + ' )').css('color', 'red');
+                $('#txtNOPforRemove').val('');
+                $('#txtVolumeforRemove').val('');
+                $('#txtWeightforRemove').val('');
+                return;
+            } else {
+                $('#lblMSGForRemove').text('');
+                RemoveScannedPcsLabel();
+        
+            }
+           
         }
 
         event.stopPropagation();
@@ -1845,11 +1877,10 @@ function calculateMAnWeightForShowonScan(piece) {
         remWt = parseFloat(remWt) - parseFloat(calculateRmWt);
     } else {
 
-        if (parseInt(totalPieces) > parseInt(RemNOP)) {
-            $('.uldMessageSuccess').text('Entered NOP should not greater than remaining NOP ( ' + RemNOP + ' )').css('color', 'red');
-
-            return;
-        }
+        // if (parseInt(totalPieces) > parseInt(RemNOP)) {
+        //     $('.uldMessageSuccess').text('Entered NOP should not greater than remaining NOP ( ' + RemNOP + ' )').css('color', 'red');
+        //     return;
+        // }
         var weightNew = (remWt / remNop) * piece;
         calculateRmWt = Math.round(weightNew * 100) / 100;
         totalWeight = parseFloat(totalWeight) + parseFloat(calculateRmWt);
@@ -1861,16 +1892,7 @@ function calculateMAnWeightForShowonScan(piece) {
         remNop = remNop - piece;
         remWt = remWt - calculateRmWt;
     }
-    if (parseInt($('#_txtPices').val()) > parseInt(RemNOP)) {
-        $('.uldMessageSuccess').text('Entered NOP should not greater than remaining NOP ( ' + RemNOP + ' )').css('color', 'red');
-        $('#_txtPices').val('');
-        $('#_txtManWt').val('');
-
-        return;
-    } else {
-        $('.uldMessageSuccess').text('');
-
-    }
+    
     console.log("Updated remNop:", remNop);
     console.log("Updated remWt:", remWt);
     console.log("Updated totalWeight:", totalWeight);
@@ -3680,6 +3702,7 @@ function calculateVolumneRemove() {
         $('#lblMSGForRemove').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
         $('#txtNOPforRemove').val('');
         $('#txtVolumeforRemove').val('');
+        $('#txtWeightforRemove').val('');
 
         return;
     } else {
@@ -3964,15 +3987,16 @@ var totalToMovVol = 0;
 function calculateVolumneForMoveShipOnScan() {
     var calculateMovWt = 0;
     var calculateMovVolume = 0;
-    if (parseInt($('#txtMovePieces').val()) > parseInt(SNOPMOVE)) {
-        $('#lblMSGForMoveShipment').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
-        $('#txtMovePieces').val('');
-        $('#txtMoveVolume').val('');
-        return;
-    } else {
-        $('#lblMSGForMoveShipment').text('');
+    // if (parseInt($('#txtMovePieces').val()) > parseInt(SNOPMOVE)) {
+    //     $('#lblMSGForMoveShipment').text('Entered NOP should not greater than manifested NOP').css('color', 'red');
+    //     $('#txtMovePieces').val('');
+    //     $('#txtMoveVolume').val('');
+    //     $('#txtMoveWeight').val('');
+    //     return;
+    // } else {
+    //     $('#lblMSGForMoveShipment').text('');
 
-    }
+    // }
     if (isFirstPiece == "0") {
         var weightNew = (parseFloat(oldMovWt) / parseFloat(oldMovNop)) * 1;
         calculateMovWt = Math.round(weightNew * 100) / 100;

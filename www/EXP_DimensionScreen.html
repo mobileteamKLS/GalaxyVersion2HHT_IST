@@ -102,14 +102,14 @@
                         style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="" disabled>
                 </div>
                 <div class="col-6" style="text-align:left;">
-                    <label class="lbl" id="lblVCTNo">MAWB No.</label>
+                    <label class="lbl" id="lblMAWBNo">MAWB No.</label>
                 </div>
                 <div class="col-6">
                     <input type="text" enterkeyhint="go" id="txtMAWBNo" maxlength="15"
                         style="height: 30px;text-transform:uppercase;" class="textfieldClass" placeholder="" disabled>
                 </div>
                 <div class="col-6" style="text-align:left;">
-                    <label class="lbl" id="lblVCTNo">HAWB No.</label>
+                    <label class="lbl" id="lblHAWBNo">HAWB No.</label>
                 </div>
                 <div class="col-6">
                     <input type="text" enterkeyhint="go" id="txtHAWBNo" maxlength="15"
@@ -119,8 +119,8 @@
                 <div class="col-6" style="margin-top:10px;">
                 </div>
                 <div class="col-6" style="margin-top:10px;" text-align:center;">
-                    <button type="button" id="btnDockIn" class="btnClass"
-                        onclick="GetVCTDimensionDetails();">Search</button>
+                    <button type="button" id="btnSubmit" class="btnClass"
+                        onclick="GetVCTDimensionDetails();">Submit</button>
                 </div>
                 <div class="col-12" style="text-align:left;">
                     
@@ -131,9 +131,9 @@
                 <table class="table  table-bordered mb-0">
                     <thead class="theadClass">
                         <tr>
-                            <th colspan="1" class="text-center" id="lblPcs" style="width: 15%;">Length</th>
-                            <th colspan="1" class="text-center" id="lbVolume" style="width: 15%;">Width</th>
-                            <th colspan="1" class="text-center" id="lbVolume" style="width: 15%;">Height</th>
+                            <th colspan="1" class="text-center" id="lblL" style="width: 15%;">Length</th>
+                            <th colspan="1" class="text-center" id="lblW" style="width: 15%;">Width</th>
+                            <th colspan="1" class="text-center" id="lblH" style="width: 15%;">Height</th>
                             <th colspan="1" class="text-center" id="lbVolume" style="width: 15%;">M<sup>3</sup></th>
                             <th colspan="1" class="text-center" id="lbVolume" style="width: 6%;"></sup></th>
                             <!-- <th colspan="3">UOM <select id="ddlUnit"><option value="CM">CM</option><option value="IN">IN</option></select></th> -->
@@ -160,10 +160,10 @@
 
             <div class="contacts row contacts__itemfortext" id="divbtnInfo">
                 <div class="col-6" style="text-align:center;">
-                    <button type="button" id="btnClear" onclick="fnExit();" class="btnClass">BACK</button>
+                    <button type="button" id="btnExit" onclick="fnExit();" class="btnClass">Exit</button>
                 </div>
                 <div class="col-6" style="text-align:center;">
-                    <button type="button" onclick="clearFunction();" id="btnNext" class="btnClass">CLEAR</button>
+                    <button type="button" onclick="clearFunction();" id="btnClear" class="btnClass">CLEAR</button>
                 </div>
             </div>
             <div class="contacts row contacts__itemfortext">
@@ -234,9 +234,9 @@
                             <table class="table table-bordered mb-0" style="margin-top:10px;" id="TextBoxesGroup">
                                 <thead>
                                     <tr>
-                                        <th id="equpTh" style="width: 25%;">Length</th>
-                                        <th id="quntTh" style="width: 25%;">Width</th>
-                                        <th id="quntTh" style="width: 25%;">Height</th>
+                                        <th id="modalL" style="width: 25%;">Length</th>
+                                        <th id="modalW" style="width: 25%;">Width</th>
+                                        <th id="modalH" style="width: 25%;">Height</th>
                                         <th id="quntTh" style="width: 25%;">M<sup>3</sup></th>
                                     </tr>
                                 </thead>
@@ -247,13 +247,13 @@
                             <div class="col-1" style="margin-top: 10px;"></div>
 
                             <div class="col-4" style="margin-top: 10px;">
-                                <button type="button" id="btnSaveEQ" class="btnClass btn-primary"
-                                    onclick="saveSelectedDimension();">Save</button>
+                                <button type="button" id="btnSaveModal" class="btnClass btn-primary"
+                                    onclick="saveSelectedDimension();">Submit</button>
                             </div>
                             <div class="col-2" style="margin-top: 10px;"></div>
                             <div class="col-4" style="text-align:center;margin-top: 10px;">
-                                <button type="button" id="btnSubBack" class="btnClass btn-primary"
-                                    onclick="exitModal();">Back</button>
+                                <button type="button" id="btnExitModal" class="btnClass btn-primary"
+                                    onclick="exitModal();">Exit</button>
                             </div>
                             <div class="col-1" style="margin-top: 10px;"></div>
                         </div>

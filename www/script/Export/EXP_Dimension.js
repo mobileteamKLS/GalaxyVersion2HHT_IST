@@ -19,7 +19,21 @@ $(function () {
     }
 
     function setTurkish(){
-        $('#titUni').text("Gruplandirma");
+        $('#btnExit').text("Temizle");
+        $('#btnClear').text("Çıkış");
+        $('#btnSubmit').text("Gönder");
+        $('#lblMAWBNo').text("Ana Konsimento");
+        $('#lblHAWBNo').text("Ara Konsimento No");
+        $('#lblVCTNo').text("Kamyon No");
+        $('#btnSavetModal').text("Gönder");
+        $('#btnExitModal').text("Temizle");
+
+        $('#lblL').text("Uzunluk");
+        $('#modalL').text("Uzunluk");
+        $('#lblW').text("Genişlik");
+        $('#modalW').text("Genişlik");
+        $('#lblH').text("Yükseklik");
+        $('#modalH').text("Yükseklik");
     }
 
     $('#txtScannedNo').keypress(function (event) {
