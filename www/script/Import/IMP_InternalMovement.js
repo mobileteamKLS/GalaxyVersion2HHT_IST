@@ -28,6 +28,8 @@ var currentLocID;
 var NPR;
 var ShipmentWeight;
 var isDataAvail = false;
+var calPieces;
+var calLocWeight;
 $(function () {
 
     // $("#ddlHAWBList").trigger('change'); _textofHawb
@@ -119,7 +121,7 @@ $(function () {
         }
     });
 
-   
+
 
 });
 
@@ -219,7 +221,9 @@ function calculateWeight() {
         return;
     }
     locNOP = $("#txtMovePkgs").val()
-    locWeight = (parseFloat(locNOP) * parseFloat(ShipmentWeight)) / parseFloat(NPR);
+    // locWeight = (parseFloat(locNOP) * parseFloat(ShipmentWeight)) / parseFloat(NPR);
+    locWeight = (parseFloat(locNOP) * parseFloat(calLocWeight)) / parseFloat(calPieces);
+
     $("#textMoveWght").val(locWeight.toFixed(2))
 }
 
@@ -376,7 +380,7 @@ function getDetailsbyFilghtChangeEvent(IGMVal) {
                     //    //$("#spnlocationPackgs").text('');
                     //}
 
-                  
+
 
 
                     Origin = $(this).find('Origin').text();
@@ -917,11 +921,13 @@ function locationDetails(LocCode, LocPieces, LocId, LocWeight) {
     html += '<td style="padding-left: 4px;font-size:14px;text-align:right;padding-right: 4px;">' + LocWeight + '</td>';
     html += '</tr>';
 
-   // console.log(html)
+    // console.log(html)
 }
 
 function getLocation(LocCode, LocPieces, LocId, LocWeight) {
 
+    calPieces = LocPieces;
+    calLocWeight = LocWeight;
     //var str = data;
     //var Locpcs = str.substring(0, str.lastIndexOf("/"));
     //currentLocID = str.substring(str.lastIndexOf("/") + 2, str.length);
@@ -940,12 +946,16 @@ function getLocation(LocCode, LocPieces, LocId, LocWeight) {
 
 
     currentLocID = LocId;
-    $("#txtMovePkgs").val(LocPieces);
-    $("#textMoveWght").val(LocWeight);
+
     $("#locationShow").text(LocCode + "/" + LocPieces);
 
-   
+    locNOP = $("#txtMovePkgs").val();
+    locWeight = (parseFloat(LocPieces) * parseFloat(calLocWeight)) / parseFloat(calPieces);
+    $("#txtMovePkgs").val(LocPieces);
+    $("#textMoveWght").val(locWeight.toFixed(2))
 
+
+    // $("#textMoveWght").val(locWeight);
 }
 
 _SaveBinning = function (InputXML) {
