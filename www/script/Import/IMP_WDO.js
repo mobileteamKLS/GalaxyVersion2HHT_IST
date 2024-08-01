@@ -528,7 +528,10 @@ GetWDODetails = function (InputXML) {
                     $("#lblStatus").text(_WDOStatus);
                     $("#lblPkgsWgt").text(_totPkgs + ' / ' + _totWgt);
                     $("#lblRelePkgsWgt").text($(this).find('Rpcs').text() + ' / ' + $(this).find('RWt').text());
-
+                    var pkgs = $(this).find('Rpcs').text();
+                    _totRelPkgs = parseInt(pkgs);
+                    var wt = $(this).find('RWt').text();
+                    _totRelWgt = parseFloat(wt);
                 });
                 $('#dvRemarkShow').empty();
                 var Remark = '';
@@ -633,8 +636,13 @@ GetWDODetailsByGroupId = function (InputXML) {
                         arrayofStockId2.push(STOCKID);
                         console.log("STOCKID-" + STOCKID);
                         isFirst = false;
-                        _totRelPkgs=parseInt(relNop);
-                        _totRelWgt=parseFloat(relWt);
+                        //_totRelPkgs=parseInt(relNop );
+                        //_totRelWgt=parseFloat(relWt);
+
+                        //Change by junaid
+
+                        _totRelPkgs = _totRelPkgs + parseInt(relNop);
+                        _totRelWgt = _totRelWgt + parseFloat(relWt)
                     }
                     for (let i = 0; i < arrayofStockId2.length; i++) {
                         if (arrayofStockId2[i] !== STOCKID) {
