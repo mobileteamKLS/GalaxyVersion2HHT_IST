@@ -99,7 +99,7 @@ $(function () {
                 "CompanyCode": CompanyCode,
                 "Mode": "U",
                 "FltSeqNo": FltSeqNo,
-                "RoutePoint": Offpoint,
+                "RoutePoint": $("#offPointLists").val(),
             }
             console.log(InputXML)
             GetExportULDData(InputXML)
@@ -111,7 +111,7 @@ $(function () {
                 "CompanyCode": CompanyCode,
                 "Mode": "U",
                 "FltSeqNo": FltSeqNo,
-                "RoutePoint": Offpoint,
+                "RoutePoint": $("#offPointLists").val(),
             }
             console.log(InputXML)
             GetExportULDData(InputXML)
@@ -197,7 +197,7 @@ $(function () {
                 "CompanyCode": CompanyCode,
                 "Mode": "T",
                 "FltSeqNo": FltSeqNo,
-                "RoutePoint": Offpoint,
+                "RoutePoint": $("#offPointLists").val(),
             }
             console.log(InputXML)
             GetExportULDData(InputXML)
@@ -213,7 +213,7 @@ $(function () {
                 "CompanyCode": CompanyCode,
                 "Mode": "U",
                 "FltSeqNo": FltSeqNo,
-                "RoutePoint": Offpoint,
+                "RoutePoint": $("#offPointLists").val(),
             }
             console.log(InputXML)
             GetExportULDData(InputXML)
@@ -240,7 +240,7 @@ $(function () {
                     "CompanyCode": CompanyCode,
                     "Mode": "U",
                     "FltSeqNo": FltSeqNo,
-                    "RoutePoint": Offpoint,
+                    "RoutePoint": $("#offPointLists").val(),
                 }
                 console.log(InputXML)
                 GetExportULDData(InputXML)
@@ -453,7 +453,7 @@ $(function () {
                 $.alert(errmsg);
                 return;
             } else {
-                inputxml = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><IsTrolley>" + type + "</IsTrolley><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+                inputxml = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><IsTrolley>" + type + "</IsTrolley><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
 
                 GetULDMaterial(inputxml);
 
@@ -1071,7 +1071,7 @@ function GetUnitizedShipmentDetails() {
 
     $("#_txtULDNo").val(selectedULD);
 
-    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1336,7 +1336,7 @@ function UnitizationPendingAWBDetailsScanId() {
         return;
     }
 
-    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><HAWBRowId></HAWBRowId><HAWBNo></HAWBNo><ScanCode>" + $("#_txtScanId").val() + "</ScanCode><ScanType>P</ScanType></Root>";
+    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><HAWBRowId></HAWBRowId><HAWBNo></HAWBNo><ScanCode>" + $("#_txtScanId").val() + "</ScanCode><ScanType>P</ScanType></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1497,7 +1497,7 @@ function UnitizationPendingAWBDetails() {
     // }
     isHAWBNo = '0';
     // if ($("#_txtAWBNo").val().length >= 11) {
-    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><ScanCode>" + $("#_txtAWBNo").val() + "</ScanCode><ScanType></ScanType></Root>";
+    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><ScanCode>" + $("#_txtAWBNo").val() + "</ScanCode><ScanType></ScanType></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1749,7 +1749,7 @@ function calculateMAnWeightForShowonScan(piece) {
 
 
 function UnitizationPendingAWBDetailsWiithHWABNo(HAWBNo) {
-    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><HAWBRowId>" + HAWBNo + "</HAWBRowId><HAWBNo>" + $("#ddlHAWBNo option:selected").text() + "</HAWBNo></Root>";
+    var InputXML = "<Root><flightSeqNo>" + FltSeqNo + "</flightSeqNo><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><AWBPrefix>" + $("#_txtAWBNo").val().slice(0, 3) + "</AWBPrefix><AWBNo>" + $("#_txtAWBNo").val().slice(3) + "</AWBNo><HAWBRowId>" + HAWBNo + "</HAWBRowId><HAWBNo>" + $("#ddlHAWBNo option:selected").text() + "</HAWBNo></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -1914,10 +1914,10 @@ function UnitizeAWB() {
     getRowValues();
     var InputXML;
     if (scanTypeMode == 'G') {
-        InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow + "<GroupID>" + $("#_txtAWBNo").val() + "</GroupID></Root>";
+        InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow + "<GroupID>" + $("#_txtAWBNo").val() + "</GroupID></Root>";
     }
     else {
-        InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow + "<GroupID>" + $("#_txtAWBNo").val() + "</GroupID></Root>";
+        InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserID>" + Userid + "</UserID><ULDType>" + ULDType + "</ULDType><ULDNumber>" + ULDNumber + "</ULDNumber><ULDOwner>" + ULDOwner + "</ULDOwner><AWBId>-1</AWBId><ShipmentId>" + ShipmentId + "</ShipmentId><AWBNo>" + $("#_txtAWBNo").val() + "</AWBNo><NOP>" + $("#_txtPices").val() + "</NOP><Weight>" + $("#_txtManWt").val() + "</Weight><Volume>-1</Volume><HAWBRowId>" + HAWBRowId + "</HAWBRowId>" + allSHCCodeSave + "" + piecesIdRow + "<GroupID>" + $("#_txtAWBNo").val() + "</GroupID></Root>";
     }
     $('body').mLoading({
         text: "Please Wait..",
@@ -2107,7 +2107,7 @@ function GetExportFlightDetails(shouldClearRecord) {
         return;
     }
 
-    var InputXML = "<Root><FlightAirline>" + $("#txtFlightAirlineNo").val() + "</FlightAirline><FlightNo>" + $("#txtFlightNo").val() + "</FlightNo><FlightDate>" + $("#FlightDate").val() + "</FlightDate><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
+    var InputXML = "<Root><FlightAirline>" + $("#txtFlightAirlineNo").val() + "</FlightAirline><FlightNo>" + $("#txtFlightNo").val() + "</FlightNo><FlightDate>" + $("#FlightDate").val() + "</FlightDate><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -2351,7 +2351,7 @@ function UnitizationSaveTrolleyDetails() {
         return;
     }
 
-    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#bulkType").val() + "</ULDType><ULDNo>" + $("#bulkNo").val() + "</ULDNo><ULDOwner></ULDOwner><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
+    var InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDType>" + $("#bulkType").val() + "</ULDType><ULDNo>" + $("#bulkNo").val() + "</ULDNo><ULDOwner></ULDOwner><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>";
     $('body').mLoading({
         text: "Please Wait..",
     });
@@ -3349,7 +3349,7 @@ UnitizedGetAWBDetails = function () {
     //    return;
     //}
 
-    InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity > <CompanyCode>" + CompanyCode + "</CompanyCode></Root >";
+    InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>" + ULDSeqNo + "</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity > <CompanyCode>" + CompanyCode + "</CompanyCode></Root >";
 
     console.log(InputXML)
     //xmlDataForDamage = JSON.stringify(InputXML);
@@ -4318,7 +4318,7 @@ UnitizedGetAWBDetailsMove = function () {
     //    return;
     //}
 
-    InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>0</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + Offpoint + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity > <CompanyCode>" + CompanyCode + "</CompanyCode></Root >";
+    InputXML = "<Root><FlightSeqNo>" + FltSeqNo + "</FlightSeqNo><ULDSeqNo>0</ULDSeqNo><Type>" + type + "</Type><Offpoint>" + $("#offPointLists").val() + "</Offpoint><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity > <CompanyCode>" + CompanyCode + "</CompanyCode></Root >";
 
     console.log(InputXML)
     //xmlDataForDamage = JSON.stringify(InputXML);
@@ -4663,7 +4663,7 @@ function GetULDs(valFromddloffpoint) {
                     "CompanyCode": CompanyCode,
                     "Mode": "U",
                     "FltSeqNo": FltSeqNo,
-                    "RoutePoint": Offpoint,
+                    "RoutePoint": $("#offPointLists").val(),
                 }
 
                 console.log(InputXML)
