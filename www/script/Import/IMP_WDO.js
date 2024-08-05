@@ -491,6 +491,7 @@ GetWDODetails = function (InputXML) {
                     _NOP = $(this).find('NOP').text();
                     _LOCCODE = $(this).find('LOCCODE').text();
                     PFStatus = $(this).find('PFStatus').text();
+                    CheckAllWDOGroupID =$(this).find('CheckAllWDOGroupID ').text();
                     _STOCKID = $(this).find('STOCKID').text();
                     stockIdList = $(this).find('STOCKID').text();
                     _LOCCODE = $(this).find('LOCCODE').text();
@@ -726,7 +727,11 @@ bindAllCheckBoxes = function () {
     if (PFStatus == 'P') {
         $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"   class="xmlCheck"  /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
     } else if (PFStatus == 'F') {
-        $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"  checked="checked" class="xmlCheck" /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
+        if (CheckAllWDOGroupID == 'Y') {
+            $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"   class="xmlCheck"  /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
+        } else {
+            $('<tr></tr>').html('<td>' + '<input type="checkbox" name="chk" id="' + _STOCKID + '"  checked="checked" class="xmlCheck" /><input type="hidden" id="' + _NOP + '" name="' + _NOP + '" value="' + _NOP + '"></td><td>' + _GroupID + '</td><td>' + _LOCCODE + '</td><td><input type="text" style="text-align:right;" value="' + _NOP + '"></td>').appendTo('#tbTable');
+        }
     }
 
     LocXML = '<Rows><StockId>' + _STOCKID + '</StockId><IsSelect>' + checkBoxCheckStatus + '</IsSelect><LocCode>' + _LOCCODE + '</LocCode><Pieces>' + _NOP + '</Pieces><ActualPieces>' + _NOP + '</ActualPieces><IsSeized>' + _IsSeized + '</IsSeized></Rows>';
