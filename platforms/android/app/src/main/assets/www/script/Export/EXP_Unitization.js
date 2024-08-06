@@ -1659,8 +1659,8 @@ function calculateMAnWeightForShow() {
 
     //var enteredNOP = parseInt($('#txtNOPforRemove').val());
     //var volumeNew = (parseFloat(oldVolumeRm) / parseFloat(oldNOPRM)) * enteredNOP;
-    calculateRmWt = Math.round(weightNew * 100) / 100;
-    $('#_txtManWt').val(calculateRmWt);
+    calculateRmWt = weightNew; //Math.round(weightNew * 100) / 100;
+    $('#_txtManWt').val(calculateRmWt.toFixed(3));
 }
 // var totalPieces = 1;
 // var totalWeight = 0;
@@ -3654,16 +3654,30 @@ UnitizationRemoveOffloadShipment = function () {
     getRowValues();
     var inputXml;
     if (isScanned) {
+        if ($("#bulkCheckBox").prop("checked")) {
+            inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#trolleyLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
+            '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
+            '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark>' + piecesIdRow + '<GroupID>' + $("#_txtGroupIdModal").val() + '</GroupID><HouseNo>' + $("#ddlHAWBList").val() + '</HouseNo></Root>';
+        
+        }
+        else{
         inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
             '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
             '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark>' + piecesIdRow + '<GroupID>' + $("#_txtGroupIdModal").val() + '</GroupID><HouseNo>' + $("#ddlHAWBList").val() + '</HouseNo></Root>';
-        console.log(inputXml)
+        }
     }
     else {
+        if ($("#bulkCheckBox").prop("checked")) {
+            inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#trolleyLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
+            '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
+            '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark><GroupID>' + $("#_txtGroupIdModal").val() + '</GroupID><HouseNo>' + $("#ddlHAWBList").val() + '</HouseNo></Root>';
+       
+        }
+        else{
         inputXml = '<Root><FlightSeqNo>' + FltSeqNo + '</FlightSeqNo><ULDSeqNo>' + $("#uldLists").val() + '</ULDSeqNo><ManifestSeqNo>' + _ManifestSeqNo + '</ManifestSeqNo><Type>' + type + '</Type><Offpoint>' + $("#offPointLists").val() + '</Offpoint>' +
             '<AirportCity>' + SHED_AIRPORT_CITY + '</AirportCity><UserID>' + Userid + '</UserID><ULDType>' + ULDType + '</ULDType><ULDNumber>' + ULDNumber + '</ULDNumber><ULDOwner>' + ULDOwner + '</ULDOwner>' +
             '<ShipmentId>' + _OffLoadShipmentId + '</ShipmentId><NOP>' + $("#txtNOPforRemove").val() + '</NOP><Weight>' + $("#txtWeightforRemove").val() + '</Weight><Volume>' + $("#txtVolumeforRemove").val() + '</Volume><Reason>' + $("#ddlReasonforRemove").val() + '</Reason><Remark>' + $("#txtRemarkforRmove").val() + '</Remark><GroupID>' + $("#_txtGroupIdModal").val() + '</GroupID><HouseNo>' + $("#ddlHAWBList").val() + '</HouseNo></Root>';
-        console.log(inputXml)
+        }
     }
 
     //xmlDataForDamage = JSON.stringify(InputXML);
