@@ -653,14 +653,14 @@ GetWeightingScaleWt = function () {
         $.alert(errmsg);
         return;
     }
-    if (IsDolly == 'Y') {
-        if ($('#dollyDDL').find("option:selected").val() == '0') {
-            $("body").mLoading('hide');
-            errmsg = "Please select Dolly</br>";
-            $.alert(errmsg);
-            return;
-        }
-    }
+    // if (IsDolly == 'Y') {
+    //     if ($('#dollyDDL').find("option:selected").val() == '0') {
+    //         $("body").mLoading('hide');
+    //         errmsg = "Please select Dolly</br>";
+    //         $.alert(errmsg);
+    //         return;
+    //     }
+    // }
     MacRowID = $('#ddlWeighingScale').find("option:selected").val();
     InputXML = "<Root><MacRowID>" + MacRowID + "</MacRowID><AirportCity>" + SHED_AIRPORT_CITY + "</AirportCity><UserId>" + Userid + "</UserId></Root>"
     $('body').mLoading({
@@ -1052,10 +1052,12 @@ function fnClear() {
     $("#dollyDDL").empty();
     $("#counterLists").empty();
     $("#trolleyLists").empty();
+    $("#ddlWeighingScale").empty();
     clearOptions("offPointLists");
     clearOptions("uldLists");
     clearOptions("counterLists");
     clearOptions("trolleyLists");
+    clearOptions("ddlWeighingScale");
     $("#ULDCheckbox").prop("checked", true);
     $("#txtBulkManpower").prop('disabled', false);
     $("#txtBlkRemark").prop('disabled', false);
@@ -1094,10 +1096,12 @@ function fnClearfornoMsgClear() {
     $("#dollyDDL").empty();
     $("#counterLists").empty();
     $("#trolleyLists").empty();
+    $("#ddlWeighingScale").empty();
     clearOptions("offPointLists");
     clearOptions("uldLists");
     clearOptions("counterLists");
     clearOptions("trolleyLists");
+    clearOptions("ddlWeighingScale");
     $("#ULDCheckbox").prop("checked", true);
     $("#txtBulkManpower").prop('disabled', false);
     $("#txtBlkRemark").prop('disabled', false);
