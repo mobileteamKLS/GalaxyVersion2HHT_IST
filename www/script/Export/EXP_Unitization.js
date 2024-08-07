@@ -43,6 +43,7 @@ var tempRemMovVol;
 var scanTypeMode;
 var isScanned = false;
 var OffLoadShipmentId;
+var IsFlightFinalized;
 $(function () {
 
     $(document).on('show.bs.modal', '.modal', function (event) {
@@ -127,7 +128,7 @@ $(function () {
     $("#uldLists").change(function () {
         selectedULDNo = $(this).find("option:selected").text();
         selectedULDSeqNo = $(this).val();
-
+        $("#editUldType").val('0');
 
         if (selectedULDNo == "Select") {
             $("#ULDScaleWt").val('');
@@ -2309,7 +2310,7 @@ function GetExportFlightDetails(shouldClearRecord) {
                 $(xmlDoc).find('Table1').each(function (index) {
                     FltSeqNo = $(this).find('FltSeqNo').text();
                     Manpower = $(this).find('Manpower').text();
-
+                    IsFlightFinalized= $(this).find('IsFlightFinalise').text();
                     $("#txtFlightManpower").val(Manpower);
 
                 });
@@ -2821,6 +2822,10 @@ function closeULDBulk() {
     }
     if ($("#FlightDate").val() == "") {
         $.alert("Please Enter Flight Date.");
+        return;
+    }
+    if (IsFlightFinalized == "Y") {
+        $.alert("Filght is finalized, cannot update.");
         return;
     }
 
@@ -4885,7 +4890,7 @@ function GetULDs(valFromddloffpoint) {
                 $(xmlDoc).find('Table1').each(function (index) {
                     FltSeqNo = $(this).find('FltSeqNo').text();
                     Manpower = $(this).find('Manpower').text();
-
+                    IsFlightFinalized= $(this).find('IsFlightFinalise').text();
                     $("#txtFlightManpower").val(Manpower);
 
                 });
